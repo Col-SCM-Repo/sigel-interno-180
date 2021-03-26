@@ -14,9 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//Routes Web
+Route::prefix('pagos')->middleware('auth')->group(function () {
+    #Dashboard
+      Route::get('/', ['uses' => 'PagosController@index', 'as' => 'index.pagos']);
+      Route::post('/obtener_alumnos', ['uses' => 'PagosController@ObtenerAlumnos', 'as' => 'obtener.alumnos.pagos']);
+  });
+
+Route::prefix('anios')->middleware('auth')->group(function () {
+#Dashboard
+    Route::get('/obtener_anios', ['uses' => 'AniosController@ObtenerAnios', 'as' => 'obtener.anios']);
+});

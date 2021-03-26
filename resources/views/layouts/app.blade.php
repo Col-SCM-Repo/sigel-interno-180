@@ -75,6 +75,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <input type="text" id="baseUrl" value=""  hidden>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
+    @yield('scripts');
 </body>
 </html>
