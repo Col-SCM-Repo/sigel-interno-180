@@ -23,4 +23,8 @@ class Concepto extends Model
     {
         return $this->hasMany('App\ConceptoPago','MP_CON_ID','MP_CON_ID');
     }
+    public function concepto()
+    {
+        return $this->MP_CON_CONCEPTO;
+    }
 }

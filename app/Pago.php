@@ -43,4 +43,29 @@ class Pago extends Model
     {
       return $this->belongsTo('App\TipoComprobante', 'MP_TIPCOM_ID','MP_TIPCOM_ID');
     }
+    public function Usuario()
+    {
+      return $this->belongsTo('App\User', 'USU_ID','USU_ID');
+    }
+
+    public function id()
+    {
+        return $this->MP_PAGO_ID;
+    }
+    public function numero()
+    {
+        return $this->MP_PAGO_NRO;
+    }
+    public function serie()
+    {
+        return $this->MP_PAGO_SERIE;
+    }
+    public function monto()
+    {
+        return $this->MP_PAGO_MONTO;
+    }
+    public function fecha()
+    {
+        return $this->MP_PAGO_FECHA;
+    }
 }

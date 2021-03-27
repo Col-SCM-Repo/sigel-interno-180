@@ -8,8 +8,12 @@ class Vacante extends Model
 {
     protected $table = 'MP_VACANTES';
     protected $primaryKey = 'MP_VAC_ID';
-    protected $fillable = ['MP_VAC_ID',
-        'MP_ANIO_ID'];
+    protected $fillable = [
+        'MP_VAC_ID',
+        'MP_ANIO_ID',
+        'MP_GRAD_ID',
+        'MP_NIV_ID',
+        'MP_SEC_ID'];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -41,10 +45,7 @@ class Vacante extends Model
     }
     public function Grado()
     {
-      return $this->belongsTo('App\Grado', 'MP_GRA_ID', 'MP_GRA_ID');
+      return $this->belongsTo('App\Grado', 'MP_GRAD_ID', 'MP_GRA_ID');
     }
-    // public function Local()
-    // {
-    //   return $this->belongsTo('App\Local', 'local_id', 'id');
-    // }
+
 }

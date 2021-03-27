@@ -12,4 +12,8 @@ class Seccion extends Model
         'MP_SEC_ID',
         'MP_SEC_NOMBRE'
     ];
+    public function seccion()
+    {
+        return $this->MP_SEC_NOMBRE;
+    }
 }

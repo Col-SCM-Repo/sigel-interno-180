@@ -12,4 +12,9 @@ class Nivel extends Model
         'MP_NIV_ID',
         'MP_NIV_NIVEL'
     ];
+
+    public function nivel()
+    {
+        return $this->MP_NIV_NIVEL;
+    }
 }

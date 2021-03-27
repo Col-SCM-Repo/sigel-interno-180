@@ -1,5 +1,5 @@
 import Vue from 'vue';
-var asistencia = new Vue({
+var pagos = new Vue({
     el: '#pagos',
     data: {
         anios: [],
@@ -28,13 +28,13 @@ var asistencia = new Vue({
                 }
                 axios.post(url,data).then((response) => {
                     this.alumnos = response.data;
-                    console.log(this.alumnos);
                 }).catch((error) => {
                 }).finally((response) => {
                 });
-
             }
-
+        },
+        verCronograma:function(matricula_id){
+            location.href=this.url_principal+'/cronograma/'+matricula_id;
         }
     },
     created: function(){

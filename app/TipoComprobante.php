@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoComprobante extends Model
 {
-    protected $table = 'MP_TIPOCOMROBANTE';
+    protected $table = 'MP_TIPOCOMPROBANTE';
     protected $primaryKey = 'MP_TIPCOM_ID';
     protected $fillable = [
         'MP_TIPCOM_ID',
@@ -23,5 +23,9 @@ class TipoComprobante extends Model
     public function Pagos()
     {
         return $this->hasMany('App\Pago', 'MP_TIPCOM_ID', 'MP_TIPCOM_ID');
+    }
+    public function tipo()
+    {
+        return $this->MP_TIPCOM_NOMBRE;
     }
 }

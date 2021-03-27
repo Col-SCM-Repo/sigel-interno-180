@@ -18,16 +18,24 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+//principal
 Route::get('/home', 'HomeController@index')->name('home');
-//Routes Web
+//Routes pagos
 Route::prefix('pagos')->middleware('auth')->group(function () {
-    #Dashboard
-      Route::get('/', ['uses' => 'PagosController@index', 'as' => 'index.pagos']);
-      Route::post('/obtener_alumnos', ['uses' => 'PagosController@ObtenerAlumnos', 'as' => 'obtener.alumnos.pagos']);
-  });
-
+    #pagos
+    Route::get('/', ['uses' => 'PagosController@index', 'as' => 'index.pagos']);
+    Route::post('/obtener_alumnos', ['uses' => 'PagosController@ObtenerAlumnos', 'as' => 'obtener.alumnos.pagos']);
+    Route::post('/obtener_pagos', ['uses' => 'PagosController@ObtenerPagosPorCronogramaId', 'as' => 'obtener.por.cronograma.pagos']);
+});
+//Routes anio
 Route::prefix('anios')->middleware('auth')->group(function () {
-#Dashboard
+    #Dashboard
     Route::get('/obtener_anios', ['uses' => 'AniosController@ObtenerAnios', 'as' => 'obtener.anios']);
 });
+//Routes Cronograma Pagos
+Route::prefix('cronograma')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/{matricula_id}', ['uses' => 'CronogramaController@Index', 'as' => 'index.cronograma']);
+    Route::post('/obtener_datos', ['uses' => 'CronogramaController@ObtenerCronogramasPorMatriculaID', 'as' => 'obtener.por.matricula.cronograma']);
+});
+Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

@@ -40,4 +40,9 @@ class Matricula extends Model
     {
         return $this->belongsTo('App\User', 'USU_ID', 'USU_ID');
     }
+    //campos de manera resumida
+    public function estado()
+    {
+        return $this->MP_MAT_ESTADO;
+    }
 }

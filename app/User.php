@@ -19,11 +19,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'USU_ID',
-        'USU_NOMBRE',
+        'USU_NOMBRES',
         'USU_APELLIDOS',
         'username',
         'password',
         'USU_CONTRASENIA',
+        'USU_USUARIO'
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -48,5 +49,14 @@ class User extends Authenticatable
     public function Pagos()
     {
       return $this->hasMany('App\Pago', 'USU_ID', 'USU_ID');
+    }
+
+    public function nombres()
+    {
+        return $this->USU_NOMBRES;
+    }
+    public function apellidos()
+    {
+        return $this->USU_APELLIDOS;
     }
 }

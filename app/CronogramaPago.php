@@ -11,7 +11,10 @@ class CronogramaPago extends Model
     protected $fillable = [
         'MP_CRO_ID',
         'MP_CONPAGO_ID',
-        'MP_MAT_ID'
+        'MP_MAT_ID',
+        'MP_CRO_TIPODEUDA',
+        'MP_CRO_MONTO',
+        'MP_CRO_ESTADO',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -32,5 +35,22 @@ class CronogramaPago extends Model
     public function Pagos()
     {
       return $this->hasMany('App\Pago', 'MP_CRO_ID','MP_CRO_ID');
+    }
+
+    public function id()
+    {
+        return $this->MP_CRO_ID;
+    }
+    public function concepto()
+    {
+        return $this->MP_CRO_TIPODEUDA;
+    }
+    public function monto()
+    {
+        return $this->MP_CRO_MONTO;
+    }
+    public function estado()
+    {
+        return $this->MP_CRO_ESTADO;
     }
 }

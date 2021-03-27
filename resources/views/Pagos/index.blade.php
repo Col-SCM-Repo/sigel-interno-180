@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="anio_id">
+                            <select class="form-control" aria-label=".form-select-sm example" v-model="anio_id">
                                 <option value="">Seleccione Año</option>
                                 <option v-for="anio in anios" :value="anio.id">@{{anio.nombre}}</option>
                             </select>
@@ -35,23 +35,17 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
+                                  <tr v-for="alumno in alumnos">
+                                    <th scope="row">@{{alumno.matricula_id}}</th>
+                                    <td >@{{alumno.nombres}}</td>
+                                    <td >@{{alumno.nivel}}</td>
+                                    <td >@{{alumno.seccion}}</td>
+                                    <td >@{{alumno.estado}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-light" v-on:click="verCronograma(alumno.matricula_id)"><i class="far fa-eye"></i> Ver Cronograma</button>
+                                    </td>
                                   </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                  </tr>
+
                                 </tbody>
                               </table>
                         </div>

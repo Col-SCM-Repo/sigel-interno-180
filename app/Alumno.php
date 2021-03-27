@@ -27,4 +27,12 @@ class Alumno extends Model
     // {
     //     return $this->hasMany('App\Parentescos', 'alumno_id', 'id');
     // }
+    public function nombres()
+    {
+        return $this->MP_ALU_NOMBRES;
+    }
+    public function apellidos()
+    {
+        return $this->MP_ALU_APELLIDOS;
+    }
 }

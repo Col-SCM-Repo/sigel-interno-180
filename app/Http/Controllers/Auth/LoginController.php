@@ -42,15 +42,5 @@ class LoginController extends Controller
     {
       return 'username';
     }
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->only('username', 'password');
-        if (Auth::attempt(['username' => $email, 'password' => $password, 'type' => 'docente'])) {
-          // The user is active, not suspended, and exists.
-          return redirect()->intended('home');
-        }else{
-          return redirect()->intended('home');
-        }
 
-    }
 }
