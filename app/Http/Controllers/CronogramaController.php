@@ -24,6 +24,8 @@ class CronogramaController extends Controller
                 'mes'=>$cronograma_aux->ConceptoPago->Concepto->concepto(),
                 'monto'=>$cronograma_aux->monto(),
                 'estado'=>$cronograma_aux->estado(),
+                'fecha_vencimiento'=>date('d-m-Y', strtotime($cronograma_aux->fechaVencimiento())),
+                'vencido'=>strtotime($cronograma_aux->fechaVencimiento())<=strtotime(date('d-m-Y'))?true:false,
             ];
             array_push($cronogramas, $cronograma);
         }

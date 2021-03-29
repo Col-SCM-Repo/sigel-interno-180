@@ -15,6 +15,7 @@ class CronogramaPago extends Model
         'MP_CRO_TIPODEUDA',
         'MP_CRO_MONTO',
         'MP_CRO_ESTADO',
+        'MP_CRO_FECHAVEN',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -52,5 +53,9 @@ class CronogramaPago extends Model
     public function estado()
     {
         return $this->MP_CRO_ESTADO;
+    }
+    public function fechaVencimiento()
+    {
+        return $this->MP_CRO_FECHAVEN;
     }
 }
