@@ -26,6 +26,8 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     Route::get('/', ['uses' => 'PagosController@index', 'as' => 'index.pagos']);
     Route::post('/obtener_alumnos', ['uses' => 'PagosController@ObtenerAlumnos', 'as' => 'obtener.alumnos.pagos']);
     Route::post('/obtener_pagos', ['uses' => 'PagosController@ObtenerPagosPorCronogramaId', 'as' => 'obtener.por.cronograma.pagos']);
+    Route::post('/guardar_pago', ['uses' => 'PagosController@GuardarPago', 'as' => 'guardar.pago.pagos']);
+
 });
 //Routes anio
 Route::prefix('anios')->middleware('auth')->group(function () {
@@ -37,5 +39,6 @@ Route::prefix('cronograma')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/{matricula_id}', ['uses' => 'CronogramaController@Index', 'as' => 'index.cronograma']);
     Route::post('/obtener_datos', ['uses' => 'CronogramaController@ObtenerCronogramasPorMatriculaID', 'as' => 'obtener.por.matricula.cronograma']);
+    Route::post('/obtener_saldo', ['uses' => 'CronogramaController@ObtenerSaldoDeCronograma', 'as' => 'obtener.saldo.de.cronograma.pagos']);
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

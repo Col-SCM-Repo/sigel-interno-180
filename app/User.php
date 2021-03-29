@@ -50,7 +50,10 @@ class User extends Authenticatable
     {
       return $this->hasMany('App\Pago', 'USU_ID', 'USU_ID');
     }
-
+    public function SerieComprobante()
+    {
+      return $this->hasMany('App\SerieComprobante', 'USU_ID', 'USU_ID');
+    }
     public function nombres()
     {
         return $this->USU_NOMBRES;
@@ -58,5 +61,9 @@ class User extends Authenticatable
     public function apellidos()
     {
         return $this->USU_APELLIDOS;
+    }
+    public function id()
+    {
+        return $this->USU_ID;
     }
 }

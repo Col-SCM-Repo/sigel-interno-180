@@ -13,7 +13,15 @@ class Pago extends Model
         'MP_MAT_ID',
         'MP_CRO_ID',
         'MP_CONPAGO_ID',
-        'MP_SERCOM_ID'
+        'MP_SERCOM_ID',
+        'MP_PAGO_FECHA',
+        'MP_PAGO_MONTO',
+        'MP_PAGO_NRO',
+        'MP_PAGO_OBS',
+        'MP_TIPCOM_ID',
+        'USU_ID',
+        'MP_PAGO_SERIE',
+        'MP_PAGO_LEE_MONTO',
     ];
      /**
      * The attributes that should be hidden for arrays.

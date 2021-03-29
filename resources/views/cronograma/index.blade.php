@@ -1,12 +1,5 @@
 @extends('layouts.app')
 @section('styles')
-    <style>
-        input[type='text']{
-            background: white;
-            padding-left: 5px;
-            border: 1px;
-        }
-    </style>
 
 @endsection
 @section('content')
@@ -37,7 +30,7 @@
                                     <td >@{{cronograma.concepto}}</td>
                                     <td >@{{cronograma.mes}}</td>
                                     <td :style="cronograma.vencido?'color:red':'color:green'">@{{cronograma.fecha_vencimiento}}</td>
-                                    <td >@{{cronograma.monto}}</td>
+                                    <td >S/ @{{cronograma.monto}}</td>
                                     <td :style="cronograma.estado=='CANCELADO'?'color:green':(cronograma.estado=='EXONERADO'?'color:skyblue':(cronograma.estado=='PENDIENTE'?'color:orange':'color:red'))">@{{cronograma.estado}}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
@@ -86,7 +79,7 @@
                                             <th scope="row">@{{i+1}}</th>
                                             <td >@{{pago.numero}}</td>
                                             <td >@{{pago.tipo}}</td>
-                                            <td >@{{pago.monto}}</td>
+                                            <td >S/ @{{pago.monto}}</td>
                                             <td >@{{pago.fecha}}</td>
                                             <td >@{{pago.usuario}}</td>
                                             <td>
@@ -108,7 +101,7 @@
     </div>
     <!-- Modal para Pagar-->
     <div class="modal fade" id="pagarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Relizar Pago de @{{pagar_crono.mes}} </h5>
@@ -116,21 +109,59 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="margin-left: 75px">
+                <div class="modal-body" style="padding-left: 75px; background: #fafafa">
                     <div class="row">
                         <div class="'col-md-12">
                             <div class="row ">
                                 <div class="col-md-12">
-                                    <div class="form">
-
                                     <div class="form-group row">
-                                        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-                                        <div class="col-sm-10">
-                                          <input type="text"  class="form-control-plaintext" id="staticEmail" value="email@example.com">
+                                        <label for="concepto" class="col-sm-4 col-form-label">Concepto</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="concepto" :value="pagar_crono.mes" disabled>
                                         </div>
                                     </div>
-                                </div>
-
+                                    <div class="form-group row">
+                                        <label for="comprobante"class="col-sm-4 col-form-label">Tip. Comprobante</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="comprobante" value="BOLETA ELECTRÓNICA" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="serie" class="col-sm-4 col-form-label">Serie</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="serie" value="{{Auth::user()->SerieComprobante()->get()->last()->serie()}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="monto" class="col-sm-4 col-form-label">Monto</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="monto" :value="'S/ ' + pagar_crono.monto" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fecha" class="col-sm-4 col-form-label">Fecha</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="fecha" :value="fecha_pago" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="saldo" class="col-sm-4 col-form-label">Saldo</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="saldo" :value="'S/ '+ saldo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="pago" class="col-sm-4 col-form-label">Pago</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="pago" v-model="monto_pago" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="pago" class="col-sm-4 col-form-label">Observación</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="pago" v-model="observacion_pago" >
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -138,6 +169,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" v-on:click="cerrarModalPagar">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="guardarPago" :disabled="saldo==0 ||monto_pago>saldo">Guardar</button>
                 </div>
             </div>
         </div>
@@ -145,7 +177,6 @@
     <input type="text" name="" id="matricula_id" value="{{$matricula_id}}" hidden>
 </div>
 @endsection
-
 @section('scripts')
     <script src="{{asset('js/cronograma/index.js')}}"></script>
 @endsection

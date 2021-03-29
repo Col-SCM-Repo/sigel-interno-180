@@ -58,4 +58,8 @@ class CronogramaPago extends Model
     {
         return $this->MP_CRO_FECHAVEN;
     }
+    public function matriculaId()
+    {
+        return $this->MP_MAT_ID;
+    }
 }

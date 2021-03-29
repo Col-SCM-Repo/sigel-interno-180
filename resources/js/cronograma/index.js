@@ -9,7 +9,11 @@ var cronograma = new Vue({
         alumno:'',
         mes_seleccionado:'',
         pagos:[],
-        pagar_crono:[]
+        pagar_crono:[],
+        saldo:'',
+        fecha_pago:'',
+        monto_pago: '',
+        observacion_pago: ''
     },
     methods: {
         obtenerDatos:function () {
@@ -20,7 +24,6 @@ var cronograma = new Vue({
             axios.post(url, data).then((response) => {
                 this.cronogramas = response.data.cronogramas;
                 this.alumno = response.data.alumno;
-                console.log(this.cronogramas);
             }).catch((error) => {
             }).finally((response) => {
             });
@@ -48,13 +51,55 @@ var cronograma = new Vue({
         },
         pagarCronograma:function(cronograma){
             this.pagar_crono = cronograma;
-            console.log(this.pagar_crono);
             $('#pagarModal').modal({backdrop: 'static', keyboard: false});
             $('#pagarModal').modal('show');
+            this.obtenerSaldo();
         },
         cerrarModalPagar:function(){
             $('#pagarModal').modal('hide');
             this.pagar_crono = '';
+        },
+        obtenerSaldo:function(){
+            let url = this.baseUrl +'/obtener_saldo';
+            let data = {
+                'cronograma_id': this.pagar_crono.cronograma_id
+            };
+            axios.post(url, data).then((response) => {
+                console.log(response.data);
+                this.saldo = response.data.saldo;
+                this.fecha_pago = response.data.fecha_pago;
+            }).catch((error) => {
+            }).finally((response) => {
+                if(this.saldo==this.pagar_crono.monto){
+                    this.monto_pago = this.pagar_crono.monto;
+                }else{
+                    this.monto_pago = this.pagar_crono.monto-this.saldo;
+                }
+            });
+        },
+        guardarPago:function(){
+            let url = this.url_principal +'/pagos/guardar_pago';
+            let data = {
+                'cronograma_id': this.pagar_crono.cronograma_id,
+                'fecha': this.fecha_pago,
+                'observacion': this.observacion_pago,
+                'monto': this.monto_pago,
+                'saldo': this.saldo,
+            };
+            axios.post(url, data).then((response) => {
+                if(response.data!='false'){
+
+                }else{
+                    Swal.fire('Ocurrio un error inespedaro, por favor compruebe si el pago se registro con exito');
+                }
+            }).catch((error) => {
+            }).finally((response) => {
+                if(this.saldo==this.pagar_crono.monto){
+                    this.monto_pago = this.pagar_crono.monto;
+                }else{
+                    this.monto_pago = this.pagar_crono.monto-this.saldo;
+                }
+            });
         }
     },
     beforeMount: function(){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CronogramaPago;
 use App\Matricula;
 use Illuminate\Http\Request;
+use Laravel\Ui\Presets\React;
 
 class CronogramaController extends Controller
 {
@@ -32,6 +33,20 @@ class CronogramaController extends Controller
         $data=[
             'cronogramas'=>$cronogramas,
             'alumno'=> $matricula->Alumno->apellidos(). ', '.$matricula->Alumno->nombres(),
+        ];
+        return response()->json($data);
+    }
+    public function ObtenerSaldoDeCronograma(Request $request)
+    {
+
+        $cronograma = CronogramaPago::find($request->cronograma_id);
+        $saldo = $cronograma->monto();
+        foreach ($cronograma->Pagos as $pago) {
+            $saldo -= $pago->monto();
+        }
+        $data=[
+            'saldo'=>$saldo,
+            'fecha_pago'=>date('d/m/Y H:i:s'),
         ];
         return response()->json($data);
     }
