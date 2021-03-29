@@ -8,6 +8,8 @@ class CronogramaPago extends Model
 {
     protected $table = 'MP_CRONOGRAMAPAGO';
     protected $primaryKey = 'MP_CRO_ID';
+    public $timestamps = false;
+
     protected $fillable = [
         'MP_CRO_ID',
         'MP_CONPAGO_ID',

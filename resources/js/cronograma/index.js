@@ -73,7 +73,7 @@ var cronograma = new Vue({
                 if(this.saldo==this.pagar_crono.monto){
                     this.monto_pago = this.pagar_crono.monto;
                 }else{
-                    this.monto_pago = this.pagar_crono.monto-this.saldo;
+                    this.monto_pago = this.saldo;
                 }
             });
         },
@@ -88,17 +88,14 @@ var cronograma = new Vue({
             };
             axios.post(url, data).then((response) => {
                 if(response.data!='false'){
-
+                    window.open(this.url_principal+'/reportes/boleta/'+response.data)
                 }else{
                     Swal.fire('Ocurrio un error inespedaro, por favor compruebe si el pago se registro con exito');
                 }
             }).catch((error) => {
             }).finally((response) => {
-                if(this.saldo==this.pagar_crono.monto){
-                    this.monto_pago = this.pagar_crono.monto;
-                }else{
-                    this.monto_pago = this.pagar_crono.monto-this.saldo;
-                }
+                this.cerrarModalPagar();
+                this.obtenerDatos();
             });
         }
     },

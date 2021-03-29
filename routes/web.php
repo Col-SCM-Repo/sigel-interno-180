@@ -41,4 +41,9 @@ Route::prefix('cronograma')->middleware('auth')->group(function () {
     Route::post('/obtener_datos', ['uses' => 'CronogramaController@ObtenerCronogramasPorMatriculaID', 'as' => 'obtener.por.matricula.cronograma']);
     Route::post('/obtener_saldo', ['uses' => 'CronogramaController@ObtenerSaldoDeCronograma', 'as' => 'obtener.saldo.de.cronograma.pagos']);
 });
+//Routes anio
+Route::prefix('reportes')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/boleta/{pago_id}', ['uses' => 'ReportesController@VerBoleta', 'as' => 'boleta.reportes']);
+});
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

@@ -31,7 +31,7 @@
                                     <td >@{{cronograma.mes}}</td>
                                     <td :style="cronograma.vencido?'color:red':'color:green'">@{{cronograma.fecha_vencimiento}}</td>
                                     <td >S/ @{{cronograma.monto}}</td>
-                                    <td :style="cronograma.estado=='CANCELADO'?'color:green':(cronograma.estado=='EXONERADO'?'color:skyblue':(cronograma.estado=='PENDIENTE'?'color:orange':'color:red'))">@{{cronograma.estado}}</td>
+                                    <td :style="cronograma.estado=='CANCELADO'?'color:green':(cronograma.estado=='EXONERADO'?'color:skyblue':(cronograma.estado=='PENDIENTE'?'color:orange':'color:blue'))">@{{cronograma.estado}}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <button type="button" class="btn btn-light" v-on:click="verCronograma(cronograma.cronograma_id, cronograma.mes)" ><i class="far fa-eye"></i> Ver Pagos</button>

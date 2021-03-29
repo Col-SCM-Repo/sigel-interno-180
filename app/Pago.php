@@ -8,6 +8,8 @@ class Pago extends Model
 {
     protected $table = 'MP_PAGO';
     protected $primaryKey = 'MP_PAGO_ID';
+    public $timestamps = false;
+
     protected $fillable = [
         'MP_PAGO_ID',
         'MP_MAT_ID',
@@ -23,6 +25,7 @@ class Pago extends Model
         'MP_PAGO_SERIE',
         'MP_PAGO_LEE_MONTO',
     ];
+
      /**
      * The attributes that should be hidden for arrays.
      *

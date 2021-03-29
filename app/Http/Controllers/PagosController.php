@@ -78,7 +78,7 @@ class PagosController extends Controller
             }else if(number_format($request->monto,2)==number_format($request->saldo,2)){
                 $estado_cronograma='CANCELADO';
             }
-            dd($estado_cronograma);//elimnar esta linea pararegistrar pagos
+            //dd($estado_cronograma);//elimnar esta linea pararegistrar pagos
             $pago = new Pago();
             $pago->MP_PAGO_FECHA = DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha)->format('Y-m-d H:i:s');
             $pago->MP_PAGO_NRO = $num_serie+1;
