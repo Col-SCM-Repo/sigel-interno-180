@@ -45,4 +45,8 @@ class Matricula extends Model
     {
         return $this->MP_MAT_ESTADO;
     }
+    public function id()
+    {
+        return $this->MP_MAT_ID;
+    }
 }

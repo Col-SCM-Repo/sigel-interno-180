@@ -14,7 +14,6 @@ var pagos = new Vue({
             let url = this.url_principal +'/anios/obtener_anios';
             axios.get(url).then((response) => {
                 this.anios = response.data;
-                console.log(this.anios);
             }).catch((error) => {
             }).finally((response) => {
             });

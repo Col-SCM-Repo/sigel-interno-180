@@ -43,7 +43,7 @@ var cronograma = new Vue({
             });
         },
         descargar:function(pago){
-            console.log(pago);
+            window.open(this.url_principal+'/reportes/boleta/'+pago.pago_id)
         },
         cerrarModalPagos:function(){
             $('#exampleModal').modal('hide');
