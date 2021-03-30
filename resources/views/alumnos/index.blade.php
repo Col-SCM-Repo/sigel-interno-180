@@ -60,9 +60,8 @@
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Codigo</th>
                                             <th scope="col">Año</th>
+                                            <th scope="col">Codigo</th>
                                             <th scope="col">Nivel</th>
                                             <th scope="col">Grado</th>
                                             <th scope="col">Sección</th>
@@ -71,10 +70,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(matricula,i) in matriculas">
-                                                <th scope="row">@{{i+1}}</th>
-                                                <td >@{{matricula.matricula_id}}</td>
+                                            <tr v-for="matricula in matriculas">
                                                 <td >@{{matricula.anio}}</td>
+                                                <td >@{{matricula.matricula_id}}</td>
                                                 <td >@{{matricula.nivel}}</td>
                                                 <td >@{{matricula.grado}}</td>
                                                 <td >@{{matricula.seccion}}</td>

@@ -29,6 +29,6 @@ class MatriculasController extends Controller
             ];
             array_push($matriculas, $matricula);
         }
-        return response()->json($this->ordenarArray->Descendete($matriculas,'anio'));
+        return response()->json($this->ordenarArray->Ascendente($matriculas,'anio'));
     }
 }

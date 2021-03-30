@@ -13,7 +13,8 @@ var cronograma = new Vue({
         saldo:'',
         fecha_pago:'',
         monto_pago: '',
-        observacion_pago: ''
+        observacion_pago: '',
+        matricula:''
     },
     methods: {
         obtenerDatos:function () {
@@ -24,6 +25,7 @@ var cronograma = new Vue({
             axios.post(url, data).then((response) => {
                 this.cronogramas = response.data.cronogramas;
                 this.alumno = response.data.alumno;
+                this.matricula = response.data.matricula;
             }).catch((error) => {
             }).finally((response) => {
             });

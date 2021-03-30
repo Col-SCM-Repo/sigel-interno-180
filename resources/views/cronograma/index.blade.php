@@ -7,7 +7,29 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Cronograma de Pagos de <b>@{{alumno}}</b>  </div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Año:</b> @{{matricula.anio}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Cod. Matricula:</b> @{{matricula.id}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Nivel:</b> @{{matricula.nivel}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Seccion:</b> @{{matricula.grado+'° '+matricula.seccion}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <p><b>Alumno:</b>@{{alumno}}</p>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">

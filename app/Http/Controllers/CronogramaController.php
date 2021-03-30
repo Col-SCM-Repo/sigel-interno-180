@@ -17,8 +17,8 @@ class CronogramaController extends Controller
     public function ObtenerCronogramasPorMatriculaID(Request $request)
     {
         $cronogramas = [];
-        $matricula = Matricula::find($request->matricula_id);
-        foreach ($matricula->CronogramaPagos as $cronograma_aux) {
+        $matricula_aux = Matricula::find($request->matricula_id);
+        foreach ($matricula_aux->CronogramaPagos as $cronograma_aux) {
             $cronograma =[
                 'cronograma_id'=>$cronograma_aux->id(),
                 'concepto'=>$cronograma_aux->concepto(),
@@ -30,9 +30,17 @@ class CronogramaController extends Controller
             ];
             array_push($cronogramas, $cronograma);
         }
+        $matricula = [
+            'id'=>$matricula_aux->id(),
+            'nivel'=>$matricula_aux->Vacante->Nivel->nivel(),
+            'seccion'=>$matricula_aux->Vacante->seccion->seccion(),
+            'grado'=>$matricula_aux->Vacante->Grado->grado(),
+            'anio'=>$matricula_aux->Vacante->AnioAcademico->nombre(),
+        ];
         $data=[
             'cronogramas'=>$cronogramas,
-            'alumno'=> $matricula->Alumno->apellidos(). ', '.$matricula->Alumno->nombres(),
+            'alumno'=> $matricula_aux->Alumno->apellidos(). ', '.$matricula_aux->Alumno->nombres(),
+            'matricula'=>$matricula
         ];
         return response()->json($data);
     }

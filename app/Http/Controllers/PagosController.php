@@ -52,7 +52,7 @@ class PagosController extends Controller
             $pago = new Pago();
             $pago->MP_PAGO_FECHA = DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha)->format('Y-m-d\TH:i:s');
             $pago->MP_PAGO_NRO = $num_serie+1;
-            $pago->MP_PAGO_OBS = $request->observacion;
+            $pago->MP_PAGO_OBS = $request->observacion==null?'':$request->observacion;
             $pago->MP_SERCOM_ID = $serie->id();
             $pago->MP_TIPCOM_ID = 8; //TIPO DE BOLETA ELECTRONICA
             $pago->USU_ID = Auth::user()->id();
