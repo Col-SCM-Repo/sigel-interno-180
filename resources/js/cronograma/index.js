@@ -14,7 +14,8 @@ var cronograma = new Vue({
         fecha_pago:'',
         monto_pago: '',
         observacion_pago: '',
-        matricula:''
+        matricula:'',
+        pago_seleccionado:[]
     },
     methods: {
         obtenerDatos:function () {
@@ -99,9 +100,44 @@ var cronograma = new Vue({
                 this.cerrarModalPagar();
                 this.obtenerDatos();
             });
+        },
+        abrirModalNota:function(pago){
+            $('#notaModal').modal({backdrop: 'static', keyboard: false});
+            $('#notaModal').modal('show');
+            this.pago_seleccionado = pago;
+            this.pago_seleccionado.observacion = 'ANULA TICKET Nº '+this.pago_seleccionado.numero+', POR '
+        },
+        cerrarModalNota:function(){
+            $('#notaModal').modal('hide');
+            this.pago_seleccionado = [];
+        },
+        guardaNotaCredito:function(){
+            console.log(this.pago_seleccionado);
+            let url = this.url_principal +'/pagos/guardar_nota_credito';
+            let data = {
+                'pago': this.pago_seleccionado,
+            };
+            axios.post(url, data).then((response) => {
+                if(response.data!='false'){
+                    window.open(this.url_principal+'/reportes/boleta/'+response.data)
+                }else{
+                    Swal.fire('Ocurrio un error inespedaro, por favor compruebe si el pago se registro con exito');
+                }
+            }).catch((error) => {
+            }).finally((response) => {
+                this.cerrarModalNota();
+            });
         }
+
     },
     beforeMount: function(){
         this.obtenerDatos();
+    },
+    mounted:function(){
+        $("#nota_observacion").keyup(function(e) {
+            cronograma.pago_seleccionado.observacion = cronograma.pago_seleccionado.observacion.toUpperCase();
+        });
     }
 });
+
+

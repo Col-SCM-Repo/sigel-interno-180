@@ -56,8 +56,8 @@
                                     <td :style="cronograma.estado=='CANCELADO'?'color:green':(cronograma.estado=='EXONERADO'?'color:skyblue':(cronograma.estado=='PENDIENTE'?'color:orange':'color:blue'))">@{{cronograma.estado}}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn btn-light" v-on:click="verCronograma(cronograma.cronograma_id, cronograma.mes)" ><i class="far fa-eye"></i> Ver Pagos</button>
-                                            <button type="button" class="btn btn-secondary" v-on:click="pagarCronograma(cronograma)"><i class="fas fa-money-bill-alt"></i> Pagar</button>
+                                            <button v-if="cronograma.estado!='PENDIENTE'" type="button" class="btn btn-light" v-on:click="verCronograma(cronograma.cronograma_id, cronograma.mes)" ><i class="far fa-eye"></i> Ver Pagos</button>
+                                            <button v-if="cronograma.estado!='CANCELADO'" type="button" class="btn btn-secondary" v-on:click="pagarCronograma(cronograma)"><i class="fas fa-money-bill-alt"></i> Pagar</button>
                                         </div>
                                     </td>
                                   </tr>
@@ -79,7 +79,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="margin-left: 75px">
+                <div class="modal-body" style="margin-left: 25px">
                     <div class="row">
                         <div class="'col-md-12">
                             <div class="row ">
@@ -105,7 +105,10 @@
                                             <td >@{{pago.fecha}}</td>
                                             <td >@{{pago.usuario}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-light" v-on:click="descargar(pago)"><i class="far fa-eye" ></i> Boleta | Factura</button>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button type="button" class="btn btn-light" v-on:click="descargar(pago)"><i class="far fa-eye" ></i> Boleta | Factura</button>
+                                                    <button type="button" class="btn btn-secondary" v-on:click="abrirModalNota(pago)"><i class="fas fa-money-bill-alt"></i> N. C.</button>
+                                                </div>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -192,6 +195,63 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" v-on:click="cerrarModalPagar">Close</button>
                     <button type="button" class="btn btn-primary" v-on:click="guardarPago" :disabled="saldo==0 ||monto_pago>saldo">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para Nota de Credito-->
+    <div class="modal fade" id="notaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nota de Credito de @{{pago_seleccionado.numero}} </h5>
+                    <button type="button" class="close" v-on:click="cerrarModalPagar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-left: 75px; background: #fafafa">
+                    <div class="row">
+                        <div class="'col-md-12">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label for="comprobante"class="col-sm-4 col-form-label">Tip. Comprobante</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="comprobante" value="NOTA DE CREDITO" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="serie" class="col-sm-4 col-form-label">Serie</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="serie" value="{{Auth::user()->SerieComprobante()->get()->last()->serie()}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correlativo" class="col-sm-4 col-form-label">Nro. Comprobante</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="correlativo" v-model="pago_seleccionado.correlativo" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="monto" class="col-sm-4 col-form-label">Monto</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="monto" :value="'S/ -' + pago_seleccionado.monto" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="nota_observacion" class="col-sm-4 col-form-label">Observación</label>
+                                        <div class="col-sm-8">
+                                            <textarea  type="text"  class="form-control" id="nota_observacion" v-model="pago_seleccionado.observacion"rows="4" ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" v-on:click="cerrarModalNota">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="guardaNotaCredito" >Guardar</button>
                 </div>
             </div>
         </div>

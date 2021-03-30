@@ -35,6 +35,7 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     #pagos
     Route::post('/obtener_pagos', ['uses' => 'PagosController@ObtenerPagosPorCronogramaId', 'as' => 'obtener.por.cronograma.pagos']);
     Route::post('/guardar_pago', ['uses' => 'PagosController@GuardarPago', 'as' => 'guardar.pago.pagos']);
+    Route::post('/guardar_nota_credito', ['uses' => 'PagosController@GuardarNotaCredito', 'as' => 'guardar.nota.credito.pagos']);
 });
 //Routes anio
 Route::prefix('anios')->middleware('auth')->group(function () {
