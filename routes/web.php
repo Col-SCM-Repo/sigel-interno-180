@@ -21,6 +21,13 @@ Auth::routes();
 //principal
 Route::get('/home', 'HomeController@index')->name('home');
 //Routes pagos
+Route::prefix('alumnos')->middleware('auth')->group(function () {
+    #pagos
+    Route::get('/', ['uses' => 'AlumnosController@index', 'as' => 'index.alumnos']);
+    Route::post('/obtener_alumnos', ['uses' => 'AlumnosController@ObtenerAlumnos', 'as' => 'obtener.alumnos']);
+
+});
+//Routes pagos
 Route::prefix('pagos')->middleware('auth')->group(function () {
     #pagos
     Route::get('/', ['uses' => 'PagosController@index', 'as' => 'index.pagos']);

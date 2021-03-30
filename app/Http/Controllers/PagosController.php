@@ -78,9 +78,9 @@ class PagosController extends Controller
             }else if(number_format($request->monto,2)==number_format($request->saldo,2)){
                 $estado_cronograma='CANCELADO';
             }
-            //dd($estado_cronograma);//elimnar esta linea pararegistrar pagos
+            //dd(DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha)->format('Y-m-d\TH:i:s'));//elimnar esta linea pararegistrar pagos
             $pago = new Pago();
-            $pago->MP_PAGO_FECHA = DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha)->format('Y-m-d H:i:s');
+            $pago->MP_PAGO_FECHA = DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha)->format('Y-m-d\TH:i:s');
             $pago->MP_PAGO_NRO = $num_serie+1;
             $pago->MP_PAGO_OBS = $request->observacion;
             $pago->MP_SERCOM_ID = $serie->id();
@@ -96,7 +96,7 @@ class PagosController extends Controller
             $cronograma->save();
             return $pago->id();
         } catch (\Throwable $th) {
-            return 'false';
+            return $th;
         }
 
     }

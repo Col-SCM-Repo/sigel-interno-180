@@ -17,3 +17,6 @@ mix.js('resources/js/app.js', 'public/js')
 mix.js('resources/js/pagos/index.js', 'public/js/pagos');
 //crongrama
 mix.js('resources/js/cronograma/index.js', 'public/js/cronograma');
+
+//crongrama
+mix.js('resources/js/alumnos/index.js', 'public/js/alumnos');
