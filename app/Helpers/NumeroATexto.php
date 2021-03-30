@@ -14,7 +14,6 @@ class NumeroATexto{
         } else if($derecha=0) {
             $derecha='00';
         }
-
-        return $formatterES->format($izquierda) . " y " . $derecha.'/100 Soles';
+        return ucfirst($formatterES->format($izquierda)) . " y " . $derecha.'/100 Soles';
     }
 }

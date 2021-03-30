@@ -35,4 +35,12 @@ class Alumno extends Model
     {
         return $this->MP_ALU_APELLIDOS;
     }
+    public function id()
+    {
+        return $this->MP_ALU_ID;
+    }
+    public function dni()
+    {
+        return $this->MP_ALU_DNI;
+    }
 }

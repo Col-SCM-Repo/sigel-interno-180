@@ -13,10 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
-//pagos
-mix.js('resources/js/pagos/index.js', 'public/js/pagos');
 //crongrama
 mix.js('resources/js/cronograma/index.js', 'public/js/cronograma');
-
-//crongrama
+//alumnos
 mix.js('resources/js/alumnos/index.js', 'public/js/alumnos');

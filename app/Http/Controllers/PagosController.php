@@ -14,41 +14,11 @@ use PhpParser\Node\Stmt\Return_;
 
 class PagosController extends Controller
 {
-    private $ordenarArray;
     private $numeroATexto;
-    public function __construct(OrdenarArray $ordenarArray, NumeroATexto $numeroATexto)
+    public function __construct( NumeroATexto $numeroATexto)
     {
-        $this->ordenarArray=$ordenarArray;
         $this->numeroATexto=$numeroATexto;
     }
-    public function Index()
-    {
-        return view('pagos.index');
-    }
-    public function ObtenerAlumnos(Request $request)
-    {
-        $alumnos=[];
-        $string = mb_strtoupper($request->cadena);
-        $anio = AnioAcademico::find($request->anio_id);
-        foreach ($anio->Vacantes as $vacante) {
-            foreach ($vacante->Matriculas as $matricula) {
-               if(strpos($matricula->Alumno->MP_ALU_NOMBRES, $string)||strpos($matricula->Alumno->MP_ALU_APELLIDOS, $string)||strpos($matricula->Alumno->MP_ALU_DNI, $string)){
-                //dd($vacante->Grado);
-                $alumno_aux = $matricula->Alumno;
-                    $alumno=[
-                        'matricula_id'=> $matricula->MP_MAT_ID,
-                        'nombres'=> $alumno_aux->apellidos() . ', '. $alumno_aux->nombres(),
-                        'nivel'=> $vacante->Nivel->nivel(),
-                        'seccion'=> $vacante->Grado->grado().'° '. $vacante->Seccion->seccion(),
-                        'estado'=>  $matricula->estado(),
-                    ];
-                    array_push($alumnos, $alumno);
-                }
-            }
-        }
-        return response()->json($this->ordenarArray->Descendete($alumnos,'nombres'));
-    }
-
     public function ObtenerPagosPorCronogramaId(Request $request)
     {
         $pagos=[];

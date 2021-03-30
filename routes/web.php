@@ -25,16 +25,16 @@ Route::prefix('alumnos')->middleware('auth')->group(function () {
     #pagos
     Route::get('/', ['uses' => 'AlumnosController@index', 'as' => 'index.alumnos']);
     Route::post('/obtener_alumnos', ['uses' => 'AlumnosController@ObtenerAlumnos', 'as' => 'obtener.alumnos']);
-
+});
+//Routes Matriculas
+Route::prefix('matriculas')->middleware('auth')->group(function () {
+    Route::post('/obtener_matriculas_por_alumno', ['uses' => 'MatriculasController@ObtenerMatriculasPorAlumno', 'as' => 'obtener.alumnos']);
 });
 //Routes pagos
 Route::prefix('pagos')->middleware('auth')->group(function () {
     #pagos
-    Route::get('/', ['uses' => 'PagosController@index', 'as' => 'index.pagos']);
-    Route::post('/obtener_alumnos', ['uses' => 'PagosController@ObtenerAlumnos', 'as' => 'obtener.alumnos.pagos']);
     Route::post('/obtener_pagos', ['uses' => 'PagosController@ObtenerPagosPorCronogramaId', 'as' => 'obtener.por.cronograma.pagos']);
     Route::post('/guardar_pago', ['uses' => 'PagosController@GuardarPago', 'as' => 'guardar.pago.pagos']);
-
 });
 //Routes anio
 Route::prefix('anios')->middleware('auth')->group(function () {

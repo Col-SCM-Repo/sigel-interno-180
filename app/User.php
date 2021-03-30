@@ -24,7 +24,8 @@ class User extends Authenticatable
         'username',
         'password',
         'USU_CONTRASENIA',
-        'USU_USUARIO'
+        'USU_USUARIO',
+        'USU_ESTADO',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -65,5 +66,9 @@ class User extends Authenticatable
     public function id()
     {
         return $this->USU_ID;
+    }
+    public function estado()
+    {
+        return $this->USU_ESTADO;
     }
 }
