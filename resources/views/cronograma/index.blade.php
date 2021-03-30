@@ -107,7 +107,7 @@
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <button type="button" class="btn btn-light" v-on:click="descargar(pago)"><i class="far fa-eye" ></i> Boleta | Factura</button>
-                                                    <button type="button" class="btn btn-secondary" v-on:click="abrirModalNota(pago)"><i class="fas fa-money-bill-alt"></i> N. C.</button>
+                                                    <button v-if="pago.tipo!='NOTA DE CREDITO'" type="button" class="btn btn-secondary" v-on:click="abrirModalNota(pago)"><i class="fas fa-money-bill-alt"></i> N. C.</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -204,7 +204,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nota de Credito de @{{pago_seleccionado.numero}} </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Nota de Credito de B.E. - @{{pago_seleccionado.numero}} </h5>
                     <button type="button" class="close" v-on:click="cerrarModalPagar">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -241,6 +241,7 @@
                                     <div class="form-group row">
                                         <label for="nota_observacion" class="col-sm-4 col-form-label">Observación</label>
                                         <div class="col-sm-8">
+                                            <p>ANULA TICKET Nº @{{pago_seleccionado.numero}}, POR ...</p>
                                             <textarea  type="text"  class="form-control" id="nota_observacion" v-model="pago_seleccionado.observacion"rows="4" ></textarea>
                                         </div>
                                     </div>

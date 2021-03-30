@@ -105,7 +105,6 @@ var cronograma = new Vue({
             $('#notaModal').modal({backdrop: 'static', keyboard: false});
             $('#notaModal').modal('show');
             this.pago_seleccionado = pago;
-            this.pago_seleccionado.observacion = 'ANULA TICKET Nº '+this.pago_seleccionado.numero+', POR '
         },
         cerrarModalNota:function(){
             $('#notaModal').modal('hide');
@@ -114,6 +113,7 @@ var cronograma = new Vue({
         guardaNotaCredito:function(){
             console.log(this.pago_seleccionado);
             let url = this.url_principal +'/pagos/guardar_nota_credito';
+            this.pago_seleccionado.observacion = 'ANULA TICKET Nº '+this.pago_seleccionado.numero+', POR ' + this.pago_seleccionado.observacion;
             let data = {
                 'pago': this.pago_seleccionado,
             };
@@ -126,6 +126,8 @@ var cronograma = new Vue({
             }).catch((error) => {
             }).finally((response) => {
                 this.cerrarModalNota();
+                this.cerrarModalPagos();
+                this.obtenerDatos();
             });
         }
 
@@ -134,10 +136,10 @@ var cronograma = new Vue({
         this.obtenerDatos();
     },
     mounted:function(){
-        $("#nota_observacion").keyup(function(e) {
-            cronograma.pago_seleccionado.observacion = cronograma.pago_seleccionado.observacion.toUpperCase();
-        });
+
     }
 });
 
-
+$("#nota_observacion").keyup(function(e) {
+    cronograma.pago_seleccionado.observacion = cronograma.pago_seleccionado.observacion.toUpperCase();
+});
