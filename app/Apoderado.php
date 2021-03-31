@@ -43,6 +43,6 @@ class Apoderado extends Model
   }
   public function celular()
   {
-      return $this->MP_APO_TELEFONO;
+      return $this->MP_APO_CELULAR;
   }
 }

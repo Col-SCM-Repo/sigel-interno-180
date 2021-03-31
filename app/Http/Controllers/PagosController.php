@@ -107,7 +107,6 @@ class PagosController extends Controller
         } catch (\Throwable $th) {
             return 'false';
         }
-
     }
 }
 

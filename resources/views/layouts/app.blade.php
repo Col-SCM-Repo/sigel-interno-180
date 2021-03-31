@@ -56,6 +56,11 @@
                                 </a>
                             </div>
                         </li>
+                        <li id="pagos-nav" class="nav-item dropdown ">
+                            <a  class="nav-link" href="#" >
+                                PAGOS
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
