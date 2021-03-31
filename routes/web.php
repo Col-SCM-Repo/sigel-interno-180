@@ -49,7 +49,12 @@ Route::prefix('cronograma')->middleware('auth')->group(function () {
     Route::post('/obtener_datos', ['uses' => 'CronogramaController@ObtenerCronogramasPorMatriculaID', 'as' => 'obtener.por.matricula.cronograma']);
     Route::post('/obtener_saldo', ['uses' => 'CronogramaController@ObtenerSaldoDeCronograma', 'as' => 'obtener.saldo.de.cronograma.pagos']);
 });
-//Routes anio
+//Routes aulas
+Route::prefix('aulas')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/', ['uses' => 'VacanteController@Index', 'as' => 'index.aula']);
+});
+//Routes reportes
 Route::prefix('reportes')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/boleta/{pago_id}', ['uses' => 'ReportesController@VerBoleta', 'as' => 'boleta.reportes']);

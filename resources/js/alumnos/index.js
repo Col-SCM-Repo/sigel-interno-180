@@ -51,7 +51,7 @@ var pagos = new Vue({
         }
     },
     created: function(){
-
+        $('#alumnos-nav').addClass('active');
     }
 });
 

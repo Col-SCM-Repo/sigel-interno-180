@@ -56,8 +56,8 @@
                                     <td :style="cronograma.estado=='CANCELADO'?'color:green':(cronograma.estado=='EXONERADO'?'color:skyblue':(cronograma.estado=='PENDIENTE'?'color:orange':'color:blue'))">@{{cronograma.estado}}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button v-if="cronograma.estado!='PENDIENTE'" type="button" class="btn btn-light" v-on:click="verCronograma(cronograma.cronograma_id, cronograma.mes)" ><i class="far fa-eye"></i> Ver Pagos</button>
-                                            <button v-if="cronograma.estado!='CANCELADO'" type="button" class="btn btn-secondary" v-on:click="pagarCronograma(cronograma)"><i class="fas fa-money-bill-alt"></i> Pagar</button>
+                                            <button v-if="cronograma.estado!='PENDIENTE'||cronograma.estado=='EXONERADO'" type="button" class="btn btn-light" v-on:click="verCronograma(cronograma.cronograma_id, cronograma.mes)" ><i class="far fa-eye"></i> Ver Pagos</button>
+                                            <button v-if="cronograma.estado!='CANCELADO'||cronograma.estado=='EXONERADO'" type="button" class="btn btn-secondary" v-on:click="pagarCronograma(cronograma)"><i class="fas fa-money-bill-alt"></i> Pagar</button>
                                         </div>
                                     </td>
                                   </tr>

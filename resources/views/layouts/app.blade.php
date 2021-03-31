@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    @yield('styles');
+    @yield('styles')
 
 </head>
 <body>
@@ -36,7 +36,26 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li id="alumnos-nav" class="nav-item dropdown ">
+                            <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                ALUMNOS
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alumnos">
+                                <a class="dropdown-item" href="{{ route('index.alumnos') }}">
+                                    Pagos
+                                </a>
+                            </div>
+                        </li>
+                        <li id="matriculas" class="nav-item dropdown ">
+                            <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                MATRICULAS
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="matriculas">
+                                <a class="dropdown-item" href="{{ route('logout') }}">
+                                    Aulas
+                                </a>
+                            </div>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
