@@ -12,7 +12,8 @@ class Alumno extends Model
         'MP_ALU_ID',
         'MP_ALU_APELLIDOS',
         'MP_ALU_NOMBRES',
-        'MP_ALU_DNI'
+        'MP_ALU_DNI',
+        'MP_ALU_DIRECCION'
     ];
     protected $hidden = [
         'created_at', 'updated_at'
@@ -42,5 +43,9 @@ class Alumno extends Model
     public function dni()
     {
         return $this->MP_ALU_DNI;
+    }
+    public function direccion()
+    {
+        return $this->MP_ALU_DIRECCION;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Alumno;
 use App\Helpers\OrdenarArray;
+use App\Matricula;
 use Illuminate\Http\Request;
 
 class AlumnosController extends Controller
@@ -31,5 +32,26 @@ class AlumnosController extends Controller
             array_push($alumnos, $alumno);
         }
         return response()->json($this->ordenarArray->Descendete($alumnos,'nombres'));
+    }
+    public function ObtenerAlumnosPorAula(Request $request)
+    {
+        $alumnos =[];
+        $matriculas = Matricula::where('MP_VAC_ID', $request->aula_id)->get();
+        foreach ($matriculas as $matricula) {
+            //dd($matricula->Patentesco->Apoderado);
+            $alumno = [
+                'matricula_id'=>$matricula->id(),
+                'nombres'=>$matricula->Alumno->apellidos().', '.$matricula->Alumno->nombres(),
+                'dni'=>$matricula->Alumno->dni(),
+                'direccion'=>$matricula->Alumno->direccion(),
+                'apoderado'=>[
+                    'nombres'=>$matricula->Patentesco->Apoderado->apellidos().', '.$matricula->Patentesco->Apoderado->nombres(),
+                    'celular'=>$matricula->Patentesco->Apoderado->celular(),
+                    'telefono'=>$matricula->Patentesco->Apoderado->telefono(),
+                ]
+            ];
+            array_push($alumnos, $alumno);
+        }
+        return response()->json($this->ordenarArray->Ascendente($alumnos, 'nombres'));
     }
 }

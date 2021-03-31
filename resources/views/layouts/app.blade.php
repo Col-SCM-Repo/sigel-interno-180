@@ -46,12 +46,12 @@
                                 </a>
                             </div>
                         </li>
-                        <li id="matriculas" class="nav-item dropdown ">
+                        <li id="matriculas-nav" class="nav-item dropdown ">
                             <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 MATRICULAS
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="matriculas">
-                                <a class="dropdown-item" href="{{ route('logout') }}">
+                                <a class="dropdown-item" href="{{ route('index.aula') }}">
                                     Aulas
                                 </a>
                             </div>

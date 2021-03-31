@@ -17,7 +17,6 @@ class MatriculasController extends Controller
     {
         $matriculas=[];
         $matriculas_aux = Matricula::where('MP_ALU_ID',$request->alumno_id)->get();
-        //dd($matriculas_aux);
         foreach ($matriculas_aux as $matricula_aux) {
             $matricula =[
                 'matricula_id'=>$matricula_aux->id(),
@@ -29,6 +28,6 @@ class MatriculasController extends Controller
             ];
             array_push($matriculas, $matricula);
         }
-        return response()->json($this->ordenarArray->Ascendente($matriculas,'anio'));
+        return response()->json($this->ordenarArray->Descendete($matriculas,'anio'));
     }
 }

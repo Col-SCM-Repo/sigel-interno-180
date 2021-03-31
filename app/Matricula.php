@@ -13,7 +13,8 @@ class Matricula extends Model
         'MP_MAT_FECHAMATRICULA',
         'MP_VAC_ID',
         'MP_MAT_ESTADO',
-        'MP_ALU_ID'
+        'MP_ALU_ID',
+        'MP_PAR_ID'
     ];
 
     public function Vacante()
@@ -39,6 +40,10 @@ class Matricula extends Model
     public function Usuario()
     {
         return $this->belongsTo('App\User', 'USU_ID', 'USU_ID');
+    }
+    public function Patentesco()
+    {
+        return $this->belongsTo('App\Parentesco', 'MP_PAR_ID', 'MP_PAR_ID');
     }
     //campos de manera resumida
     public function estado()

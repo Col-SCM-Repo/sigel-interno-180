@@ -33,10 +33,8 @@ var pagos = new Vue({
             let data={
                 'alumno_id':this.alumno_seleccionado.alumno_id,
             }
-            console.log(data);
             axios.post(url,data).then((response) => {
                 this.matriculas = response.data;
-                console.log(this.matriculas);
             }).catch((error) => {
             }).finally((response) => {
             });

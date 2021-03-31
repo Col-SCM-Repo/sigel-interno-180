@@ -68,7 +68,6 @@ var cronograma = new Vue({
                 'cronograma_id': this.pagar_crono.cronograma_id
             };
             axios.post(url, data).then((response) => {
-                console.log(response.data);
                 this.saldo = response.data.saldo;
                 this.fecha_pago = response.data.fecha_pago;
             }).catch((error) => {
@@ -111,7 +110,6 @@ var cronograma = new Vue({
             this.pago_seleccionado = [];
         },
         guardaNotaCredito:function(){
-            console.log(this.pago_seleccionado);
             let url = this.url_principal +'/pagos/guardar_nota_credito';
             this.pago_seleccionado.observacion = 'ANULA TICKET Nº '+this.pago_seleccionado.numero+', POR ' + this.pago_seleccionado.observacion;
             let data = {

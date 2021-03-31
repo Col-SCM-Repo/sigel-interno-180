@@ -25,6 +25,7 @@ Route::prefix('alumnos')->middleware('auth')->group(function () {
     #pagos
     Route::get('/', ['uses' => 'AlumnosController@index', 'as' => 'index.alumnos']);
     Route::post('/obtener_alumnos', ['uses' => 'AlumnosController@ObtenerAlumnos', 'as' => 'obtener.alumnos']);
+    Route::post('/obtener_alumnos_por_aula', ['uses' => 'AlumnosController@ObtenerAlumnosPorAula', 'as' => 'obtener.por.aula.alumnos']);
 });
 //Routes Matriculas
 Route::prefix('matriculas')->middleware('auth')->group(function () {
@@ -53,6 +54,12 @@ Route::prefix('cronograma')->middleware('auth')->group(function () {
 Route::prefix('aulas')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/', ['uses' => 'VacanteController@Index', 'as' => 'index.aula']);
+    Route::post('/obtener_aulas', ['uses' => 'VacanteController@ObtenerAulasPorAnio', 'as' => 'obtener.aulas.anios.aula']);
+});
+//Routes aulas
+Route::prefix('anios')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_anios', ['uses' => 'AnioAcademicoController@ObtenerAnios', 'as' => 'obtener.anios']);
 });
 //Routes reportes
 Route::prefix('reportes')->middleware('auth')->group(function () {

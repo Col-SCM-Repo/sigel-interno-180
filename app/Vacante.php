@@ -47,5 +47,8 @@ class Vacante extends Model
     {
       return $this->belongsTo('App\Grado', 'MP_GRAD_ID', 'MP_GRA_ID');
     }
-
+    public function id()
+    {
+      return $this->MP_VAC_ID;
+    }
 }
