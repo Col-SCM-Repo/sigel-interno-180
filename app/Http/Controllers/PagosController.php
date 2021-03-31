@@ -108,5 +108,15 @@ class PagosController extends Controller
             return 'false';
         }
     }
+    public function PagosDelDiaVista()
+    {
+        return view('reportes.vistas.pagos_del_dia');
+    }
+    public function ObtenerPagosDelDia(Request $request)
+    {
+        $fecha = $request->fecha;
+        $pagos = Pago::where('')->get();
+        dd($fecha);
+    }
 }
 

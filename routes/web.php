@@ -38,7 +38,8 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     Route::post('/guardar_pago', ['uses' => 'PagosController@GuardarPago', 'as' => 'guardar.pago.pagos']);
     Route::post('/guardar_nota_credito', ['uses' => 'PagosController@GuardarNotaCredito', 'as' => 'guardar.nota.credito.pagos']);
     #pagos del dia
-    Route::post('/del_dia', ['uses' => 'PagosController@PagosDelDiaVista', 'as' => 'vista.pagos.del.dia.pagos']);
+    Route::get('/del_dia', ['uses' => 'PagosController@PagosDelDiaVista', 'as' => 'vista.pagos.del.dia.pagos']);
+    Route::post('/obtener_pagos_del_dia', ['uses' => 'PagosController@ObtenerPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
 
 });
 //Routes anio

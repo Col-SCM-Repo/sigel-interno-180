@@ -19,3 +19,5 @@ mix.js('resources/js/cronograma/index.js', 'public/js/cronograma');
 mix.js('resources/js/alumnos/index.js', 'public/js/alumnos');
 //alumnos
 mix.js('resources/js/aulas/index.js', 'public/js/aulas');
+//reportes - pagos
+mix.js('resources/js/pagos/del_dia.js', 'public/js/pagos');
