@@ -28,7 +28,6 @@ var pagos = new Vue({
                 };
                 axios.post(url, data).then((response) => {
                     this.aulas = response.data;
-                    console.log(this.aulas);
                 }).catch((error) => {
                 }).finally((response) => {
                 });
@@ -37,7 +36,6 @@ var pagos = new Vue({
             }
         },
         obtenerAlumnos:function(){
-            console.log(this.aula_id);
             if (this.aula_id!='') {
                 let url = this.url_principal +'/alumnos/obtener_alumnos_por_aula';
                 let data ={
@@ -45,7 +43,6 @@ var pagos = new Vue({
                 };
                 axios.post(url,data).then((response) => {
                     this.alumnos = response.data;
-                    console.log(this.alumnos);
                 }).catch((error) => {
                 }).finally((response) => {
                 });
