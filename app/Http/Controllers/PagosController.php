@@ -114,9 +114,19 @@ class PagosController extends Controller
     }
     public function ObtenerPagosDelDia(Request $request)
     {
-        $fecha = $request->fecha;
-        $pagos = Pago::where('')->get();
-        dd($fecha);
+        $pagos =[];
+        $pagos_aux = Pago::whereDate('MP_PAGO_FECHA', '=',$request->fecha)->where('USU_ID',Auth::user()->id())->get();
+        foreach ($pagos_aux as $pago_aux ) {
+            $pago=[
+                'pago_id'=>$pago_aux->id(),
+                'fecha'=>date('d/m/Y H:i:s',strtotime($pago_aux->fecha())),
+                'numero'=>$pago_aux->serie().' - '. $pago_aux->numero(),
+                'observacion'=>$pago_aux->observacion(),
+                'monto'=>$pago_aux->monto(),
+            ];
+            array_push($pagos,$pago);
+        }
+        return $pagos;
     }
 }
 

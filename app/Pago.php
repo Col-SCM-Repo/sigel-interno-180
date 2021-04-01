@@ -79,4 +79,8 @@ class Pago extends Model
     {
         return $this->MP_PAGO_FECHA;
     }
+    public function observacion()
+    {
+        return $this->MP_PAGO_OBS;
+    }
 }

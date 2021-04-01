@@ -78,7 +78,7 @@
                                                 <td >@{{matricula.seccion}}</td>
                                                 <td >@{{matricula.estado}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-light" v-on:click="verCronograma(matricula.matricula_id    )"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                                    <button type="button" class="btn btn-light" v-on:click="verCronograma(matricula.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
                                                 </td>
                                             </tr>
                                         </tbody>

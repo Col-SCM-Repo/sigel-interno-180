@@ -50,6 +50,9 @@ var pagos = new Vue({
                 this.alumnos = [];
             }
         },
+        verCronograma:function(matricula_id){
+            location.href=this.url_principal+'/cronograma/'+matricula_id;
+        },
     },
     created: function(){
         this.obtenerAnios();

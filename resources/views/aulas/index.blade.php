@@ -35,6 +35,7 @@
                                     <th scope="col">Apoderado</th>
                                     <th scope="col">Cel. / Telf. Apoderado</th>
                                     <th scope="col">Dirección Alumno</th>
+                                    <th scope="col">Opciones</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -45,7 +46,9 @@
                                     <td >@{{alumno.apoderado.nombres}}</td>
                                     <td >@{{alumno.apoderado.celular}} / @{{alumno.apoderado.telefono}}</td>
                                     <td >@{{alumno.direccion}}</td>
-
+                                    <td>
+                                        <button type="button" class="btn btn-light" v-on:click="verCronograma(alumno.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
