@@ -194,7 +194,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" v-on:click="cerrarModalPagar">Close</button>
-                    <button type="button" class="btn btn-primary" v-on:click="guardarPago" :disabled="saldo==0 ||monto_pago>saldo">Guardar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="guardarPago" :disabled="parseFloat(monto_pago)>parseFloat(saldo)">Guardar</button>
                 </div>
             </div>
         </div>
