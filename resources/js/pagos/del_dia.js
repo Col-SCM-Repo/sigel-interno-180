@@ -43,7 +43,10 @@ var pagos = new Vue({
                 link.click();
             }).catch((error) => {
             });
-        }
+        },
+        verBoleta:function(pago){
+            window.open(this.url_principal+'/reportes/boleta/'+pago.pago_id);
+        },
     },
     created: function(){
 

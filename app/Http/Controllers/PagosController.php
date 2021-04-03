@@ -123,6 +123,8 @@ class PagosController extends Controller
                 'numero'=>$pago_aux->serie().' - '. $pago_aux->numero(),
                 'observacion'=>$pago_aux->observacion(),
                 'monto'=>$pago_aux->monto(),
+                'concepto'=>$pago_aux->ConceptoPago?$pago_aux->ConceptoPago->Concepto->concepto():$pago_aux->CronogramaPago->ConceptoPago->Concepto->concepto(),
+                'alumno'=>$pago_aux->Matricula->Alumno->apellidos().', '.$pago_aux->Matricula->Alumno->nombres(),
             ];
             array_push($pagos,$pago);
         }

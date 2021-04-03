@@ -72,7 +72,7 @@
                     Concepto:
                 </td>
                 <td width="60%" style="font-size:0.55em; text-align:left">
-                    {{$pago->CronogramaPago->ConceptoPago->Concepto->concepto()}}
+                    {{$pago->ConceptoPago?$pago->ConceptoPago->Concepto->concepto():$pago->CronogramaPago->ConceptoPago->Concepto->concepto()}}
                     -
                     {{$pago->Matricula->Vacante->Grado->grado()}} °
                     {{$pago->Matricula->Vacante->Seccion->seccion()}}

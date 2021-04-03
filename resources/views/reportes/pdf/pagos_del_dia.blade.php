@@ -19,8 +19,10 @@
         <thead>
           <tr>
             <th class="border" scope="col">#</th>
+            <th class="border" scope="col">Alumno</th>
             <th class="border" scope="col">Fecha</th>
             <th class="border" scope="col">Número</th>
+            <th class="border" scope="col">Concepto</th>
             <th class="border" scope="col">Observación</th>
             <th class="border" scope="col">Monto</th>
           </tr>
@@ -33,8 +35,10 @@
             @foreach ($pagos as $pago)
                 <tr >
                     <th class="border">{{$i+1}}</th>
+                    <td class="border" >{{$pago['alumno']}}</td>
                     <td class="border" >{{$pago['fecha']}}</td>
                     <td class="border" >{{$pago['numero']}}</td>
+                    <td class="border" >{{$pago['concepto']}}</td>
                     <td class="border" >{{$pago['observacion']}}</td>
                     <td class="border" >S/ {{$pago['monto']}}</td>
                 </tr>
@@ -46,7 +50,7 @@
         </tbody>
         <tfoot>
             <tr style="background: #ececec">
-                <td class="border" colspan="4">
+                <td class="border" colspan="6">
                     Total
                 </td>
                 <td class="border">

@@ -37,34 +37,40 @@
                                         <thead>
                                           <tr>
                                             <th scope="col">#</th>
+                                            <th scope="col">Alumno</th>
                                             <th scope="col">Fecha</th>
                                             <th scope="col">Número</th>
+                                            <th scope="col">Concepto</th>
                                             <th scope="col">Observación</th>
                                             <th scope="col">Monto</th>
-                                            {{-- <th scope="col">Opciones</th> --}}
+                                            <th scope="col">Opciones</th>
                                           </tr>
                                         </thead>
                                         <tbody>
                                           <tr v-for="(pago,i) in pagos">
                                             <th scope="row">@{{i+1}}</th>
+                                            <td >@{{pago.alumno}}</td>
                                             <td >@{{pago.fecha}}</td>
                                             <td >@{{pago.numero}}</td>
+                                            <td >@{{pago.concepto}}</td>
                                             <td >@{{pago.observacion}}</td>
                                             <td >S/ @{{pago.monto}}</td>
-                                            {{-- <td >
+                                            <td >
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <button type="button" class="btn btn-light" v-on:click="descargarPago(pago)"><i class="far fa-eye" ></i> Boleta | Factura</button>
+                                                    <button type="button" class="btn btn-light" v-on:click="verBoleta(pago)"><i class="far fa-eye" ></i> Boleta | Factura</button>
                                                 </div>
-                                            </td> --}}
+                                            </td>
                                           </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr style="background: #ececec">
-                                                <td colspan="4">
+                                                <td colspan="6">
                                                     Total
                                                 </td>
                                                 <td>
                                                     S/ @{{total}}
+                                                </td>
+                                                <td>
                                                 </td>
                                             </tr>
                                         </tfoot>
