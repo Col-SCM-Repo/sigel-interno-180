@@ -36,45 +36,43 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li id="alumnos-nav" class="nav-item dropdown ">
-                            <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                ALUMNOS
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alumnos">
-                                <a class="dropdown-item" href="{{ route('index.alumnos') }}">
-                                    Pagos
+                        @guest
+
+                        @else
+                            <li id="alumnos-nav" class="nav-item dropdown ">
+                                <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    ALUMNOS
                                 </a>
-                            </div>
-                        </li>
-                        <li id="matriculas-nav" class="nav-item dropdown ">
-                            <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                MATRICULAS
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="matriculas">
-                                <a class="dropdown-item" href="{{ route('index.aula') }}">
-                                    Aulas
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alumnos">
+                                    <a class="dropdown-item" href="{{ route('index.alumnos') }}">
+                                        Pagos
+                                    </a>
+                                </div>
+                            </li>
+                            <li id="matriculas-nav" class="nav-item dropdown ">
+                                <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    MATRICULAS
                                 </a>
-                            </div>
-                        </li>
-                        <li id="pagos-nav" class="nav-item dropdown ">
-                            <a  class="nav-link" href="{{ route('vista.pagos.del.dia.pagos') }}">
-                                PAGOS
-                            </a>
-                        </li>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="matriculas">
+                                    <a class="dropdown-item" href="{{ route('index.aula') }}">
+                                        Aulas
+                                    </a>
+                                </div>
+                            </li>
+                            <li id="pagos-nav" class="nav-item dropdown ">
+                                <a  class="nav-link" href="{{ route('vista.pagos.del.dia.pagos') }}">
+                                    PAGOS
+                                </a>
+                            </li>
+                        @endguest
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

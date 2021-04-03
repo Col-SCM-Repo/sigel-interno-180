@@ -12,15 +12,17 @@ var pagos = new Vue({
     },
     methods: {
         obtenerAlumnos:function(){
-            let url = this.baseUrl +'/obtener_alumnos';
-            let data={
-                'cadena':this.cadena,
+            if(this.cadena!=''){
+                let url = this.baseUrl +'/obtener_alumnos';
+                let data={
+                    'cadena':this.cadena,
+                }
+                axios.post(url,data).then((response) => {
+                    this.alumnos = response.data;
+                }).catch((error) => {
+                }).finally((response) => {
+                });
             }
-            axios.post(url,data).then((response) => {
-                this.alumnos = response.data;
-            }).catch((error) => {
-            }).finally((response) => {
-            });
         },
         abrirModalMatriculas:function(alumno){
             $('#exampleModal').modal({backdrop: 'static', keyboard: false});
@@ -54,6 +56,7 @@ var pagos = new Vue({
 });
 
 $("#buscar").keyup(function(e) {
+
     pagos.cadena = pagos.cadena.toUpperCase();
     var code = (e.keyCode ? e.keyCode : e.which);
     if(code==13){

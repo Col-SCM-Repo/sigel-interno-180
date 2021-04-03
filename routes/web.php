@@ -40,6 +40,7 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     #pagos del dia
     Route::get('/del_dia', ['uses' => 'PagosController@PagosDelDiaVista', 'as' => 'vista.pagos.del.dia.pagos']);
     Route::post('/obtener_pagos_del_dia', ['uses' => 'PagosController@ObtenerPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
+    Route::post('/descargar_pagos_del_dia', ['uses' => 'PagosController@DescargarPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
 
 });
 //Routes anio

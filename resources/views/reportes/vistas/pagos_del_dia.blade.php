@@ -23,7 +23,16 @@
                                     </div>
                                 </div>
                                 <div  class="col-md-12">
-                                    <h3>Lista de Pagos</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h3>Lista de Pagos</h3>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <div class="btn-group"  role="group" aria-label="Basic example">
+                                                <button type="button" class="btn btn-light" v-on:click="descargarPagos" style="color: green"><i class="fas fa-file-csv " ></i> Exportar Excel</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped">
                                         <thead>
                                           <tr>

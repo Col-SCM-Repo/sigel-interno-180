@@ -28,8 +28,22 @@ var pagos = new Vue({
                  this.total+=   parseFloat(pago.monto);
             });
         },
-        descargarPago:function(pago){
-            window.open(this.url_principal+'/reportes/boleta/'+pago.pago_id);
+        descargarPagos:function(){
+            var url = this.baseUrl + '/descargar_pagos_del_dia' ;
+            let nombre_archivo = 'Pagos del'+this.fecha + '.xls';
+            let data= {
+                'pagos': this.pagos,
+                'fecha': this.fecha
+            }
+            axios.post(url,data, { responseType: 'blob' }).then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', nombre_archivo);
+                document.body.appendChild(link);
+                link.click();
+            }).catch((error) => {
+            });
         }
     },
     created: function(){
