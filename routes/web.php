@@ -40,7 +40,6 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     #pagos del dia
     Route::get('/del_dia', ['uses' => 'PagosController@PagosDelDiaVista', 'as' => 'vista.pagos.del.dia.pagos']);
     Route::post('/obtener_pagos_del_dia', ['uses' => 'PagosController@ObtenerPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
-    Route::post('/descargar_pagos_del_dia', ['uses' => 'PagosController@DescargarPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
 
 });
 //Routes anio
@@ -68,7 +67,10 @@ Route::prefix('anios')->middleware('auth')->group(function () {
 });
 //Routes reportes
 Route::prefix('reportes')->middleware('auth')->group(function () {
-    #Dashboard
     Route::get('/boleta/{pago_id}', ['uses' => 'ReportesController@VerBoleta', 'as' => 'boleta.reportes']);
+    Route::post('/descargar_lista', ['uses' => 'ReportesController@DescargarListaAlumnos', 'as' => 'descargar.lista.alumnos']);
+    Route::post('/descargar_pagos_del_dia', ['uses' => 'ReportesController@DescargarPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
+
+
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

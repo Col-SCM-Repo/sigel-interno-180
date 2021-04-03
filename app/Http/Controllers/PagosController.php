@@ -128,9 +128,5 @@ class PagosController extends Controller
         }
         return $pagos;
     }
-    public function DescargarPagosDelDia(Request $request)
-    {
-        return view('reportes.excel.pagos_del_dia')->with('pagos',$request->pagos)->with('fecha', $request->fecha);
-    }
 }
 

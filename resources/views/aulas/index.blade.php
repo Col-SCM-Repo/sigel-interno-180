@@ -11,13 +11,13 @@
                         <div class="col-md-12 " style="margin-bottom: 10px">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <select class="form-control" aria-label="Default select example" v-model="anio_id" v-on:change="obtenerAulas">
+                                    <select id="anios" class="form-control" aria-label="Default select example" v-model="anio_id" v-on:change="obtenerAulas">
                                         <option value=''>Seleccione Año</option>
                                         <option v-for="anio in anios" :value="anio.id">@{{anio.nombre}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-8">
-                                    <select :disabled="anio_id==''" class="form-control" aria-label="Default select example" v-model="aula_id" v-on:change="obtenerAlumnos" >
+                                    <select id="seccion" :disabled="anio_id==''" class="form-control" aria-label="Default select example" v-model="aula_id" v-on:change="obtenerAlumnos" >
                                         <option value=''>Seleccione Aula</option>
                                         <option v-for="aula in aulas" :value="aula.id">@{{aula.nombre_completo}}</option>
                                     </select>
@@ -25,7 +25,16 @@
                             </div>
                         </div>
                         <div v-if="aula_id!=''" class="col-md-12">
-                            <h3>Lista de Alumnos</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Lista de Alumnos</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group"  role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-light" v-on:click="descargarLista" style="color: green"><i class="fas fa-file-csv " ></i> Exportar EXCEL</button>
+                                    </div>
+                                </div>
+                            </div>
                             <table class="table table-striped">
                                 <thead>
                                   <tr>

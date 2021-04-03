@@ -17,7 +17,6 @@ var pagos = new Vue({
             }
             axios.post(url,data).then((response) => {
                 this.pagos = response.data;
-                console.log(this.pagos);
             }).catch((error) => {
             }).finally((response) => {
                 this.calcularTotal();
@@ -29,8 +28,8 @@ var pagos = new Vue({
             });
         },
         descargarPagos:function(){
-            var url = this.baseUrl + '/descargar_pagos_del_dia' ;
-            let nombre_archivo = 'Pagos del'+this.fecha + '.xls';
+            var url = this.url_principal + '/reportes/descargar_pagos_del_dia' ;
+            let nombre_archivo = 'Pagos del'+this.fecha + '.pdf';
             let data= {
                 'pagos': this.pagos,
                 'fecha': this.fecha

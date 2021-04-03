@@ -53,6 +53,26 @@ var pagos = new Vue({
         verCronograma:function(matricula_id){
             location.href=this.url_principal+'/cronograma/'+matricula_id;
         },
+        descargarLista:function(){
+            let seccion =  $('#seccion option:selected').text();
+            let anio = $('#anios option:selected').text();
+            var url = this.url_principal + '/reportes/descargar_lista' ;
+            let nombre_archivo = 'Lista de Alumnos de '+seccion +' - '+anio + '.xls';
+            let data= {
+                'alumnos': this.alumnos,
+                'seccion': seccion,
+                'anio': anio
+            }
+            axios.post(url,data, { responseType: 'blob' }).then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', nombre_archivo);
+                document.body.appendChild(link);
+                link.click();
+            }).catch((error) => {
+            });
+        }
     },
     created: function(){
         this.obtenerAnios();

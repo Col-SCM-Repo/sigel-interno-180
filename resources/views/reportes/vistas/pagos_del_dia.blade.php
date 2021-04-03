@@ -29,7 +29,7 @@
                                         </div>
                                         <div class="col-md-6 ">
                                             <div class="btn-group"  role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-light" v-on:click="descargarPagos" style="color: green"><i class="fas fa-file-csv " ></i> Exportar Excel</button>
+                                                <button type="button" class="btn btn-light" v-on:click="descargarPagos" style="color: rgb(124, 11, 11)"><i class="far fa-file-pdf"></i> Exportar PDF</button>
                                             </div>
                                         </div>
                                     </div>

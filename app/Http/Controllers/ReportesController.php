@@ -13,4 +13,13 @@ class ReportesController extends Controller
         $pdf = PDF::loadView('reportes.pdf.boleta', ['pago'=>$pago] )->setPaper( [0, 0, 220, 320]);
         return $pdf->stream('invoice.pdf');
     }
+    public function DescargarListaAlumnos(Request $request)
+    {
+        return view('reportes.excel.aulas_con_alumnos')->with('alumnos',$request->alumnos)->with('seccion', $request->seccion)->with('anio', $request->anio);
+    }
+    public function DescargarPagosDelDia(Request $request)
+    {
+        $pdf = PDF::loadView('reportes.pdf.pagos_del_dia', ['pagos'=>$request->pagos, 'fecha'=>$request->fecha] );
+        return $pdf->download('invoice.pdf');
+    }
 }

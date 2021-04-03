@@ -1,8 +1,3 @@
-<?php
-header('Content-type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8');
-header('Content-Disposition:attachment; filename=Pagos del '. $fecha . '.xls');
-
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -28,7 +23,6 @@ header('Content-Disposition:attachment; filename=Pagos del '. $fecha . '.xls');
             <th class="border" scope="col">Número</th>
             <th class="border" scope="col">Observación</th>
             <th class="border" scope="col">Monto</th>
-            {{-- <th scope="col">Opciones</th> --}}
           </tr>
         </thead>
         <tbody>
