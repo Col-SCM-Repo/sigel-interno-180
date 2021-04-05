@@ -48,19 +48,22 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr v-for="alumno in alumnos">
-                                    <th scope="row">@{{alumno.matricula_id}}</th>
-                                    <td >@{{alumno.nombres}}</td>
-                                    <td >@{{alumno.dni}}</td>
-                                    <td >@{{alumno.apoderado.nombres}}</td>
-                                    <td >@{{alumno.apoderado.celular}} / @{{alumno.apoderado.telefono}}</td>
-                                    <td >@{{alumno.direccion}}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-light" v-on:click="verCronograma(alumno.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
-                                    </td>
-                                  </tr>
+                                    <tr v-for="alumno in alumnos">
+                                        <th scope="row">@{{alumno.matricula_id}}</th>
+                                        <td >@{{alumno.nombres}}</td>
+                                        <td >@{{alumno.dni}}</td>
+                                        <td >@{{alumno.apoderado.nombres}}</td>
+                                        <td >@{{alumno.apoderado.celular}} / @{{alumno.apoderado.telefono}}</td>
+                                        <td >@{{alumno.direccion}}</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <button type="button" class="btn btn-light" v-on:click="verCronograma(alumno.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                                <button type="button" class="btn btn-light" v-on:click="editarAlumno(alumno.alumno_id)"><i class="far fa-edit"></i> Editar</button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
-                              </table>
+                            </table>
                         </div>
                     </div>
                 </div>

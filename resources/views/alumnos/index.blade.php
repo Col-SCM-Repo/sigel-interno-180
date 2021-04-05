@@ -31,7 +31,11 @@
                                     <td >@{{alumno.nombres}}</td>
                                     <td >@{{alumno.dni}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-light" v-on:click="abrirModalMatriculas(alumno)"><i class="far fa-eye"></i> Ver Matriculas</button>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-light" v-on:click="abrirModalMatriculas(alumno)"><i class="far fa-eye"></i> Ver Matriculas</button>
+                                            <button type="button" class="btn btn-light" v-on:click="editarAlumno(alumno.alumno_id)"><i class="far fa-edit"></i> Editar</button>
+                                        </div>
+
                                     </td>
                                   </tr>
                                 </tbody>
@@ -78,7 +82,9 @@
                                                 <td >@{{matricula.seccion}}</td>
                                                 <td >@{{matricula.estado}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-light" v-on:click="verCronograma(matricula.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <button type="button" class="btn btn-light" v-on:click="verCronograma(matricula.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -89,7 +95,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" v-on:click="cerrarModalMatricula">Close</button>
+                    <button type="button" class="btn btn-secondary" v-on:click="cerrarModalMatricula">Cerrar</button>
                 </div>
             </div>
         </div>

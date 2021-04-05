@@ -48,6 +48,9 @@ var pagos = new Vue({
             $('#exampleModal').modal('hide');
             this.alumno_seleccionado = [];
             this.matriculas = [];
+        },
+        editarAlumno:function(alumno_id){
+            location.href=this.baseUrl+'/editar/'+alumno_id;
         }
     },
     created: function(){

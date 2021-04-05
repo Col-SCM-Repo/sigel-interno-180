@@ -26,6 +26,10 @@ Route::prefix('alumnos')->middleware('auth')->group(function () {
     Route::get('/', ['uses' => 'AlumnosController@index', 'as' => 'index.alumnos']);
     Route::post('/obtener_alumnos', ['uses' => 'AlumnosController@ObtenerAlumnos', 'as' => 'obtener.alumnos']);
     Route::post('/obtener_alumnos_por_aula', ['uses' => 'AlumnosController@ObtenerAlumnosPorAula', 'as' => 'obtener.por.aula.alumnos']);
+    #editar
+    Route::get('/editar/{alumno_id}', ['uses' => 'AlumnosController@Editar', 'as' => 'editar.alumno.alumnos']);
+    Route::post('/obtener_datos_alumno', ['uses' => 'AlumnosController@ObtenerAlumnoPorID', 'as' => 'datos.alumno.por.id.alumnos']);
+    Route::post('/guardar', ['uses' => 'AlumnosController@Guardar', 'as' => 'datos.alumno.por.id.alumnos']);
 });
 //Routes Matriculas
 Route::prefix('matriculas')->middleware('auth')->group(function () {
@@ -60,7 +64,7 @@ Route::prefix('aulas')->middleware('auth')->group(function () {
     Route::get('/', ['uses' => 'VacanteController@Index', 'as' => 'index.aula']);
     Route::post('/obtener_aulas', ['uses' => 'VacanteController@ObtenerAulasPorAnio', 'as' => 'obtener.aulas.anios.aula']);
 });
-//Routes aulas
+//Routes anios
 Route::prefix('anios')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_anios', ['uses' => 'AnioAcademicoController@ObtenerAnios', 'as' => 'obtener.anios']);
@@ -70,7 +74,14 @@ Route::prefix('reportes')->middleware('auth')->group(function () {
     Route::get('/boleta/{pago_id}', ['uses' => 'ReportesController@VerBoleta', 'as' => 'boleta.reportes']);
     Route::post('/descargar_lista', ['uses' => 'ReportesController@DescargarListaAlumnos', 'as' => 'descargar.lista.alumnos']);
     Route::post('/descargar_pagos_del_dia', ['uses' => 'ReportesController@DescargarPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
-
-
+});
+//Routes anios
+Route::prefix('paises')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_paises', ['uses' => 'PaisesController@ObtenerPaises', 'as' => 'obtener.anios']);
+});
+Route::prefix('distritos')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_distritos', ['uses' => 'DistritosController@ObtenerDistritos', 'as' => 'obtener.anios']);
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

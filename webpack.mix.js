@@ -16,8 +16,9 @@ mix.js('resources/js/app.js', 'public/js')
 //crongrama
 mix.js('resources/js/cronograma/index.js', 'public/js/cronograma');
 //alumnos
-mix.js('resources/js/alumnos/index.js', 'public/js/alumnos');
-//alumnos
+mix.js('resources/js/alumnos/index.js', 'public/js/alumnos')
+    .js('resources/js/alumnos/editar.js', 'public/js/alumnos');
+//aulas
 mix.js('resources/js/aulas/index.js', 'public/js/aulas');
 //reportes - pagos
 mix.js('resources/js/pagos/del_dia.js', 'public/js/pagos');

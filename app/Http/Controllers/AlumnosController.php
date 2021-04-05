@@ -40,6 +40,7 @@ class AlumnosController extends Controller
         foreach ($matriculas as $matricula) {
             //dd($matricula->Patentesco->Apoderado);
             $alumno = [
+                'alumno_id'=>$matricula->Alumno->id(),
                 'matricula_id'=>$matricula->id(),
                 'nombres'=>$matricula->Alumno->apellidos().', '.$matricula->Alumno->nombres(),
                 'dni'=>$matricula->Alumno->dni(),
@@ -53,5 +54,73 @@ class AlumnosController extends Controller
             array_push($alumnos, $alumno);
         }
         return response()->json($this->ordenarArray->Ascendente($alumnos, 'nombres'));
+    }
+    public function Editar($alumno_id)
+    {
+        return view('alumnos.editar')->with('alumno_id',$alumno_id);
+    }
+
+    public function ObtenerAlumnoPorID(Request $request)
+    {
+        if ($request->alumno_id!=0) {
+            $aux=Alumno::find($request->alumno_id);
+            $alumno = [
+                'id'=>$aux->id(),
+                'nombres'=>$aux->nombres(),
+                'apellidos'=>$aux->apellidos(),
+                'direccion'=>$aux->direccion(),
+                'celular'=>$aux->celular(),
+                'telefono'=>$aux->telefono(),
+                'genero'=>$aux->genero(),
+                'fecha_nacimiento'=>date('Y-m-d', strtotime($aux->fecha_nacimiento())),
+                'dni'=>$aux->dni(),
+                'pais_id'=>$aux->pais_id(),
+                'distrito_nacimiento'=>$aux->distrito_nacimiento(),
+                'distrito_residencia'=>$aux->distrito_residencia(),
+            ];
+        } else {
+            $alumno = [
+                'id'=>0,
+                'nombres'=>'',
+                'apellidos'=>'',
+                'direccion'=>'',
+                'celular'=>'',
+                'telefono'=>'',
+                'genero'=>'',
+                'fecha_nacimiento'=>date('Y-m-d'),
+                'dni'=>'',
+                'pais_id'=>'',
+                'distrito_nacimiento'=>'',
+                'distrito_residencia'=>'',
+            ];
+        }
+        return response()->json($alumno);
+    }
+    public function Guardar(Request $request)
+    {
+        try {
+            $alumno = (object)$request->alumno;
+
+            if ($alumno->id!=0) {
+                $aux=Alumno::find($alumno->id);
+            } else {
+                $aux=new Alumno();
+            }
+            $aux->MP_ALU_NOMBRES=mb_strtoupper($alumno->nombres);
+            $aux->MP_ALU_APELLIDOS=mb_strtoupper($alumno->apellidos);
+            $aux->MP_ALU_DIRECCION=mb_strtoupper($alumno->direccion);
+            $aux->MP_ALU_CELULAR=$alumno->celular;
+            $aux->MP_ALU_TELEFONO=$alumno->telefono;
+            $aux->MP_ALU_SEXO=$alumno->genero;
+            $aux->MP_ALU_FECHANAC=date('Y-m-d\TH:i:s',strtotime($alumno->fecha_nacimiento));
+            $aux->MP_ALU_DNI=$alumno->dni;
+            $aux->MP_PAIS_ID=$alumno->pais_id;
+            $aux->MP_ALU_UBIGNAC=$alumno->distrito_nacimiento;
+            $aux->MP_ALU_UBIGDIR=$alumno->distrito_residencia;
+            $aux->save();
+        } catch (\Throwable $th) {
+            return response()->json($th,401);
+        }
+
     }
 }

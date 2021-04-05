@@ -72,6 +72,9 @@ var pagos = new Vue({
                 link.click();
             }).catch((error) => {
             });
+        },
+        editarAlumno:function(alumno_id){
+            location.href=this.url_principal+'/alumnos/editar/'+alumno_id;
         }
     },
     created: function(){
