@@ -28,7 +28,7 @@ var pagos = new Vue({
             });
         },
         descargarPagos:function(){
-            var url = this.url_principal + '/reportes/descargar_pagos_del_dia' ;
+            var url = this.url_principal + '/reportes/descargar_resumen' ;
             let nombre_archivo = 'Pagos del'+this.fecha + '.pdf';
             let data= {
                 'pagos': this.pagos,

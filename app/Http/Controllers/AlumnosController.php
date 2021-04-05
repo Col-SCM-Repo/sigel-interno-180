@@ -100,7 +100,6 @@ class AlumnosController extends Controller
     {
         try {
             $alumno = (object)$request->alumno;
-
             if ($alumno->id!=0) {
                 $aux=Alumno::find($alumno->id);
             } else {
@@ -121,6 +120,5 @@ class AlumnosController extends Controller
         } catch (\Throwable $th) {
             return response()->json($th,401);
         }
-
     }
 }

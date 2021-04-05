@@ -66,9 +66,8 @@ class PagosController extends Controller
             $cronograma->save();
             return $pago->id();
         } catch (\Throwable $th) {
-            return 'false';
+            return response()->json($th,401);
         }
-
     }
     public function GuardarNotaCredito(Request $request)
     {
@@ -105,7 +104,7 @@ class PagosController extends Controller
             $cronograma->save();
             return $pago->id();
         } catch (\Throwable $th) {
-            return 'false';
+            return response()->json($th,401);
         }
     }
     public function PagosDelDiaVista()

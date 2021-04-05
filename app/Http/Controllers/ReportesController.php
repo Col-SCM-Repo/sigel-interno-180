@@ -17,9 +17,22 @@ class ReportesController extends Controller
     {
         return view('reportes.excel.aulas_con_alumnos')->with('alumnos',$request->alumnos)->with('seccion', $request->seccion)->with('anio', $request->anio);
     }
-    public function DescargarPagosDelDia(Request $request)
+    public function DescargarResumen(Request $request)
     {
-        $pdf = PDF::loadView('reportes.pdf.pagos_del_dia', ['pagos'=>$request->pagos, 'fecha'=>$request->fecha] );
+        $pagos = $request->pagos;
+        $total = 0;
+        $cant = 0;
+        foreach ($pagos as $pago) {
+            $total += $pago['monto'];
+            $cant ++;
+        }
+        $pdf = PDF::loadView('reportes.pdf.resumen_pagos', ['total'=>$total, 'fecha'=>$request->fecha, 'cant'=>$cant] )->setPaper('a5');
         return $pdf->download('invoice.pdf');
     }
+    //se puede eliminar si no se llega a usar
+    // public function DescargarPagosDelDia(Request $request)
+    // {
+    //     $pdf = PDF::loadView('reportes.pdf.pagos_del_dia', ['pagos'=>$request->pagos, 'fecha'=>$request->fecha] );
+    //     return $pdf->download('invoice.pdf');
+    // }
 }

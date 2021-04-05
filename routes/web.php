@@ -73,7 +73,8 @@ Route::prefix('anios')->middleware('auth')->group(function () {
 Route::prefix('reportes')->middleware('auth')->group(function () {
     Route::get('/boleta/{pago_id}', ['uses' => 'ReportesController@VerBoleta', 'as' => 'boleta.reportes']);
     Route::post('/descargar_lista', ['uses' => 'ReportesController@DescargarListaAlumnos', 'as' => 'descargar.lista.alumnos']);
-    Route::post('/descargar_pagos_del_dia', ['uses' => 'ReportesController@DescargarPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
+    Route::post('/descargar_resumen', ['uses' => 'ReportesController@DescargarResumen', 'as' => 'obtener.pagos.del.dia.pagos']);
+    // Route::post('/descargar_pagos_del_dia', ['uses' => 'ReportesController@DescargarPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
 });
 //Routes anios
 Route::prefix('paises')->middleware('auth')->group(function () {
