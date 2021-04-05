@@ -72,6 +72,7 @@ class AlumnosController extends Controller
                 'celular'=>$aux->celular(),
                 'telefono'=>$aux->telefono(),
                 'genero'=>$aux->genero(),
+                'correo'=>$aux->correo(),
                 'fecha_nacimiento'=>date('Y-m-d', strtotime($aux->fecha_nacimiento())),
                 'dni'=>$aux->dni(),
                 'pais_id'=>$aux->pais_id(),
@@ -87,6 +88,7 @@ class AlumnosController extends Controller
                 'celular'=>'',
                 'telefono'=>'',
                 'genero'=>'',
+                'correo'=>'',
                 'fecha_nacimiento'=>date('Y-m-d'),
                 'dni'=>'',
                 'pais_id'=>'',
@@ -110,6 +112,7 @@ class AlumnosController extends Controller
             $aux->MP_ALU_DIRECCION=mb_strtoupper($alumno->direccion);
             $aux->MP_ALU_CELULAR=$alumno->celular;
             $aux->MP_ALU_TELEFONO=$alumno->telefono;
+            $aux->MP_ALU_EMAIL=$alumno->correo;
             $aux->MP_ALU_SEXO=$alumno->genero;
             $aux->MP_ALU_FECHANAC=date('Y-m-d\TH:i:s',strtotime($alumno->fecha_nacimiento));
             $aux->MP_ALU_DNI=$alumno->dni;
