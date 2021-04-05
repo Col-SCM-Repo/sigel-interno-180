@@ -21,7 +21,7 @@
         <h2 >
             <strong>Total:</strong> S/ {{number_format($total, 2, '.', ' ')}}
         </h2>
-        <h2 style="color: red" >
+        <h2 >
             <strong>Nro. Tickects:</strong> {{$cant}}
         </h2>
     </body>
