@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1 style="text-align: center;">
-        PAGOS DEL {{$fecha}}
+        PAGOS DEL {{date('d/m/Y',strtotime($fecha))}}
     </h1>
     <h2>
         <strong>Usuario:</strong> {{Auth::user()->nombres()}}
