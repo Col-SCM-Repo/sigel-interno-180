@@ -78,6 +78,7 @@ class AlumnosController extends Controller
                 'pais_id'=>$aux->pais_id(),
                 'distrito_nacimiento'=>$aux->distrito_nacimiento(),
                 'distrito_residencia'=>$aux->distrito_residencia(),
+                'religion_id'=>$aux->religion_id(),
             ];
         } else {
             $alumno = [
@@ -94,6 +95,7 @@ class AlumnosController extends Controller
                 'pais_id'=>'',
                 'distrito_nacimiento'=>'',
                 'distrito_residencia'=>'',
+                'religion_id'=>1,
             ];
         }
         return response()->json($alumno);
@@ -119,7 +121,9 @@ class AlumnosController extends Controller
             $aux->MP_PAIS_ID=$alumno->pais_id;
             $aux->MP_ALU_UBIGNAC=$alumno->distrito_nacimiento;
             $aux->MP_ALU_UBIGDIR=$alumno->distrito_residencia;
+            $aux->MP_REL_ID=$alumno->religion_id;
             $aux->save();
+            return $aux->id();
         } catch (\Throwable $th) {
             return response()->json($th,401);
         }

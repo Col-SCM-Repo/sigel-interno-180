@@ -7,7 +7,9 @@ var editar = new Vue({
         alumno_id:$("#alumno_id").val(),
         alumno:[],
         paises:[],
-        distritos:[]
+        distritos:[],
+        religiones:[],
+        familiares:[],
     },
     methods: {
         obtenerDatosAlumno:function(){
@@ -37,22 +39,46 @@ var editar = new Vue({
             }).finally((response) => {
             });
         },
-        guardar:function(){
+        obtenerReligiones:function(){
+            let url = this.url_principal +'/religiones/obtener_religiones';
+            axios.get(url).then((response) => {
+                this.religiones = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        obtenerFamiliares:function(){
+            let url = this.url_principal +'/apoderados/obtener_por_alumno';
+            let data = {
+                'alumno_id':this.alumno_id,
+            };
+            axios.post(url,data).then((response) => {
+                this.familiares = response.data;
+                console.log(this.familiares);
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        guardarAlumno:function(){
             this.alumno.correo = this.alumno.dni+'@colegiocabrera.edu.pe';
             let url = this.baseUrl +'/guardar';
             let data = {
                 'alumno':this.alumno
             };
             axios.post(url,data).then((response) => {
+                this.alumno_id = response.data;
             }).catch((error) => {
             }).finally((response) => {
+                location.href = this.baseUrl+'/editar/'+this.alumno_id;
             });
         }
     },
     created: function(){
         this.obtenerDistritos();
         this.obtenerPaises();
-        this.obtenerDatosAlumno()
+        this.obtenerReligiones();
+        this.obtenerDatosAlumno();
+        this.obtenerFamiliares();
     }
 });
 

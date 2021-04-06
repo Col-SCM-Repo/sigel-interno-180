@@ -79,7 +79,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Pagos de @{{mes_seleccionado}}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Pagos de @{{mes_seleccionado}} - @{{alumno}} - @{{matricula.grado+'° '+matricula.seccion}} - @{{matricula.nivel}} </h5>
                     <button type="button" class="close" v-on:click="cerrarModalPagos">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -134,7 +134,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Relizar Pago de @{{pagar_crono.mes}} </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Relizar Pago de @{{pagar_crono.mes}}</h5>
                     <button type="button" class="close" v-on:click="cerrarModalPagar">
                         <span aria-hidden="true">&times;</span>
                     </button>

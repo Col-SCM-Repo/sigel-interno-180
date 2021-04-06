@@ -83,11 +83,11 @@ Route::prefix('reportes')->middleware('auth')->group(function () {
 //Routes anios
 Route::prefix('paises')->middleware('auth')->group(function () {
     #Dashboard
-    Route::get('/obtener_paises', ['uses' => 'PaisesController@ObtenerPaises', 'as' => 'obtener.anios']);
+    Route::get('/obtener_paises', ['uses' => 'PaisesController@ObtenerPaises', 'as' => 'obtener.paises']);
 });
 Route::prefix('distritos')->middleware('auth')->group(function () {
     #Dashboard
-    Route::get('/obtener_distritos', ['uses' => 'DistritosController@ObtenerDistritos', 'as' => 'obtener.anios']);
+    Route::get('/obtener_distritos', ['uses' => 'DistritosController@ObtenerDistritos', 'as' => 'obtener.distritos']);
 });
 Route::prefix('apoderados')->middleware('auth')->group(function () {
     #Dashboard
@@ -96,5 +96,9 @@ Route::prefix('apoderados')->middleware('auth')->group(function () {
 Route::prefix('vacantes')->middleware('auth')->group(function () {
     #Dashboard
     Route::post('/obtener_por_nivel_grado_anio_actual', ['uses' => 'VacantesController@ObtenerPorNivelGradoDelAnioActual', 'as' => 'obtener.por.nivel.grado.anio_actual.vacantes']);
+});
+Route::prefix('religiones')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_religiones', ['uses' => 'ReligionesController@ObtenerReligiones', 'as' => 'obtener.religiones']);
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

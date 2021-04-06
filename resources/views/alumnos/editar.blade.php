@@ -61,7 +61,7 @@
                                                         <div class="input-group-prepend">
                                                           <span class="input-group-text" >DNI</span>
                                                         </div>
-                                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" v-model="alumno.dni">
+                                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" v-model="alumno.dni" maxlength="8">
                                                       </div>
                                                 </div>
                                             </div>
@@ -100,6 +100,20 @@
                                                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" v-model="alumno.telefono">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" >Religión</span>
+                                                        </div>
+                                                        <select class="form-control" name=""  v-model="alumno.religion_id">
+                                                            <option value="">SELECCIONE RELIGIÓN</option>
+                                                            <option v-for="religion in religiones" :value="religion.id">@{{religion.religion}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -152,23 +166,16 @@
                                         </div>
                                     </div>
                                     <div class="row justify-content-md-center">
-                                        <template v-if="alumno_id!=0">
-                                            <div class="col-md-3">
-                                                <button class="btn btn-dark" v-on:click="guardar">
-                                                    <i class="far fa-save"></i> Guardar
-                                                </button>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <button class="btn btn-light">
-                                                    Cancelar
-                                                </button>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <div class="col-md-3">
-                                                <a class="btn btn-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Siguiente -></a>
-                                            </div>
-                                        </template>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-dark" v-on:click="guardarAlumno">
+                                                <i class="far fa-save"></i> Guardar
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-light">
+                                                Cancelar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -182,28 +189,18 @@
                                                         <thead>
                                                           <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">First</th>
-                                                            <th scope="col">Last</th>
-                                                            <th scope="col">Handle</th>
+                                                            <th scope="col">Nombres</th>
+                                                            <th scope="col">Relacion</th>
+                                                            <th scope="col">Opciones</th>
                                                           </tr>
                                                         </thead>
                                                         <tbody>
-                                                          <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
-                                                          </tr>
-                                                          <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
-                                                          </tr>
-                                                          <tr>
-                                                            <th scope="row">3</th>
-                                                            <td colspan="2">Larry the Bird</td>
-                                                            <td>@twitter</td>
+                                                          <tr v-for="(familiar,i) in familiares">
+                                                            <th scope="row">@{{i+1}}</th>
+                                                            <td>@{{familiar.apellidos+', '+ familiar.nombres}}</td>
+                                                            <td>@{{familiar.tipo}}</td>
+                                                            <td>
+                                                            </td>
                                                           </tr>
                                                         </tbody>
                                                       </table>

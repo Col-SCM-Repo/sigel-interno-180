@@ -23,6 +23,7 @@ class Alumno extends Model
         'MP_ALU_FECHANAC',
         'MP_PAIS_ID',
         'MP_ALU_UBIGNAC',
+        'MP_REL_ID',
         'MP_ALU_UBIGDIR',
     ];
     protected $hidden = [
@@ -89,6 +90,10 @@ class Alumno extends Model
     public function distrito_residencia()
     {
         return $this->MP_ALU_UBIGDIR;
+    }
+    public function religion_id()
+    {
+        return $this->MP_REL_ID;
     }
 }
 

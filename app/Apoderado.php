@@ -16,6 +16,10 @@ class Apoderado extends Model
         'MP_APO_NRODOC',
         'MP_APO_DIRECCION',
         'MP_APO_CELULAR',
+        'MP_APO_EMAIL',
+        'MP_APO_FECHANAC',
+        'MP_APO_SEXO',
+        'MP_APO_VIVE',
         'MP_APO_TELEFONO'];
   /**
    * The attributes that should be hidden for arrays.
@@ -44,5 +48,25 @@ class Apoderado extends Model
   public function celular()
   {
       return $this->MP_APO_CELULAR;
+  }
+  public function direccion()
+  {
+      return $this->MP_APO_DIRECCION;
+  }
+  public function correo()
+  {
+      return $this->MP_APO_EMAIL;
+  }
+  public function fecha_nacimineto()
+  {
+      return $this->MP_APO_FECHANAC;
+  }
+  public function genero()
+  {
+      return $this->MP_APO_SEXO;
+  }
+  public function vive()
+  {
+      return $this->MP_APO_VIVE;
   }
 }
