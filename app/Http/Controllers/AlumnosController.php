@@ -124,4 +124,24 @@ class AlumnosController extends Controller
             return response()->json($th,401);
         }
     }
+    public function ObtenerAlumnoPorDNI(Request $request)
+    {
+        $aux=Alumno::where('MP_ALU_DNI',$request->alumno_dni)->first();
+        $alumno = [
+            'id'=>$aux->id(),
+            'nombres'=>$aux->nombres(),
+            'apellidos'=>$aux->apellidos(),
+            'direccion'=>$aux->direccion(),
+            'celular'=>$aux->celular(),
+            'telefono'=>$aux->telefono(),
+            'genero'=>$aux->genero(),
+            'correo'=>$aux->correo(),
+            'fecha_nacimiento'=>date('Y-m-d', strtotime($aux->fecha_nacimiento())),
+            'dni'=>$aux->dni(),
+            'pais_id'=>$aux->pais_id(),
+            'distrito_nacimiento'=>$aux->distrito_nacimiento(),
+            'distrito_residencia'=>$aux->distrito_residencia(),
+        ];
+        return $alumno;
+    }
 }

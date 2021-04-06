@@ -30,8 +30,13 @@ class Parentesco extends Model
   {
     return $this->belongsTo('App\Apoderado', 'MP_APO_ID', 'MP_APO_ID');
   }
-//   public function TipoParentesco()
-//   {
-//     return $this->belongsTo('App\TipoParentesco', 'tipo_parentesco_id', 'id');
-//   }
+  public function TipoParentesco()
+  {
+    return $this->belongsTo('App\TipoParentesco', 'MP_TIPAR_ID', 'MP_TIPAR_ID');
+  }
+
+    public function id()
+    {
+        return $this->MP_PAR_ID;
+    }
 }
