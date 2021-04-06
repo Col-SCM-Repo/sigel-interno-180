@@ -30,4 +30,27 @@ class MatriculasController extends Controller
         }
         return response()->json($this->ordenarArray->Descendete($matriculas,'anio'));
     }
+
+    public function NuevaVista($alumno_id)
+    {
+       return view('matriculas.nueva')->with('alumno_id', $alumno_id);
+    }
+    public function ModeloMatricula()
+    {
+        $matricula =[
+            'pariente_id' => '',
+            'alumno_id' => 0,
+            'tipo_id' => 1,
+            'observacion' => '',
+            'ie_procedencia_id' => '',
+            'estado' => 2,
+            'alumno_id' => 0,
+            'vacante_id' => '',
+            'nivel' => '',
+            'grado' => '',
+            'monto_matriula' => '',
+            'monto_pension' => '',
+        ];
+        return $matricula;
+    }
 }

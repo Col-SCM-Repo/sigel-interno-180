@@ -30,10 +30,15 @@ Route::prefix('alumnos')->middleware('auth')->group(function () {
     Route::get('/editar/{alumno_id}', ['uses' => 'AlumnosController@Editar', 'as' => 'editar.alumno.alumnos']);
     Route::post('/obtener_datos_alumno', ['uses' => 'AlumnosController@ObtenerAlumnoPorID', 'as' => 'datos.alumno.por.id.alumnos']);
     Route::post('/guardar', ['uses' => 'AlumnosController@Guardar', 'as' => 'datos.alumno.por.id.alumnos']);
+    #
+    Route::post('/buscar_por_dni', ['uses' => 'AlumnosController@ObtenerAlumnoPorDNI', 'as' => 'buscar.alumno.por.dni.alumnos']);
 });
 //Routes Matriculas
 Route::prefix('matriculas')->middleware('auth')->group(function () {
-    Route::post('/obtener_matriculas_por_alumno', ['uses' => 'MatriculasController@ObtenerMatriculasPorAlumno', 'as' => 'obtener.alumnos']);
+    Route::post('/obtener_matriculas_por_alumno', ['uses' => 'MatriculasController@ObtenerMatriculasPorAlumno', 'as' => 'obtener.alumnos.matriculas']);
+    #nueva
+    Route::get('/nueva/{alumno_id}', ['uses' => 'MatriculasController@NuevaVista', 'as' => 'nueva.matriculas']);
+    Route::get('/obtener_modelo', ['uses' => 'MatriculasController@ModeloMatricula', 'as' => 'modelo.matriculas']);
 });
 //Routes pagos
 Route::prefix('pagos')->middleware('auth')->group(function () {
@@ -44,7 +49,6 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     #pagos del dia
     Route::get('/del_dia', ['uses' => 'PagosController@PagosDelDiaVista', 'as' => 'vista.pagos.del.dia.pagos']);
     Route::post('/obtener_pagos_del_dia', ['uses' => 'PagosController@ObtenerPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
-
 });
 //Routes anio
 Route::prefix('anios')->middleware('auth')->group(function () {
@@ -84,5 +88,13 @@ Route::prefix('paises')->middleware('auth')->group(function () {
 Route::prefix('distritos')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_distritos', ['uses' => 'DistritosController@ObtenerDistritos', 'as' => 'obtener.anios']);
+});
+Route::prefix('apoderados')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::post('/obtener_por_alumno', ['uses' => 'ApoderadosController@ObtenerPorAlumno', 'as' => 'obtener.por.alumno.apoderados']);
+});
+Route::prefix('vacantes')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::post('/obtener_por_nivel_grado_anio_actual', ['uses' => 'VacantesController@ObtenerPorNivelGradoDelAnioActual', 'as' => 'obtener.por.nivel.grado.anio_actual.vacantes']);
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

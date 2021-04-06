@@ -59,7 +59,6 @@ var pagos = new Vue({
 });
 
 $("#buscar").keyup(function(e) {
-
     pagos.cadena = pagos.cadena.toUpperCase();
     var code = (e.keyCode ? e.keyCode : e.which);
     if(code==13){

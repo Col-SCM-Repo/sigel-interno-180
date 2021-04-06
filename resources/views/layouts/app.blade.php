@@ -57,6 +57,9 @@
                                     <a class="dropdown-item" href="{{ route('index.aula') }}">
                                         Aulas
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('nueva.matriculas', ['alumno_id'=>0]) }}">
+                                        Nueva Matrícula
+                                    </a>
                                 </div>
                             </li>
                             <li id="pagos-nav" class="nav-item dropdown ">
