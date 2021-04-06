@@ -1,6 +1,6 @@
 import Vue from 'vue';
-var pagos = new Vue({
-    el: '#alumnos',
+var editar = new Vue({
+    el: '#editar',
     data: {
         url_principal: $("#baseUrl").val(),
         baseUrl: $("#baseUrl").val()+'/alumnos',
