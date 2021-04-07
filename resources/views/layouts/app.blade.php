@@ -44,9 +44,9 @@
                                     ALUMNOS
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alumnos">
-                                    {{-- <a class="dropdown-item" href="{{route('editar.alumno.alumnos', ['alumno_id' => 0])}}">
+                                    <a class="dropdown-item" href="{{route('editar.alumno.alumnos', ['alumno_id' => 0])}}">
                                         Nuevo Alumno
-                                    </a> --}}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('index.alumnos') }}">
                                         Pagos
                                     </a>

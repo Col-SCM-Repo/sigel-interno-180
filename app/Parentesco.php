@@ -39,4 +39,8 @@ class Parentesco extends Model
     {
         return $this->MP_PAR_ID;
     }
+    public function tipo_id()
+    {
+        return $this->MP_TIPAR_ID;
+    }
 }

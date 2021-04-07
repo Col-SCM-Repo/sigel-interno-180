@@ -35,11 +35,10 @@
                                             <button type="button" class="btn btn-light" v-on:click="abrirModalMatriculas(alumno)"><i class="far fa-eye"></i> Ver Matriculas</button>
                                             <button type="button" class="btn btn-light" v-on:click="editarAlumno(alumno.alumno_id)"><i class="far fa-edit"></i> Editar</button>
                                         </div>
-
                                     </td>
                                   </tr>
                                 </tbody>
-                              </table>
+                            </table>
                         </div>
                     </div>
                 </div>

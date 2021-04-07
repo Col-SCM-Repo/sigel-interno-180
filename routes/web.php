@@ -92,6 +92,8 @@ Route::prefix('distritos')->middleware('auth')->group(function () {
 Route::prefix('apoderados')->middleware('auth')->group(function () {
     #Dashboard
     Route::post('/obtener_por_alumno', ['uses' => 'ApoderadosController@ObtenerPorAlumno', 'as' => 'obtener.por.alumno.apoderados']);
+    Route::get('/modelo', ['uses' => 'ApoderadosController@ModeloApoderado', 'as' => 'modelo.apoderados']);
+    Route::post('/guardar', ['uses' => 'ApoderadosController@GuardarApoderado', 'as' => 'guardar.apoderados']);
 });
 Route::prefix('vacantes')->middleware('auth')->group(function () {
     #Dashboard
@@ -100,5 +102,25 @@ Route::prefix('vacantes')->middleware('auth')->group(function () {
 Route::prefix('religiones')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_religiones', ['uses' => 'ReligionesController@ObtenerReligiones', 'as' => 'obtener.religiones']);
+});
+Route::prefix('tipo_documento')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_tipos', ['uses' => 'TipoDocumentoController@ObtenerTipos', 'as' => 'obtener.tipo_documento']);
+});
+Route::prefix('tipo_parentesco')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_tipos', ['uses' => 'TipoParentescoController@ObtenerTipos', 'as' => 'obtener.tipo_parentesco']);
+});
+Route::prefix('grado_instrucion')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_grados', ['uses' => 'GradoInstruccionController@ObtenerGrados', 'as' => 'obtener.grados_instruccion']);
+});
+Route::prefix('centro_laboral')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_centros', ['uses' => 'CentroLaboralController@ObtenerCentros', 'as' => 'obtener.centro_laboral']);
+});
+Route::prefix('ocupacion')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_ocupaciones', ['uses' => 'OcupacionesController@ObtenerOcupaciones', 'as' => 'obtener.ocupacion']);
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

@@ -32,8 +32,8 @@
                 </td>
             </tr>
             <tr>
-                <td  style="font-size:0.55em; text-align:center" colspan="2">
-                    <a href="http://www.colegiocabrera.edu.pe/">www.colegiocabrera.edu.pe</a>
+                <td  style="font-size:0.6em; text-align:center" colspan="2">
+                    www.colegiocabrera.edu.pe
                 </td>
             </tr>
             <tr>
@@ -99,11 +99,11 @@
                 <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->Usuario->nombres()}} </td>
             </tr>
             <tr>
-                <td width="60%" style="font-size:0.55em; text-align:center" colspan="2">
+                <td width="60%" style="font-size:0.6em; text-align:center" colspan="2">
                     Representación impresa del Comprobante de
                     Venta <br> Electrónica, esta puede ser consultada
                     y descargada <br> desde nuestro portal Institucional <br>
-                    <a href="http://www.colegiocabrera.edu.pe/">www.colegiocabrera.edu.pe</a>
+                    www.colegiocabrera.edu.pe
                 </td>
             </tr>
             <tr>

@@ -10,6 +10,13 @@ var editar = new Vue({
         distritos:[],
         religiones:[],
         familiares:[],
+        familiar_seleccionado:[],
+        editar_familiar: false,
+        tipo_documentos:[],
+        tipo_parentescos:[],
+        grados_intruccion:[],
+        centro_laborales:[],
+        ocupaciones:[]
     },
     methods: {
         obtenerDatosAlumno:function(){
@@ -54,9 +61,13 @@ var editar = new Vue({
             };
             axios.post(url,data).then((response) => {
                 this.familiares = response.data;
-                console.log(this.familiares);
             }).catch((error) => {
             }).finally((response) => {
+                this.obtenerTipoDocumentos();
+                this.obtenerTipoParentescos();
+                this.obtenerGradosInstruccion();
+                this.obtenerCentroLaborales();
+                this.obtenerOcupaciones();
             });
         },
         guardarAlumno:function(){
@@ -70,6 +81,72 @@ var editar = new Vue({
             }).catch((error) => {
             }).finally((response) => {
                 location.href = this.baseUrl+'/editar/'+this.alumno_id;
+            });
+        },
+        obtenerTipoDocumentos:function(){
+            let url = this.url_principal +'/tipo_documento/obtener_tipos';
+            axios.get(url).then((response) => {
+                this.tipo_documentos = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        obtenerTipoParentescos:function(){
+            let url = this.url_principal +'/tipo_parentesco/obtener_tipos';
+            axios.get(url).then((response) => {
+                this.tipo_parentescos = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        obtenerGradosInstruccion:function(){
+            let url = this.url_principal +'/grado_instrucion/obtener_grados';
+            axios.get(url).then((response) => {
+                this.grados_intruccion = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        obtenerCentroLaborales:function(){
+            let url = this.url_principal +'/centro_laboral/obtener_centros';
+            axios.get(url).then((response) => {
+                this.centro_laborales = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        obtenerOcupaciones:function(){
+            let url = this.url_principal +'/ocupacion/obtener_ocupaciones';
+            axios.get(url).then((response) => {
+                this.ocupaciones = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        editarFamiliar:function(familiar,editar, nuevo){
+            if (nuevo) {
+                let url = this.url_principal +'/apoderados/modelo';
+                axios.get(url).then((response) => {
+                    this.familiar_seleccionado = response.data;
+                }).catch((error) => {
+                }).finally((response) => {
+                });
+            } else {
+                this.familiar_seleccionado = familiar;
+            }
+            this.editar_familiar = editar;
+        },
+        guardaFamiliar:function(){
+            let url = this.url_principal +'/apoderados/guardar';
+            let data = {
+                'familiar':this.familiar_seleccionado,
+                'alumno_id':this.alumno_id,
+            };
+            axios.post(url,data).then((response) => {
+            }).catch((error) => {
+            }).finally((response) => {
+                this.obtenerFamiliares();
+                this.familiar_seleccionado = [];
             });
         }
     },
