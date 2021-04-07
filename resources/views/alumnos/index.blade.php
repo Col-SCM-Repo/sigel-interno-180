@@ -55,8 +55,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="margin-left: 75px">
-                    <div class="row">
+                <div class="modal-body" >
+                    <div class="row justify-content-md-center">
                         <div class="'col-md-12">
                             <div class="row ">
                                 <div class="col-md-12">
@@ -83,6 +83,7 @@
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <button type="button" class="btn btn-light" v-on:click="verCronograma(matricula.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                                        <button type="button" class="btn btn-dark" v-on:click="abrirModalOtrosPagos(matricula)"><i class="fas fa-money-check-alt"></i> Otros Pagos</button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -95,6 +96,69 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" v-on:click="cerrarModalMatricula">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal de Otros Pagos -->
+     <div class="modal fade" id="otrosPagosModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pagos</h5>
+                    <button type="button" class="close" v-on:click="cerrarModalOtrosPagos">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-md-center">
+                        <div class="'col-md-12">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text" >Año</span>
+                                        </div>
+                                        <input disabled type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value = "2021">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text" >Concepto</span>
+                                        </div>
+                                       <select class="form-control" name="" >
+                                           <option value="">SELECCIONE CONCEPTO</option>
+                                       </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text" >Monto</span>
+                                        </div>
+                                        <input disabled type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text" >Observacion</span>
+                                        </div>
+                                        <input  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" >Guardar</button>
+                    <button type="button" class="btn btn-secondary" v-on:click="cerrarModalOtrosPagos">Cerrar</button>
                 </div>
             </div>
         </div>
