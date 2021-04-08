@@ -10,7 +10,7 @@ class ReportesController extends Controller
     public function VerBoleta($pago_id)
     {
         $pago=Pago::find($pago_id);
-        $pdf = PDF::loadView('reportes.pdf.boleta', ['pago'=>$pago] )->setPaper( [0, 0, 220, 320]);
+        $pdf = PDF::loadView('reportes.pdf.boleta', ['pago'=>$pago] )->setPaper( [0, 0, 220, 340]);
         return $pdf->stream('invoice.pdf');
     }
     public function DescargarListaAlumnos(Request $request)

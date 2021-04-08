@@ -10,6 +10,10 @@ var pagos = new Vue({
         alumno_seleccionado:[],
         matriculas:[],
         matricula_seleccionada:[],
+        conceptos:[],
+        monto_pago:'',
+        observacion_pago:'',
+        concepto_pago_id:''
     },
     methods: {
         obtenerAlumnos:function(){
@@ -57,11 +61,44 @@ var pagos = new Vue({
             $('#otrosPagosModal').modal({backdrop: 'static', keyboard: false});
             $('#otrosPagosModal').modal('show');
             this.matricula_seleccionada = matricula;
+            this.obtenerConceptosAnioActual();
         },
         cerrarModalOtrosPagos:function(){
             $('#otrosPagosModal').modal('hide');
             this.matricula_seleccionada = [];
+            this.concepto_pago_id='';
+            this.observacion_pago='';
+            this.monto_pago='';
         },
+        obtenerConceptosAnioActual:function(){
+            this.conceptos = [];
+            let url = this.url_principal +'/conceptos/obtener_conceptos_anio_actual';
+            axios.get(url).then((response) => {
+                this.conceptos = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        asignarMonto:function(){
+            this.monto_pago = $('#conceptos option:selected')[0].attributes['monto'].value
+        },
+        guardarPago:function(){
+            if (this.concepto_pago_id!='') {
+                let url = this.url_principal +'/pagos/guardar_pago';
+                let data = {
+                    concepto_pago_id: this.concepto_pago_id,
+                    monto: this.monto_pago,
+                    observacion: this.observacion_pago,
+                    matricula_id: this.matricula_seleccionada.matricula_id,
+                };
+                axios.post(url,data).then((response) => {
+                    window.open(this.url_principal+'/reportes/boleta/'+response.data)
+                }).catch((error) => {
+                }).finally((response) => {
+                    this.cerrarModalOtrosPagos();
+                });
+            }
+        }
     },
     created: function(){
         $('#alumnos-nav').addClass('active');

@@ -112,7 +112,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row justify-content-md-center">
-                        <div class="'col-md-12">
+                        <div class="col-md-12">
                             <div class="row ">
                                 <div class="col-md-12">
                                     <div class="input-group input-group-sm mb-3">
@@ -129,8 +129,9 @@
                                         <div class="input-group-prepend">
                                           <span class="input-group-text" >Concepto</span>
                                         </div>
-                                       <select class="form-control" name="" >
+                                       <select id="conceptos" class="form-control" name="" v-on:change="asignarMonto" v-model="concepto_pago_id">
                                            <option value="">SELECCIONE CONCEPTO</option>
+                                           <option v-for="concepto in conceptos" :value="concepto.concepto_pago_id" :monto="concepto.monto">@{{concepto.concepto}}</option>
                                        </select>
                                     </div>
                                 </div>
@@ -141,7 +142,7 @@
                                         <div class="input-group-prepend">
                                           <span class="input-group-text" >Monto</span>
                                         </div>
-                                        <input disabled type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                        <input disabled type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" :value="'S/ '+ monto_pago">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -149,7 +150,7 @@
                                         <div class="input-group-prepend">
                                           <span class="input-group-text" >Observacion</span>
                                         </div>
-                                        <input  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                        <input  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" v-model="observacion_pago" >
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +158,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" >Guardar</button>
+                    <button type="button" class="btn btn-dark" v-on:click="guardarPago">Guardar</button>
                     <button type="button" class="btn btn-secondary" v-on:click="cerrarModalOtrosPagos">Cerrar</button>
                 </div>
             </div>

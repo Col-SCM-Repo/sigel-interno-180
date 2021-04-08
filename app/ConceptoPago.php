@@ -30,8 +30,16 @@ class ConceptoPago extends Model
     {
       return $this->belongsTo('App\Concepto', 'MP_CON_ID','MP_CON_ID');
     }
-    // public function AnioAcademico()
-    // {
-    //   return $this->belongsTo('App\AnioAcademico', 'anio_id','id');
-    // }
+    public function AnioAcademico()
+    {
+      return $this->belongsTo('App\AnioAcademico', 'MP_ANIO_ID','MP_ANIO_ID');
+    }
+    public function id()
+    {
+        return $this->MP_CONPAGO_ID;
+    }
+    public function monto()
+    {
+        return $this->MP_CONPAGO_MONTO;
+    }
 }

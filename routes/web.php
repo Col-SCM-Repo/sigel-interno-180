@@ -123,4 +123,8 @@ Route::prefix('ocupacion')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_ocupaciones', ['uses' => 'OcupacionesController@ObtenerOcupaciones', 'as' => 'obtener.ocupacion']);
 });
+Route::prefix('conceptos')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_conceptos_anio_actual', ['uses' => 'ConceptosController@ObtenerConceptosDelAnioActual', 'as' => 'obtener.ocupacion']);
+});
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');
