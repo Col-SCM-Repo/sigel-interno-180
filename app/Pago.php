@@ -83,4 +83,8 @@ class Pago extends Model
     {
         return $this->MP_PAGO_OBS;
     }
+    public function matricula_id()
+    {
+        return $this->MP_MAT_ID;
+    }
 }

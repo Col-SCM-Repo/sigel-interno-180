@@ -15,7 +15,8 @@ var cronograma = new Vue({
         monto_pago: '',
         observacion_pago: '',
         matricula:'',
-        pago_seleccionado:[]
+        pago_seleccionado:[],
+        otros_pagos:[]
     },
     methods: {
         obtenerDatos:function () {
@@ -126,16 +127,26 @@ var cronograma = new Vue({
                 this.cerrarModalNota();
                 this.cerrarModalPagos();
                 this.obtenerDatos();
+                this.obtenerOtrosPagos();
+            });
+        },
+        obtenerOtrosPagos:function(){
+            let url = this.url_principal +'/pagos/otros_pagos_por_matricula';
+            let data = {
+                'matricula_id': this.matricula_id,
+            };
+            axios.post(url, data).then((response) => {
+                this.otros_pagos = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+
             });
         }
-
     },
     beforeMount: function(){
         this.obtenerDatos();
+        this.obtenerOtrosPagos();
     },
-    mounted:function(){
-
-    }
 });
 
 $("#nota_observacion").keyup(function(e) {

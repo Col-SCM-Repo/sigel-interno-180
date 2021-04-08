@@ -6,6 +6,7 @@
 <div id="cronograma" class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            {{-- card Cronogramam --}}
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -66,6 +67,55 @@
 
                                     </td>
                                   </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <br>
+        </div>
+        {{-- Card otros pagos --}}
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Pagos por Otros Conceptos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Lista de Pagos</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Concepto</th>
+                                    <th scope="col">Número</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Monto</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Opciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(pago,i) in otros_pagos">
+                                    <th scope="row">@{{i+1}}</th>
+                                    <td >@{{pago.concepto}}</td>
+                                    <td >@{{pago.numero}}</td>
+                                    <td >@{{pago.tipo}}</td>
+                                    <td >S/ @{{pago.monto}}</td>
+                                    <td >@{{pago.fecha}}</td>
+                                    <td >@{{pago.usuario}}</td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-light" v-on:click="descargar(pago)"><i class="far fa-eye" ></i> Boleta | Factura</button>
+                                            <button v-if="pago.tipo!='NOTA DE CREDITO'" type="button" class="btn btn-secondary" v-on:click="abrirModalNota(pago)"><i class="fas fa-money-bill-alt"></i> N. C.</button>
+                                        </div>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

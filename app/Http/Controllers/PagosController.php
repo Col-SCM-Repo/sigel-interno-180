@@ -80,16 +80,18 @@ class PagosController extends Controller
             $datos_pago = (object)$request->pago;
             $serie =Auth::user()->SerieComprobante()->get()->last();
             $pago_aux = Pago::find($datos_pago->pago_id);
-            $monto_pagado=0;
-            foreach ($pago_aux->CronogramaPago->Pagos as $p) {
-                $monto_pagado += $p->monto();
-            }
-            $cronograma = $pago_aux->CronogramaPago;
-            $estado_cronograma = '';
-            if(number_format(number_format($monto_pagado,2)-number_format($datos_pago->monto,2),2)==number_format(0,2)){
-                $estado_cronograma='PENDIENTE';
-            }else if(number_format(number_format($monto_pagado,2)-number_format($datos_pago->monto,2),2)<number_format($cronograma->monto(),2)){
-                $estado_cronograma='SALDO';
+            if (isset($pago_aux->CronogramaPago)) {
+                $monto_pagado=0;
+                foreach ($pago_aux->CronogramaPago->Pagos as $p) {
+                    $monto_pagado += $p->monto();
+                }
+                $cronograma = $pago_aux->CronogramaPago;
+                $estado_cronograma = '';
+                if(number_format(number_format($monto_pagado,2)-number_format($datos_pago->monto,2),2)==number_format(0,2)){
+                    $estado_cronograma='PENDIENTE';
+                }else if(number_format(number_format($monto_pagado,2)-number_format($datos_pago->monto,2),2)<number_format($cronograma->monto(),2)){
+                    $estado_cronograma='SALDO';
+                }
             }
             $pago = new Pago();
             $pago->MP_PAGO_FECHA = date('Y-m-d\TH:i:s');
@@ -99,14 +101,17 @@ class PagosController extends Controller
             $pago->MP_SERCOM_ID = $serie->id();
             $pago->MP_TIPCOM_ID = 5; //TIPO DE NOTA DE CREDITO
             $pago->USU_ID = Auth::user()->id();
-            $pago->MP_CRO_ID = $cronograma->id();
+            $pago->MP_CRO_ID = isset($pago_aux->CronogramaPago)?$cronograma->id():null;
+            $pago->MP_CONPAGO_ID = isset($pago_aux->ConceptoPago)?$pago_aux->ConceptoPago->id():null;
             $pago->MP_PAGO_MONTO = -$datos_pago->monto;
             $pago->MP_PAGO_SERIE = $serie->serie();
-            $pago->MP_MAT_ID = $cronograma->matriculaId();
+            $pago->MP_MAT_ID = isset($pago_aux->CronogramaPago)?$cronograma->matriculaId():$pago_aux->matricula_id();
             $pago->MP_PAGO_LEE_MONTO= 'Cero y 00/100 Soles';
             $pago->save();
-            $cronograma->MP_CRO_ESTADO = $estado_cronograma;
-            $cronograma->save();
+            if (isset($pago_aux->CronogramaPago)) {
+                $cronograma->MP_CRO_ESTADO = $estado_cronograma;
+                $cronograma->save();
+            }
             return $pago->id();
         } catch (\Throwable $th) {
             return response()->json($th,401);
@@ -131,6 +136,25 @@ class PagosController extends Controller
                 'alumno'=>$pago_aux->Matricula->Alumno->apellidos().', '.$pago_aux->Matricula->Alumno->nombres(),
             ];
             array_push($pagos,$pago);
+        }
+        return $pagos;
+    }
+    public function PagosPorOtrosConceptosPorMatriula(Request $request)
+    {
+        $pagos =[];
+        $aux = Pago::where('MP_MAT_ID',$request->matricula_id)->where('MP_CONPAGO_ID','!=',null)->get();
+        //dd($aux);
+        foreach ($aux as $pago_aux) {
+            $pago=[
+                'pago_id'=>$pago_aux->id(),
+                'concepto'=>$pago_aux->ConceptoPago->Concepto->concepto(),
+                'numero'=>$pago_aux->serie().' - '.$pago_aux->numero(),
+                'tipo'=>$pago_aux->TipoComprobante->tipo(),
+                'monto'=>$pago_aux->monto(),
+                'fecha'=>$pago_aux->fecha(),
+                'usuario'=>$pago_aux->Usuario->apellidos().', '.$pago_aux->Usuario->nombres(),
+            ];
+            array_push($pagos, $pago);
         }
         return $pagos;
     }

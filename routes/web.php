@@ -46,6 +46,7 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     Route::post('/obtener_pagos', ['uses' => 'PagosController@ObtenerPagosPorCronogramaId', 'as' => 'obtener.por.cronograma.pagos']);
     Route::post('/guardar_pago', ['uses' => 'PagosController@GuardarPago', 'as' => 'guardar.pago.pagos']);
     Route::post('/guardar_nota_credito', ['uses' => 'PagosController@GuardarNotaCredito', 'as' => 'guardar.nota.credito.pagos']);
+    Route::post('/otros_pagos_por_matricula', ['uses' => 'PagosController@PagosPorOtrosConceptosPorMatriula', 'as' => 'pagos.por.otrosconcepto.por.matricula.pagos']);
     #pagos del dia
     Route::get('/del_dia', ['uses' => 'PagosController@PagosDelDiaVista', 'as' => 'vista.pagos.del.dia.pagos']);
     Route::post('/obtener_pagos_del_dia', ['uses' => 'PagosController@ObtenerPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
@@ -125,6 +126,6 @@ Route::prefix('ocupacion')->middleware('auth')->group(function () {
 });
 Route::prefix('conceptos')->middleware('auth')->group(function () {
     #Dashboard
-    Route::get('/obtener_conceptos_anio_actual', ['uses' => 'ConceptosController@ObtenerConceptosDelAnioActual', 'as' => 'obtener.ocupacion']);
+    Route::get('/obtener_conceptos_anio_actual', ['uses' => 'ConceptosController@ObtenerConceptosDelAnioActual', 'as' => 'obtener.por.anio.actual.concepto']);
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');
