@@ -6,7 +6,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3>Nueva Matrícula</h3>
+                    <h3 v-if="matricula_id==0">Nueva Matrícula</h3>
+                    <h3 v-else>Editar Matrícula</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -191,6 +192,7 @@
         </div>
     </div>
    <input type="text" id="alumno_id" value="{{$alumno_id}}" hidden>
+   <input type="text" id="matricula_id" value="{{$matricula_id}}" hidden>
 </div>
 @endsection
 

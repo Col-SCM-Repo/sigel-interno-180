@@ -84,6 +84,7 @@
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <button type="button" class="btn btn-light" v-on:click="verCronograma(matricula.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
                                                         <button type="button" class="btn btn-dark" v-on:click="abrirModalOtrosPagos(matricula)"><i class="fas fa-money-check-alt"></i> Otros Pagos</button>
+                                                        <button type="button" class="btn btn-ligth" v-on:click="editarMatricula(matricula.matricula_id)"><i class="far fa-edit"></i> Editar</button>
                                                     </div>
                                                 </td>
                                             </tr>

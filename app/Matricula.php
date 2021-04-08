@@ -14,7 +14,11 @@ class Matricula extends Model
         'MP_VAC_ID',
         'MP_MAT_ESTADO',
         'MP_ALU_ID',
-        'MP_PAR_ID'
+        'MP_PAR_ID',
+        'MP_MAT_FECHAMATRICULA',
+        'MP_MAT_OBS',
+        'MP_TIPMAT_ID',
+        'MP_IEPRO_ID'
     ];
 
     public function Vacante()
@@ -53,5 +57,33 @@ class Matricula extends Model
     public function id()
     {
         return $this->MP_MAT_ID;
+    }
+    public function pariente_id()
+    {
+        return $this->MP_PAR_ID;
+    }
+    public function alumno_id()
+    {
+        return $this->MP_ALU_ID;
+    }
+    public function fecha()
+    {
+        return $this->MP_MAT_FECHAMATRICULA;
+    }
+    public function tipo_id()
+    {
+        return $this->MP_TIPMAT_ID;
+    }
+    public function observacion()
+    {
+        return $this->MP_MAT_OBS;
+    }
+    public function ie_procedencia_id()
+    {
+        return $this->MP_IEPRO_ID;
+    }
+    public function vacante_id()
+    {
+        return $this->MP_IEPRO_ID;
     }
 }

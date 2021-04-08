@@ -37,8 +37,8 @@ Route::prefix('alumnos')->middleware('auth')->group(function () {
 Route::prefix('matriculas')->middleware('auth')->group(function () {
     Route::post('/obtener_matriculas_por_alumno', ['uses' => 'MatriculasController@ObtenerMatriculasPorAlumno', 'as' => 'obtener.alumnos.matriculas']);
     #nueva
-    Route::get('/nueva/{alumno_id}', ['uses' => 'MatriculasController@NuevaVista', 'as' => 'nueva.matriculas']);
-    Route::get('/obtener_modelo', ['uses' => 'MatriculasController@ModeloMatricula', 'as' => 'modelo.matriculas']);
+    Route::get('/nueva/{alumno_id}/{matricula_id}', ['uses' => 'MatriculasController@NuevaVista', 'as' => 'nueva.matriculas']);
+    Route::get('/obtener_modelo/{matricula_id}', ['uses' => 'MatriculasController@ModeloMatricula', 'as' => 'modelo.matriculas']);
 });
 //Routes pagos
 Route::prefix('pagos')->middleware('auth')->group(function () {

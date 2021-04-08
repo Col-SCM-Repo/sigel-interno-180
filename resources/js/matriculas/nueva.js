@@ -5,6 +5,7 @@ var matricula = new Vue({
         url_principal: $("#baseUrl").val(),
         baseUrl: $("#baseUrl").val()+'/matriculas',
         alumno_id: $("#alumno_id").val(),
+        matricula_id: $("#matricula_id").val(),
         alumno: [],
         matricula: [],
         apoderados: [],
@@ -24,7 +25,7 @@ var matricula = new Vue({
             });
         },
         obtenerModeloMatricula:function(){
-            let url = this.baseUrl +'/obtener_modelo';
+            let url = this.baseUrl +'/obtener_modelo/'+this.matricula_id;
             axios.get(url).then((response) => {
                 this.matricula = response.data;
             }).catch((error) => {

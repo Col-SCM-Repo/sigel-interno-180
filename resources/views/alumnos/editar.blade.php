@@ -183,7 +183,7 @@
                                                 <div class="col-md-4">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <button v-if="alumno_id!=0" type="button" class="btn btn-dark" v-on:click="editarFamiliar([],true,true)"><i class="fas fa-plus"></i> Agregar Familiar</button>
-                                                        {{-- <button v-if="familiares.length!=0" type="button" class="btn btn-ligth" v-on:click="matricularAlumno"><i class="fas fa-plus"></i> Matricular</button> --}}
+                                                        <button v-if="familiares.length!=0" type="button" class="btn btn-ligth" v-on:click="matricularAlumno"><i class="fas fa-plus"></i> Matricular</button>
                                                     </div>
                                                 </div>
                                             </div>

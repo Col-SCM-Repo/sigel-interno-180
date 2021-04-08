@@ -98,6 +98,9 @@ var pagos = new Vue({
                     this.cerrarModalOtrosPagos();
                 });
             }
+        },
+        editarMatricula:function(matricula_id){
+            window.open(this.url_principal+'/matriculas/nueva/'+this.alumno_seleccionado.alumno_id+'/'+matricula_id)
         }
     },
     created: function(){

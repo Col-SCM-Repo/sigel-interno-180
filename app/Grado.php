@@ -16,4 +16,8 @@ class Grado extends Model
     {
         return $this->MP_GRA_GRADO;
     }
+    public function id()
+    {
+        return $this->MP_GRA_ID;
+    }
 }

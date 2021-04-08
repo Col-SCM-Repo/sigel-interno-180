@@ -148,6 +148,9 @@ var editar = new Vue({
                 this.obtenerFamiliares();
                 this.familiar_seleccionado = [];
             });
+        },
+        matricularAlumno:function(){
+            location.href=this.url_principal+'/matriculas/nueva/'+this.alumno_id+'/0';
         }
     },
     created: function(){
