@@ -4,12 +4,13 @@
         <meta charset="UTF-8">
         <style>
             body{
-                font-size: 0.8em;
+                font-size: 0.6em;
+                text-align: center;
             }
         </style>
     </head>
     <body>
-        <h1  style="margin-top: -30px;">
+        <h1  style="margin-top: 35px;">
             PAGOS DEL DÍA
         </h1>
         <h2 >
