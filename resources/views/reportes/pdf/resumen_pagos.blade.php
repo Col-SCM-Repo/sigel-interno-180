@@ -6,6 +6,7 @@
             body{
                 font-size: 0.6em;
                 text-align: center;
+                margin-left: -170px;
             }
         </style>
     </head>
