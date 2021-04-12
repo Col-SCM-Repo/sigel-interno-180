@@ -56,7 +56,6 @@
 
         <br><br><br>
         <table style="margin-left:50px ; width: 90%;">
-
             <tr>
                 <td style="font-size:0.9em; text-align:center"><br><br><br><br>____________________________</td>
                 <td style="font-size:0.9em; text-align:center"><br><br><br><br>____________________________</td>
