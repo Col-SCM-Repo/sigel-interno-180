@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Matricula;
 use App\Pago;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PDF;
 class ReportesController extends Controller
@@ -92,6 +93,29 @@ class ReportesController extends Controller
             'relacion' => $matricula->Patentesco->TipoParentesco->nombre()
         ];
         $pdf = PDF::loadView('reportes.pdf.ficha_matricula', ['matricula'=>$matricula, 'alumno'=>$alumno, 'madre'=>$madre, 'padre'=>$padre, 'responsable'=>$responsable] )->setPaper('a4');
+        return $pdf->stream('ficha_matricula.pdf');
+    }
+    public function DescargarCronograma($matricula_id)
+    {
+        setlocale(LC_ALL,"es_ES");
+        Carbon::setLocale('es');
+        $fecha_hoy = Carbon::parse(date('j F Y'));
+        $matricula = Matricula::find($matricula_id);
+        $alumno = $matricula->Alumno;
+        $cronogramas = [];
+        $i = 0;
+        foreach ($matricula->CronogramaPagos as $crono) {
+            $cronograma =(object)[
+                'item'=> $i+1,
+                'concepto'=> $crono->ConceptoPago->Concepto->concepto(),
+                'monto'=> $crono->monto(),
+                'fecha_vencimiento'=> $crono->fechaVencimiento(),
+                'estado'=> $crono->estado(),
+            ];
+            array_push($cronogramas, $cronograma);
+            $i++;
+        }
+        $pdf = PDF::loadView('reportes.pdf.cronograma', ['anio'=>$matricula->Vacante->AnioAcademico->nombre(), 'alumno'=>$alumno, 'cronogramas'=>$cronogramas, 'fecha_hoy'=>$fecha_hoy, 'matricula'=>$matricula] )->setPaper('a4');
         return $pdf->stream('ficha_matricula.pdf');
     }
     //mover a helpers

@@ -144,6 +144,9 @@ var cronograma = new Vue({
         },
         generarFichaMatricula:function(){
             window.open(this.url_principal+'/reportes/descargar_ficha_matricula/'+this.matricula_id);
+        },
+        generarCronograma:function(){
+            window.open(this.url_principal+'/reportes/descargar_cronograma/'+this.matricula_id);
         }
     },
     beforeMount: function(){

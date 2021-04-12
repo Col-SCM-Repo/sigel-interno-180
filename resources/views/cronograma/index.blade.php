@@ -41,7 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" class="btn btn-light" v-on:click="generarFichaMatricula"><i class="fas fa-file-export" ></i> F. de Matícula</button>
-                                        <button  type="button" class="btn btn-secondary" ><i class="far fa-calendar-alt"></i> Cro. Pagos</button>
+                                        <button  type="button" class="btn btn-secondary" v-on:click="generarCronograma"><i class="far fa-calendar-alt"></i> Cro. Pagos</button>
                                     </div>
                                 </div>
                             </div>
