@@ -12,16 +12,10 @@ class ConceptoPago extends Model
         'MP_CONPAGO_ID',
         'MP_CONPAGO_MONTO',
         'MP_CON_ID',
-        'MP_ANIO_ID'
+        'MP_ANIO_ID',
+        'FECHA_VENCIMIENTO'
     ];
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'created_at', 'updated_at'
-    ];
+
     public function CronogramasPago()
     {
         return $this->hasMany('App\CronogramaPago','MP_CONPAGO_ID','MP_CONPAGO_ID');
@@ -41,5 +35,13 @@ class ConceptoPago extends Model
     public function monto()
     {
         return $this->MP_CONPAGO_MONTO;
+    }
+    public function fecha_vencimiento()
+    {
+        return $this->FECHA_VENCIMIENTO;
+    }
+    public function concepto_id()
+    {
+        return $this->MP_CON_ID;
     }
 }

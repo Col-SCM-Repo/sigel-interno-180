@@ -8,6 +8,8 @@ class Matricula extends Model
 {
     protected $table = 'MP_MATRICULA';
     protected $primaryKey = 'MP_MAT_ID';
+    public $timestamps = false;
+
     protected $fillable = [
         'MP_MAT_ID',
         'MP_MAT_FECHAMATRICULA',
@@ -84,6 +86,6 @@ class Matricula extends Model
     }
     public function vacante_id()
     {
-        return $this->MP_IEPRO_ID;
+        return $this->MP_VAC_ID;
     }
 }

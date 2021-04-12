@@ -60,7 +60,7 @@
                                             <button v-if="cronograma.estado!='PENDIENTE'||cronograma.estado=='EXONERADO'" type="button" class="btn btn-light" v-on:click="verCronograma(cronograma.cronograma_id, cronograma.mes)" ><i class="far fa-eye"></i> Ver Pagos</button>
                                             <button v-if="cronograma.estado!='CANCELADO'||cronograma.estado=='EXONERADO'" type="button" class="btn btn-secondary" v-on:click="pagarCronograma(cronograma)"><i class="fas fa-money-bill-alt"></i> Pagar</button>
                                         </div>
-                                        <div v-if="i>0 && (cronogramas[i-1].estado=='CANCELADO'||cronogramas[i-1].estado=='EXONERADO')" class="btn-group" role="group" aria-label="Basic example">
+                                        <div v-if="i>0 && ((cronogramas[i-1].estado=='CANCELADO' || cronogramas[i-1].estado=='EXONERADO') &&cronogramas[i].estado!='EXONERADO')" class="btn-group" role="group" aria-label="Basic example">
                                             <button v-if="cronograma.estado!='PENDIENTE'||cronograma.estado=='EXONERADO'" type="button" class="btn btn-light" v-on:click="verCronograma(cronograma.cronograma_id, cronograma.mes)" ><i class="far fa-eye"></i> Ver Pagos</button>
                                             <button v-if="cronograma.estado!='CANCELADO'||cronograma.estado=='EXONERADO'" type="button" class="btn btn-secondary" v-on:click="pagarCronograma(cronograma)"><i class="fas fa-money-bill-alt"></i> Pagar</button>
                                         </div>

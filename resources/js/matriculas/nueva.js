@@ -9,7 +9,8 @@ var matricula = new Vue({
         alumno: [],
         matricula: [],
         apoderados: [],
-        secciones:[]
+        secciones:[],
+        instituciones_educativas:[]
     },
     methods: {
         obtenerDatosAlumno:function(){
@@ -22,6 +23,7 @@ var matricula = new Vue({
             }).catch((error) => {
             }).finally((response) => {
                 this.obtenerApoderados();
+                this.obtenerInstituciones();
             });
         },
         obtenerModeloMatricula:function(){
@@ -30,6 +32,9 @@ var matricula = new Vue({
                 this.matricula = response.data;
             }).catch((error) => {
             }).finally((response) => {
+                if(this.matricula.nivel!=''&&this.matricula.grado!=''){
+                    this.obtenerSecciones();
+                }
             });
         },
         buscarAlumnoPorDNI:function(){
@@ -62,18 +67,36 @@ var matricula = new Vue({
         },
         obtenerSecciones:function(){
             let url = this.url_principal +'/vacantes/obtener_por_nivel_grado_anio_actual';
-                let data={
-                    'nivel_id':this.matricula.nivel,
-                    'grado_id':this.matricula.grado,
-                }
-                axios.post(url,data).then((response) => {
-                    this.secciones = response.data;
-                }).catch((error) => {
-                }).finally((response) => {
-                });
+            let data={
+                'nivel_id':this.matricula.nivel,
+                'grado_id':this.matricula.grado,
+            }
+            axios.post(url,data).then((response) => {
+                this.secciones = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
+        },
+        obtenerInstituciones:function(){
+            let url = this.url_principal +'/ie_procedencia/obtener_instituciones';
+            axios.get(url).then((response) => {
+                this.instituciones_educativas = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+            });
         },
         guardar:function(){
-
+            this.matricula.alumno_id = this.alumno_id;
+            console.log(this.matricula);
+            let url = this.baseUrl +'/guardar';
+            let data = {
+                matricula:this.matricula
+            }
+            axios.post(url,data).then((response) => {
+                location.href = this.url_principal + '/cronograma/'+response.data;
+            }).catch((error) => {
+            }).finally(() => {
+            });
         }
     },
     created: function(){

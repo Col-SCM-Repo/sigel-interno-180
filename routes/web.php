@@ -39,6 +39,7 @@ Route::prefix('matriculas')->middleware('auth')->group(function () {
     #nueva
     Route::get('/nueva/{alumno_id}/{matricula_id}', ['uses' => 'MatriculasController@NuevaVista', 'as' => 'nueva.matriculas']);
     Route::get('/obtener_modelo/{matricula_id}', ['uses' => 'MatriculasController@ModeloMatricula', 'as' => 'modelo.matriculas']);
+    Route::post('/guardar', ['uses' => 'MatriculasController@Guardar', 'as' => 'guardar.matriculas']);
 });
 //Routes pagos
 Route::prefix('pagos')->middleware('auth')->group(function () {
@@ -127,5 +128,9 @@ Route::prefix('ocupacion')->middleware('auth')->group(function () {
 Route::prefix('conceptos')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_conceptos_anio_actual', ['uses' => 'ConceptosController@ObtenerConceptosDelAnioActual', 'as' => 'obtener.por.anio.actual.concepto']);
+});
+Route::prefix('ie_procedencia')->middleware('auth')->group(function () {
+    #Dashboard
+    Route::get('/obtener_instituciones', ['uses' => 'InstitucionEducativaProcedenciaController@ObtenerInstituciones', 'as' => 'obtener.ie_prodecendia']);
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

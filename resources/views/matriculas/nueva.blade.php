@@ -57,7 +57,6 @@
                         <div v-if="alumno_id!=0" class="col-md-12">
                             <h3>Datos de la Matricula</h3>
                             <div class="row">
-
                                 <div class="col-md-12">
                                     <div class="input-group input-group-sm mb-3">
                                         <div class="input-group-prepend">
@@ -66,6 +65,19 @@
                                        <select class="form-control" name=""  v-model="matricula.pariente_id" >
                                            <option value="">SELECCIONE APODERADO</option>
                                            <option v-for="apoderado in apoderados" :value="apoderado.parentesco_id">@{{apoderado.apellidos +', '+ apoderado.nombres + ' - ' +apoderado.tipo }}</option>
+                                       </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text" >I.E. de Prodecedencia</span>
+                                        </div>
+                                       <select class="form-control" name=""  v-model="matricula.ie_procedencia_id" >
+                                           <option value="">SELECCIONE I.E.</option>
+                                           <option v-for="institucion in instituciones_educativas" :value="institucion.id">@{{institucion.nombre}}</option>
                                        </select>
                                     </div>
                                 </div>
