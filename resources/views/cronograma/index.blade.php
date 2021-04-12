@@ -34,7 +34,17 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>CRONOGRAMA DE PAGOS</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>CRONOGRAMA DE PAGOS</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-light" v-on:click="generarFichaMatricula"><i class="fas fa-file-export" ></i> F. de Matícula</button>
+                                        <button  type="button" class="btn btn-secondary" ><i class="far fa-calendar-alt"></i> Cro. Pagos</button>
+                                    </div>
+                                </div>
+                            </div>
                             <table class="table table-striped">
                                 <thead>
                                   <tr>
@@ -78,7 +88,7 @@
             <br>
         </div>
         {{-- Card otros pagos --}}
-        <div class="col-md-12">
+        <div v-if="otros_pagos.length>0" class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h3>Pagos por Otros Conceptos</h3>

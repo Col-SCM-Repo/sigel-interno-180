@@ -51,6 +51,10 @@ class Matricula extends Model
     {
         return $this->belongsTo('App\Parentesco', 'MP_PAR_ID', 'MP_PAR_ID');
     }
+    public function IEProcedencia()
+    {
+        return $this->belongsTo('App\InstitucionEducativaProcedencia', 'MP_IEPRO_ID', 'MP_IEPRO_ID');
+    }
     //campos de manera resumida
     public function estado()
     {

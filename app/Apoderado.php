@@ -39,6 +39,18 @@ class Apoderado extends Model
   protected $hidden = [
       'created_at', 'updated_at', 'deleted_at'
   ];
+  public function GradoInstruccion()
+  {
+    return $this->belongsTo('App\GradoInstruccion', 'MP_GI_ID','MP_GI_ID');
+  }
+  public function Ocupacion()
+  {
+    return $this->belongsTo('App\Ocupacion', 'MP_OCU_ID','MP_OCU_ID');
+  }
+  public function CentroLaboral()
+  {
+    return $this->belongsTo('App\CentroLaboral', 'MP_CL_ID','MP_CL_ID');
+  }
   public function id()
   {
       return $this->MP_APO_ID;

@@ -33,12 +33,15 @@ class Alumno extends Model
     {
         return $this->hasMany('App\Matricula', 'MP_ALU_ID', 'MP_ALU_ID');
     }
-
-
-    // public function Parentescos()
-    // {
-    //     return $this->hasMany('App\Parentescos', 'alumno_id', 'id');
-    // }
+    public function Parentescos()
+    {
+        return $this->hasMany('App\Parentesco', 'MP_ALU_ID', 'MP_ALU_ID');
+    }
+    public function DistritoNacimiento()
+    {
+        return $this->belongsTo('App\Distrito', 'MP_ALU_UBIGNAC', 'MP_UBIG_ID');
+    }
+    //
     public function nombres()
     {
         return $this->MP_ALU_NOMBRES;
