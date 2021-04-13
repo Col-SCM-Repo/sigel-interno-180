@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('login');
 });
-
-Auth::routes();
+Auth::routes(['register' => false]);
 //principal
 Route::get('/home', 'HomeController@index')->name('home');
 //Routes pagos
@@ -62,7 +61,8 @@ Route::prefix('cronograma')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/{matricula_id}', ['uses' => 'CronogramaController@Index', 'as' => 'index.cronograma']);
     Route::post('/obtener_datos', ['uses' => 'CronogramaController@ObtenerCronogramasPorMatriculaID', 'as' => 'obtener.por.matricula.cronograma']);
-    Route::post('/obtener_saldo', ['uses' => 'CronogramaController@ObtenerSaldoDeCronograma', 'as' => 'obtener.saldo.de.cronograma.pagos']);
+    Route::post('/obtener_saldo', ['uses' => 'CronogramaController@ObtenerSaldoDeCronograma', 'as' => 'obtener.saldo.de.cronograma']);
+    Route::post('/actualizar_monto', ['uses' => 'CronogramaController@ActualizarMonto', 'as' => 'actualizar.monto.cronograma']);
 });
 //Routes aulas
 Route::prefix('aulas')->middleware('auth')->group(function () {

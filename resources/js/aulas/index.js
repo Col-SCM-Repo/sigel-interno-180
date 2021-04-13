@@ -8,7 +8,8 @@ var pagos = new Vue({
         anio_id: '',
         aulas: [],
         aula_id: '',
-        alumnos:[]
+        alumnos:[],
+        matriculas_seleccionadas:[]
     },
     methods: {
         obtenerAnios:function(){
@@ -75,6 +76,18 @@ var pagos = new Vue({
         },
         editarAlumno:function(alumno_id){
             location.href=this.url_principal+'/alumnos/editar/'+alumno_id;
+        },
+        agregarEliminarAlumno:function(matricula_id, e){
+            if (e.target.checked) {
+                this.matriculas_seleccionadas.push(matricula_id);
+                console.log(this.matriculas_seleccionadas);
+                return
+            }
+            if (!e.target.checked) {
+                this.matriculas_seleccionadas = this.matriculas_seleccionadas.filter(item => item !== matricula_id);
+                console.log(this.matriculas_seleccionadas);
+                return
+            }
         }
     },
     created: function(){

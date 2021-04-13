@@ -27,7 +27,6 @@ var pagos = new Vue({
                 };
                 axios.post(url,data).then((response) => {
                     this.secciones = response.data;
-                    console.log(this.secciones);
                 }).catch((error) => {
                 }).finally((response) => {
                 });

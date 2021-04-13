@@ -42,6 +42,14 @@
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" class="btn btn-light" v-on:click="generarFichaMatricula"><i class="fas fa-file-export" ></i> F. de Matícula</button>
                                         <button  type="button" class="btn btn-secondary" v-on:click="generarCronograma"><i class="far fa-calendar-alt"></i> Cro. Pagos</button>
+                                        <button  type="button" class="btn btn-light" v-on:click="editarCronograma">
+                                            <template v-if="!editar">
+                                                <i class="far fa-edit"></i> Editar
+                                            </template>
+                                            <template v-else>
+                                                <i class="fas fa-ban"></i> Cancelar
+                                            </template>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +71,10 @@
                                     <td >@{{cronograma.concepto}}</td>
                                     <td >@{{cronograma.mes}}</td>
                                     <td :style="cronograma.vencido?'color:red':'color:green'">@{{cronograma.fecha_vencimiento}}</td>
-                                    <td >S/ @{{cronograma.monto}}</td>
+                                    <td >
+                                        <input v-if="editar && i!=0 && (cronograma.estado!='CANCELADO'||cronograma.estado=='EXONERADO')"  type="text" v-model="cronograma.monto" class="form-control" v-on:change="modificarMonto(cronograma.cronograma_id,cronograma.monto)">
+                                        <p v-else>S/ @{{cronograma.monto}}</p>
+                                    </td>
                                     <td :style="cronograma.estado=='CANCELADO'?'color:green':(cronograma.estado=='EXONERADO'?'color:skyblue':(cronograma.estado=='PENDIENTE'?'color:orange':'color:blue'))">@{{cronograma.estado}}</td>
                                     <td>
                                         <div v-if="i==0" class="btn-group" role="group" aria-label="Basic example">

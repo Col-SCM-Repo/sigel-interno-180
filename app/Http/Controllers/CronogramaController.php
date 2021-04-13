@@ -56,4 +56,10 @@ class CronogramaController extends Controller
         ];
         return response()->json($data);
     }
+    public function ActualizarMonto(Request $request)
+    {
+        $cronograma = CronogramaPago::find($request->cronograma_id);
+        $cronograma->MP_CRO_MONTO = $request->monto;
+        $cronograma->save();
+    }
 }

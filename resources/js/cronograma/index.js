@@ -16,7 +16,8 @@ var cronograma = new Vue({
         observacion_pago: '',
         matricula:'',
         pago_seleccionado:[],
-        otros_pagos:[]
+        otros_pagos:[],
+        editar: false
     },
     methods: {
         obtenerDatos:function () {
@@ -147,6 +148,23 @@ var cronograma = new Vue({
         },
         generarCronograma:function(){
             window.open(this.url_principal+'/reportes/descargar_cronograma/'+this.matricula_id);
+        },
+        editarCronograma:function(){
+            this.editar = !this.editar;
+        },
+        modificarMonto:function(cronograma_id, monto){
+            let url = this.url_principal +'/cronograma/actualizar_monto';
+            let data = {
+                'cronograma_id': cronograma_id,
+                'monto': monto
+            };
+            axios.post(url, data).then((response) => {
+                showToastr('Correcto','Se modifico el monto correctamente.', 'error');
+            }).catch((error) => {
+            }).finally((response) => {
+
+            });
+
         }
     },
     beforeMount: function(){
