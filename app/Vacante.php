@@ -10,6 +10,9 @@ class Vacante extends Model
     protected $primaryKey = 'MP_VAC_ID';
     protected $fillable = [
         'MP_VAC_ID',
+        'MP_VAC_TOT',
+        'MP_VAC_OCU',
+        'MP_VAC_DISP',
         'MP_ANIO_ID',
         'MP_GRAD_ID',
         'MP_NIV_ID',
@@ -50,5 +53,17 @@ class Vacante extends Model
     public function id()
     {
       return $this->MP_VAC_ID;
+    }
+    public function total_vacantes()
+    {
+      return $this->MP_VAC_TOT;
+    }
+    public function vacantes_disponibles()
+    {
+      return $this->MP_VAC_DISP;
+    }
+    public function vacantes_ocupadas()
+    {
+      return $this->MP_VAC_OCU;
     }
 }

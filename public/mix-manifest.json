@@ -3,6 +3,7 @@
     "/js/alumnos/index.js": "/js/alumnos/index.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/js/aulas/cant_alumnos_nivel.js": "/js/aulas/cant_alumnos_nivel.js",
     "/js/aulas/index.js": "/js/aulas/index.js",
     "/js/cronograma/index.js": "/js/cronograma/index.js",
     "/js/matriculas/nueva.js": "/js/matriculas/nueva.js",

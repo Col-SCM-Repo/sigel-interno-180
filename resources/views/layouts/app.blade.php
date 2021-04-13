@@ -65,13 +65,20 @@
                                     </a>
                                 </div>
                             </li>
-                            <li id="pagos-nav" class="nav-item dropdown ">
-                                <a  class="nav-link" href="{{ route('vista.pagos.del.dia.pagos') }}">
-                                    PAGOS
+                            <li id="reportes-nav" class="nav-item dropdown ">
+                                <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    REPORTES
                                 </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="matriculas">
+                                    <a class="dropdown-item" href="{{ route('vista.pagos.del.dia.pagos') }}">
+                                        Pagos Por Usuario
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('vista.por.nivel.anio_actual.vacantes') }}">
+                                        Alumnos Por Año y Nivel
+                                    </a>
+                                </div>
                             </li>
                         @endguest
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
