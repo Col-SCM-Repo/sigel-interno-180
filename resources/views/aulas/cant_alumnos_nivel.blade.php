@@ -55,6 +55,14 @@
                                         <td >@{{seccion.vacantes_ocupadas}} </td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2">Total</td>
+                                        <td>@{{total_vacantes}}</td>
+                                        <td>@{{vacantes_disponibles}}</td>
+                                        <td>@{{vacantes_ocupadas}}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -62,7 +70,6 @@
             </div>
         </div>
     </div>
-
 </div>
 @endsection
 

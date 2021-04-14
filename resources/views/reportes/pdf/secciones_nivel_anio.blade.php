@@ -13,6 +13,11 @@
     </head>
     <body >
         <h3 style="text-align: center;">Lista de Secciones de {{$nivel}} - {{$anio}}</h3>
+        @php
+            $total_vacante = 0;
+            $vacantes_ocupadas =0;
+            $vacantes_disponibles = 0;
+        @endphp
         <table style="width: 100%;">
             <thead>
               <tr>
@@ -32,8 +37,21 @@
                         <td class="border">{{$seccion['vacantes_disponibles']}}</td>
                         <td class="border"><b>{{$seccion['vacantes_ocupadas']}}</b></td>
                     </tr>
+                    @php
+                        $total_vacante += $seccion['total_vacantes'];
+                        $vacantes_ocupadas +=   $seccion['vacantes_ocupadas'];
+                        $vacantes_disponibles += $seccion['vacantes_disponibles'];
+                    @endphp
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td class="border" colspan="2"><b>Total</b></td>
+                    <td class="border"><b>{{$total_vacante}}</b></td>
+                    <td class="border"><b>{{$vacantes_disponibles}}</b></td>
+                    <td class="border"><b>{{$vacantes_ocupadas}}</b></td>
+                </tr>
+            </tfoot>
         </table>
     </body>
 </html>

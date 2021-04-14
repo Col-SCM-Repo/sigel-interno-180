@@ -7,7 +7,10 @@ var pagos = new Vue({
         anios: [],
         anio_id: '',
         nivel_id: '',
-        secciones:[]
+        secciones:[],
+        total_vacantes:0,
+        vacantes_ocupadas:0,
+        vacantes_disponibles:0,
     },
     methods: {
         obtenerAnios:function(){
@@ -29,6 +32,14 @@ var pagos = new Vue({
                     this.secciones = response.data;
                 }).catch((error) => {
                 }).finally((response) => {
+                    this.total_vacantes = 0;
+                    this.vacantes_disponibles=0;
+                    this.vacantes_ocupadas =0;
+                    this.secciones.forEach(seccion => {
+                        this.total_vacantes += parseInt(seccion.total_vacantes) ;
+                        this.vacantes_ocupadas += parseInt(seccion.vacantes_ocupadas) ;
+                        this.vacantes_disponibles += parseInt(seccion.vacantes_disponibles) ;
+                    });
                 });
             } else {
                 this.alumnos = [];
