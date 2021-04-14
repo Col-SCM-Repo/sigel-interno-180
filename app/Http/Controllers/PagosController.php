@@ -26,7 +26,9 @@ class PagosController extends Controller
         foreach ($pagos_aux as $pago_aux ) {
             $pago=[
                 'pago_id'=>$pago_aux->id(),
-                'numero'=>$pago_aux->serie().' - '.$pago_aux->numero(),
+                'serie'=>$pago_aux->serie(),
+                'serie_id'=>$pago_aux->serie_id(),
+                'numero'=>$pago_aux->numero(),
                 'tipo'=>$pago_aux->TipoComprobante->tipo(),
                 'monto'=>$pago_aux->monto(),
                 'fecha'=>$pago_aux->fecha(),
@@ -39,6 +41,7 @@ class PagosController extends Controller
     public function GuardarPago(Request $request)
     {
         try {
+            //dd(date('Y-m-d\T00:00:00',strtotime($request->fecha)));
             $serie =Auth::user()->SerieComprobante()->get()->last();
             $num_serie = Pago::where('MP_PAGO_SERIE', $serie->serie())->max('MP_PAGO_NRO');
             if(isset($request->cronograma_id)){
@@ -50,18 +53,17 @@ class PagosController extends Controller
                     $estado_cronograma='CANCELADO';
                 }
             }
-            //dd(DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha)->format('Y-m-d\TH:i:s'));//elimnar esta linea pararegistrar pagos
             $pago = new Pago();
-            $pago->MP_PAGO_FECHA = date('Y-m-d\TH:i:s');
-            $pago->MP_PAGO_NRO = $num_serie+1;
+            $pago->MP_PAGO_FECHA = substr($request->serie,0,1)=='E'? date('Y-m-d\T00:00:00',strtotime($request->fecha)):date('Y-m-d\TH:i:s');
+            $pago->MP_PAGO_NRO = substr($request->serie,0,1)=='E'?$request->numeracion:$num_serie+1;
             $pago->MP_PAGO_OBS = $request->observacion==null?'':$request->observacion;
-            $pago->MP_SERCOM_ID = $serie->id();
-            $pago->MP_TIPCOM_ID = 8; //TIPO DE BOLETA ELECTRONICA
+            $pago->MP_SERCOM_ID = substr($request->serie,0,1)=='E'? NULL:$serie->id();
+            $pago->MP_TIPCOM_ID = substr($request->serie,0,1)=='E'?5:8; //TIPO DE FACTURA / TIPO DE BOLETA ELECTRONICA
             $pago->USU_ID = Auth::user()->id();
             $pago->MP_CRO_ID = isset($request->cronograma_id)?$cronograma->id():null;
             $pago->MP_CONPAGO_ID = isset($request->concepto_pago_id)?$request->concepto_pago_id:null;
             $pago->MP_PAGO_MONTO = $request->monto;
-            $pago->MP_PAGO_SERIE = $serie->serie();
+            $pago->MP_PAGO_SERIE = substr($request->serie,0,1)=='E'? $request->serie:$serie->serie();
             $pago->MP_MAT_ID = isset($request->cronograma_id)?$cronograma->matriculaId():$request->matricula_id;
             $pago->MP_PAGO_LEE_MONTO= $this->numeroATexto->Soles($request->monto);
             $pago->save();
@@ -78,7 +80,6 @@ class PagosController extends Controller
     {
         try {
             $datos_pago = (object)$request->pago;
-            $serie =Auth::user()->SerieComprobante()->get()->last();
             $pago_aux = Pago::find($datos_pago->pago_id);
             if (isset($pago_aux->CronogramaPago)) {
                 $monto_pagado=0;
@@ -98,13 +99,13 @@ class PagosController extends Controller
             $pago->MP_PAGO_FECHAEMISION = date('Y-m-d\TH:i:s');
             $pago->MP_PAGO_NRO = $datos_pago->correlativo;
             $pago->MP_PAGO_OBS = $datos_pago->observacion;
-            $pago->MP_SERCOM_ID = $serie->id();
+            $pago->MP_SERCOM_ID = $datos_pago->serie_id;
             $pago->MP_TIPCOM_ID = 5; //TIPO DE NOTA DE CREDITO
             $pago->USU_ID = Auth::user()->id();
             $pago->MP_CRO_ID = isset($pago_aux->CronogramaPago)?$cronograma->id():null;
             $pago->MP_CONPAGO_ID = isset($pago_aux->ConceptoPago)?$pago_aux->ConceptoPago->id():null;
             $pago->MP_PAGO_MONTO = -$datos_pago->monto;
-            $pago->MP_PAGO_SERIE = $serie->serie();
+            $pago->MP_PAGO_SERIE = $datos_pago->serie;
             $pago->MP_MAT_ID = isset($pago_aux->CronogramaPago)?$cronograma->matriculaId():$pago_aux->matricula_id();
             $pago->MP_PAGO_LEE_MONTO= 'Cero y 00/100 Soles';
             $pago->save();
@@ -147,12 +148,14 @@ class PagosController extends Controller
         foreach ($aux as $pago_aux) {
             $pago=[
                 'pago_id'=>$pago_aux->id(),
-                'concepto'=>$pago_aux->ConceptoPago->Concepto->concepto(),
-                'numero'=>$pago_aux->serie().' - '.$pago_aux->numero(),
+                'serie'=>$pago_aux->serie(),
+                'serie_id'=>$pago_aux->serie_id(),
+                'numero'=>$pago_aux->numero(),
                 'tipo'=>$pago_aux->TipoComprobante->tipo(),
                 'monto'=>$pago_aux->monto(),
                 'fecha'=>$pago_aux->fecha(),
                 'usuario'=>$pago_aux->Usuario->apellidos().', '.$pago_aux->Usuario->nombres(),
+                'concepto'=>$pago_aux->ConceptoPago->Concepto->concepto(),
             ];
             array_push($pagos, $pago);
         }

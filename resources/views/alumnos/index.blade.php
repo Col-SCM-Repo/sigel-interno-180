@@ -32,8 +32,8 @@
                                     <td >@{{alumno.dni}}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn btn-light" v-on:click="abrirModalMatriculas(alumno)"><i class="far fa-eye"></i> Ver Matriculas</button>
-                                            <button type="button" class="btn btn-light" v-on:click="editarAlumno(alumno.alumno_id)"><i class="far fa-edit"></i> Editar</button>
+                                            <button type="button" class="btn btn-dark" v-on:click="abrirModalMatriculas(alumno)"><i class="far fa-eye"></i> Ver Matriculas</button>
+                                            <button type="button" class="btn btn-secondary" v-on:click="editarAlumno(alumno.alumno_id)"><i class="far fa-edit"></i> Editar</button>
                                         </div>
                                     </td>
                                   </tr>
@@ -82,9 +82,9 @@
                                                 <td >@{{matricula.estado}}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <button type="button" class="btn btn-light" v-on:click="verCronograma(matricula.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
-                                                        <button type="button" class="btn btn-dark" v-on:click="abrirModalOtrosPagos(matricula)"><i class="fas fa-money-check-alt"></i> Otros Pagos</button>
-                                                        <button type="button" class="btn btn-ligth" v-on:click="editarMatricula(matricula.matricula_id)"><i class="far fa-edit"></i> Editar</button>
+                                                        <button type="button" class="btn btn-dark" v-on:click="verCronograma(matricula.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                                        <button type="button" class="btn btn-secondary" v-on:click="abrirModalOtrosPagos(matricula)"><i class="fas fa-money-check-alt"></i> Otros Pagos</button>
+                                                        <button type="button" class="btn btn-light" v-on:click="editarMatricula(matricula.matricula_id)"><i class="far fa-edit"></i> Editar</button>
                                                     </div>
                                                 </td>
                                             </tr>

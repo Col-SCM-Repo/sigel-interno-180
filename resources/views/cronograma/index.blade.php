@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-light" v-on:click="generarFichaMatricula"><i class="fas fa-file-export" ></i> F. de Matícula</button>
+                                        <button type="button" class="btn btn-dark" v-on:click="generarFichaMatricula"><i class="fas fa-file-export" ></i> F. de Matícula</button>
                                         <button  type="button" class="btn btn-secondary" v-on:click="generarCronograma"><i class="far fa-calendar-alt"></i> Cro. Pagos</button>
                                         <button  type="button" class="btn btn-light" v-on:click="editarCronograma">
                                             <template v-if="!editar">
@@ -125,7 +125,7 @@
                                 <tr v-for="(pago,i) in otros_pagos">
                                     <th scope="row">@{{i+1}}</th>
                                     <td >@{{pago.concepto}}</td>
-                                    <td >@{{pago.numero}}</td>
+                                    <td >@{{pago.serie+' - '+pago.numero}}</td>
                                     <td >@{{pago.tipo}}</td>
                                     <td >S/ @{{pago.monto}}</td>
                                     <td >@{{pago.fecha}}</td>
@@ -175,7 +175,7 @@
                                         <tbody>
                                         <tr v-for="(pago,i) in pagos">
                                             <th scope="row">@{{i+1}}</th>
-                                            <td >@{{pago.numero}}</td>
+                                            <td >@{{pago.serie +' - ' +pago.numero}}</td>
                                             <td >@{{pago.tipo}}</td>
                                             <td >S/ @{{pago.monto}}</td>
                                             <td >@{{pago.fecha}}</td>
@@ -224,13 +224,24 @@
                                     <div class="form-group row">
                                         <label for="comprobante"class="col-sm-4 col-form-label">Tip. Comprobante</label>
                                         <div class="col-sm-8">
-                                            <input type="text"  class="form-control" id="comprobante" value="BOLETA ELECTRÓNICA" disabled>
+                                            <select class="form-control" name="" id="" v-model="tipo_comprobante">
+                                                <option value="">SELECIONE TIPO</option>
+                                                <option value="1">BOLETA ELECTRÓNICA</option>
+                                                <option value="2">FACTURA ELECTRÓNICA</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="serie" class="col-sm-4 col-form-label">Serie</label>
                                         <div class="col-sm-8">
-                                            <input type="text"  class="form-control" id="serie" value="{{Auth::user()->SerieComprobante()->get()->last()->serie()}}" disabled>
+                                            <input v-if="tipo_comprobante==1" type="text"  class="form-control" :value="serie" disabled>
+                                            <input v-else type="text"  class="form-control" id="serie" value="" >
+                                        </div>
+                                    </div>
+                                    <div  v-if="tipo_comprobante==2" class="form-group row">
+                                        <label for="serie" class="col-sm-4 col-form-label">Número</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  class="form-control" id="numeracion" value="" >
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -242,8 +253,10 @@
                                     <div class="form-group row">
                                         <label for="fecha" class="col-sm-4 col-form-label">Fecha</label>
                                         <div class="col-sm-8">
-                                            <input type="text"  class="form-control" id="fecha" :value="fecha_pago" disabled>
+                                            <input v-if="tipo_comprobante==1" type="text"  class="form-control" id="fecha" :value="fecha_pago" disabled>
+                                            <input v-else type="date"  class="form-control" id="fecha" v-model="fecha_pago" >
                                         </div>
+
                                     </div>
                                     <div class="form-group row">
                                         <label for="saldo" class="col-sm-4 col-form-label">Saldo</label>
@@ -299,7 +312,7 @@
                                     <div class="form-group row">
                                         <label for="serie" class="col-sm-4 col-form-label">Serie</label>
                                         <div class="col-sm-8">
-                                            <input type="text"  class="form-control" id="serie" value="{{Auth::user()->SerieComprobante()->get()->last()->serie()}}" disabled>
+                                            <input type="text"  class="form-control" id="serie" v-model="pago_seleccionado.serie" >
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -334,6 +347,7 @@
         </div>
     </div>
     <input type="text" name="" id="matricula_id" value="{{$matricula_id}}" hidden>
+    <input type="text" name="" id="serie_empleado" value="{{Auth::user()->SerieComprobante()->get()->last()->serie()}}" hidden>
 </div>
 @endsection
 @section('scripts')

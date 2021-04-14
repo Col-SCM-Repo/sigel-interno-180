@@ -87,4 +87,8 @@ class Pago extends Model
     {
         return $this->MP_MAT_ID;
     }
+    public function serie_id()
+    {
+        return $this->MP_SERCOM_ID;
+    }
 }

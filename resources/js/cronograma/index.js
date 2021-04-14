@@ -17,7 +17,9 @@ var cronograma = new Vue({
         matricula:'',
         pago_seleccionado:[],
         otros_pagos:[],
-        editar: false
+        editar: false,
+        tipo_comprobante:1,
+        serie: $("#serie_empleado").val()
     },
     methods: {
         obtenerDatos:function () {
@@ -82,14 +84,23 @@ var cronograma = new Vue({
             });
         },
         guardarPago:function(){
+            let serie_aux ='' ;
+            if (this.tipo_comprobante==1) {
+                serie_aux = this.serie;
+            }else{
+                serie_aux = $('#serie').val();
+            }
             let url = this.url_principal +'/pagos/guardar_pago';
             let data = {
+                'serie': serie_aux,
+                'numeracion': $('#numeracion').val(),
                 'cronograma_id': this.pagar_crono.cronograma_id,
                 'fecha': this.fecha_pago,
                 'observacion': this.observacion_pago,
                 'monto': this.monto_pago,
                 'saldo': this.saldo,
             };
+            console.log(data);
             axios.post(url, data).then((response) => {
                 if(response.data!='false'){
                     window.open(this.url_principal+'/reportes/boleta/'+response.data)

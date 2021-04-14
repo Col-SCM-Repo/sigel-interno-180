@@ -91,7 +91,7 @@ class ApoderadosController extends Controller
             $apoderado->MP_APO_DIRECCION =mb_strtoupper($familiar->direccion);
             $apoderado->MP_APO_CELULAR =$familiar->celular;
             $apoderado->MP_APO_EMAIL =$familiar->correo;
-            $apoderado->MP_APO_FECHANAC =date('Y-m-d',strtotime($familiar->fecha_nacimiento));
+            $apoderado->MP_APO_FECHANAC =date('Y-m-d\TH:i:s',strtotime($familiar->fecha_nacimiento));
             $apoderado->MP_APO_SEXO =$familiar->genero;
             $apoderado->MP_APO_VIVE =$familiar->vive;
             $apoderado->MP_EC_ID =$familiar->estado_civil_id;

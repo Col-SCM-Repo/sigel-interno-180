@@ -57,8 +57,8 @@
                                         <td >@{{alumno.direccion}}</td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-light" v-on:click="verCronograma(alumno.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
-                                                <button type="button" class="btn btn-light" v-on:click="editarAlumno(alumno.alumno_id)"><i class="far fa-edit"></i> Editar</button>
+                                                <button type="button" class="btn btn-dark" v-on:click="verCronograma(alumno.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                                <button type="button" class="btn btn-secundary" v-on:click="editarAlumno(alumno.alumno_id)"><i class="far fa-edit"></i> Editar</button>
                                             </div>
                                         </td>
                                     </tr>
