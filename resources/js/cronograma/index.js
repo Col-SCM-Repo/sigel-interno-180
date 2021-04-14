@@ -159,12 +159,13 @@ var cronograma = new Vue({
                 'monto': monto
             };
             axios.post(url, data).then((response) => {
-                showToastr('Correcto','Se modifico el monto correctamente.', 'error');
+                showToastr('Correcto','Se modifico el monto correctamente.', 'success');
             }).catch((error) => {
+                showToastr('Error','Ocurrio un error inesperado. POR FAVOR RECARGUE LA PÁGINA', 'error');
+
             }).finally((response) => {
 
             });
-
         }
     },
     beforeMount: function(){
