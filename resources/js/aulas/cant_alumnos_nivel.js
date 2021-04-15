@@ -53,7 +53,10 @@ var pagos = new Vue({
             let data= {
                 'secciones': this.secciones,
                 'nivel': nivel,
-                'anio': anio
+                'anio': anio,
+                'total_vacantes' : this.total_vacantes,
+                'vacantes_disponibles' : this.vacantes_disponibles,
+                'vacantes_ocupadas' : this.vacantes_ocupadas,
             }
             axios.post(url,data, { responseType: 'blob' }).then((response) => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));

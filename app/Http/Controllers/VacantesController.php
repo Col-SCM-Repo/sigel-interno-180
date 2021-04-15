@@ -46,8 +46,8 @@ class VacantesController extends Controller
                 'grado'=> $vacante->Grado->grado(),
                 'seccion'=> $vacante->Seccion->seccion(),
                 'total_vacantes'=> $vacante->total_vacantes(),
-                'vacantes_ocupadas'=> $vacante->vacantes_ocupadas(),
-                'vacantes_disponibles'=> $vacante->vacantes_disponibles(),
+                'vacantes_ocupadas'=> count($vacante->Matriculas->where('MP_MAT_ESTADO','!=','RETIRADO')),
+                'vacantes_disponibles'=>$vacante->total_vacantes()- count($vacante->Matriculas->where('MP_MAT_ESTADO','!=','RETIRADO')),
             ];
             array_push($secciones,$seccion);
         }
