@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Alumno;
 use App\Helpers\OrdenarArray;
 use App\Matricula;
-use App\Structure\Services\Concreties\AlumnoService;
+use App\Structure\Services\AlumnoService;
 use Illuminate\Http\Request;
 
 class AlumnosController extends Controller

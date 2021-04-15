@@ -2,8 +2,7 @@
 namespace App\Structure\Repository\Concreties;
 
 use App\Alumno;
-use App\Structure\Repository\Abstracts\IAlumnoRepository;
-class AlumnoRepository extends Alumno implements  IAlumnoRepository
+class AlumnoRepository extends Alumno
 {
     public function BuscarPorId($alumno_id)
     {

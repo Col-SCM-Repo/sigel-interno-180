@@ -1,11 +1,10 @@
 <?php
-namespace App\Structure\Services\Concreties;
+namespace App\Structure\Services;
 
 use App\Mappers\AlumnoMapper;
-use App\Structure\Repository\Concreties\AlumnoRepository;
-use App\Structure\Services\Abstracts\IAlumnoService;
+use App\Structure\Repository\AlumnoRepository;
 
-class AlumnoService  implements  IAlumnoService
+class AlumnoService
 {
     private $_alumnoRepository ;
     private $_alumnoMapper ;
