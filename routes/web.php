@@ -31,6 +31,8 @@ Route::prefix('alumnos')->middleware('auth')->group(function () {
     Route::post('/guardar', ['uses' => 'AlumnosController@Guardar', 'as' => 'datos.alumno.por.id.alumnos']);
     #
     Route::post('/buscar_por_dni', ['uses' => 'AlumnosController@ObtenerAlumnoPorDNI', 'as' => 'buscar.alumno.por.dni.alumnos']);
+    #morosos
+    Route::get('/deudores', ['uses' => 'AlumnosController@VistaMorosos', 'as' => 'vista.morosos.alumnos']);
 });
 //Routes Matriculas
 Route::prefix('matriculas')->middleware('auth')->group(function () {
@@ -133,6 +135,7 @@ Route::prefix('ocupacion')->middleware('auth')->group(function () {
 Route::prefix('conceptos')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_conceptos_anio_actual', ['uses' => 'ConceptosController@ObtenerConceptosDelAnioActual', 'as' => 'obtener.por.anio.actual.concepto']);
+    Route::post('/obtener_conceptos_anio_nivel', ['uses' => 'ConceptosController@ObtenerConceptosPorAnioIDNivel', 'as' => 'obtener.por.anio.nivel.concepto']);
 });
 Route::prefix('ie_procedencia')->middleware('auth')->group(function () {
     #Dashboard

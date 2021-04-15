@@ -126,4 +126,9 @@ class AlumnosController extends Controller
     {
         return response()->json($this->_alumnoService->BuscarPorDNI($request->alumno_dni));
     }
+    //morosos
+    public function VistaMorosos()
+    {
+        return view('alumnos.morosos');
+    }
 }
