@@ -69,6 +69,9 @@
                                     <a class="dropdown-item" href="{{ route('vista.por.nivel.anio_actual.vacantes') }}">
                                         Alumnos Por Año y Nivel
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('vista.morosos.alumnos') }}">
+                                        Alumnos Morosos
+                                    </a>
                                 </div>
                             </li>
                         @endguest

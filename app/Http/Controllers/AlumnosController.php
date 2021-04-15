@@ -148,4 +148,9 @@ class AlumnosController extends Controller
         ];
         return $alumno;
     }
+    //morosos
+    public function VistaMorosos()
+    {
+        return view('alumnos.morosos');
+    }
 }

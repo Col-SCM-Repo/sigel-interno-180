@@ -17,7 +17,8 @@ mix.js('resources/js/app.js', 'public/js')
 mix.js('resources/js/cronograma/index.js', 'public/js/cronograma');
 //alumnos
 mix.js('resources/js/alumnos/index.js', 'public/js/alumnos')
-    .js('resources/js/alumnos/editar.js', 'public/js/alumnos');
+    .js('resources/js/alumnos/editar.js', 'public/js/alumnos')
+    .js('resources/js/alumnos/morosos.js', 'public/js/alumnos');
 //aulas
 mix.js('resources/js/aulas/index.js', 'public/js/aulas')
    .js('resources/js/aulas/cant_alumnos_nivel.js', 'public/js/aulas');

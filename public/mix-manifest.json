@@ -1,6 +1,7 @@
 {
     "/js/alumnos/editar.js": "/js/alumnos/editar.js",
     "/js/alumnos/index.js": "/js/alumnos/index.js",
+    "/js/alumnos/morosos.js": "/js/alumnos/morosos.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/aulas/cant_alumnos_nivel.js": "/js/aulas/cant_alumnos_nivel.js",

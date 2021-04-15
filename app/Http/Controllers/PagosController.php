@@ -161,5 +161,9 @@ class PagosController extends Controller
         }
         return $pagos;
     }
+    public function ObtenerAlumnosMoross(Request $request)
+    {
+        return response()->json();
+    }
 }
 

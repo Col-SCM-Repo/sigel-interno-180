@@ -43,6 +43,7 @@ class VacantesController extends Controller
                         ->orderBy('MP_GRAD_ID')->orderBy('MP_SEC_ID')->get();
         foreach ($aux as $vacante) {
             $seccion = [
+                'id'=> $vacante->id(),
                 'grado'=> $vacante->Grado->grado(),
                 'seccion'=> $vacante->Seccion->seccion(),
                 'total_vacantes'=> $vacante->total_vacantes(),
