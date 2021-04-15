@@ -4,27 +4,21 @@ namespace App\Http\Controllers;
 
 use App\AnioAcademico;
 use App\Helpers\OrdenarArray;
+use App\Structure\Services\AnioAcademicoService;
 use Illuminate\Http\Request;
 
 class AnioAcademicoController extends Controller
 {
     protected $ordenarArray;
-    public function __construct(OrdenarArray $ordenarArray)
+    protected $_anioAcademicoService;
+    public function __construct(OrdenarArray $ordenarArray,
+                                AnioAcademicoService $_anioAcademicoService)
     {
         $this->ordenarArray=$ordenarArray;
+        $this->_anioAcademicoService=$_anioAcademicoService;
     }
     public function ObtenerAnios()
     {
-        $anios=[];
-        $anios_aux = AnioAcademico::all();
-        foreach ($anios_aux  as $anio_aux) {
-            $anio=[
-                'id'=>$anio_aux->id(),
-                'nombre'=>$anio_aux->nombre(),
-                'estado'=>$anio_aux->estado(),
-            ];
-            array_push($anios, $anio);
-        }
-        return response()->json($this->ordenarArray->Descendete($anios, 'nombre') );
+        return response()->json($this->ordenarArray->Descendete($this->_anioAcademicoService->ObtenerTodos(), 'nombre') );
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App\Structure\Repository\Concreties;
+namespace App\Structure\Repository;
 
 use App\Alumno;
 class AlumnoRepository extends Alumno
@@ -11,5 +11,9 @@ class AlumnoRepository extends Alumno
     public function BuscarPorNombresApellidosDNI($texto)
     {
         return $this::where('MP_ALU_NOMBRES','like','%'.$texto.'%')->orWhere('MP_ALU_APELLIDOS','like','%'.$texto.'%')->orWhere('MP_ALU_DNI','like','%'.$texto.'%')->get();
+    }
+    public function BuscarPorDNI($dni)
+    {
+        return $this::where('MP_ALU_DNI',$dni)->first();
     }
 }

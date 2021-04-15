@@ -17,6 +17,7 @@ class AnioAcademico extends Model
     protected $fillable = [
         'MP_ANIO_ID',
         'MP_ANIO_FECHAINICIO',
+        'MP_ANIO_FECHAFIN',
         'MP_ANIO_DESCRIPCION',
         'MP_ANIO_NOMBRE',
         'MP_ANIO_ESTADO',

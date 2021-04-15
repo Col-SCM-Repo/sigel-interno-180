@@ -25,8 +25,7 @@ class AlumnosController extends Controller
     public function ObtenerAlumnos(Request $request)
     {
         $texto = mb_strtoupper($request->cadena);
-        $alumnos =$this->_alumnoService->BuscarPorNombresApellidosDNI($texto);
-        return response()->json($this->ordenarArray->Descendete($alumnos,"apellidos"));
+        return response()->json($this->ordenarArray->Ascendente($this->_alumnoService->BuscarPorNombresApellidosDNI($texto),"apellidos"));
     }
     public function ObtenerAlumnosPorAula(Request $request)
     {
@@ -125,22 +124,6 @@ class AlumnosController extends Controller
     }
     public function ObtenerAlumnoPorDNI(Request $request)
     {
-        $aux=Alumno::where('MP_ALU_DNI',$request->alumno_dni)->first();
-        $alumno = [
-            'id'=>$aux->id(),
-            'nombres'=>$aux->nombres(),
-            'apellidos'=>$aux->apellidos(),
-            'direccion'=>$aux->direccion(),
-            'celular'=>$aux->celular(),
-            'telefono'=>$aux->telefono(),
-            'genero'=>$aux->genero(),
-            'correo'=>$aux->correo(),
-            'fecha_nacimiento'=>date('Y-m-d', strtotime($aux->fecha_nacimiento())),
-            'dni'=>$aux->dni(),
-            'pais_id'=>$aux->pais_id(),
-            'distrito_nacimiento'=>$aux->distrito_nacimiento(),
-            'distrito_residencia'=>$aux->distrito_residencia(),
-        ];
-        return $alumno;
+        return response()->json($this->_alumnoService->BuscarPorDNI($request->alumno_dni));
     }
 }

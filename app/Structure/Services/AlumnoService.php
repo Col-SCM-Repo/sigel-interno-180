@@ -15,8 +15,10 @@ class AlumnoService
     }
     public function BuscarPorNombresApellidosDNI($texto)
     {
-        $listaAlumnmos = $this->_alumnoRepository->BuscarPorNombresApellidosDNI($texto);
-        $listAlumnosViewModel = $this->_alumnoMapper->ListModelToViewModel($listaAlumnmos);
-        return $listAlumnosViewModel;
+        return $this->_alumnoMapper->ListModelToViewModel($this->_alumnoRepository->BuscarPorNombresApellidosDNI($texto));;
+    }
+    public function BuscarPorDNI($dni)
+    {
+        return $this->_alumnoMapper->ModelToViewModel($this->_alumnoRepository->BuscarPorDNI($dni));
     }
 }
