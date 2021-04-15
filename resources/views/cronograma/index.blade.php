@@ -235,7 +235,7 @@
                                         <label for="serie" class="col-sm-4 col-form-label">Serie</label>
                                         <div class="col-sm-8">
                                             <input v-if="tipo_comprobante==1" type="text"  class="form-control" :value="serie" disabled>
-                                            <input v-else type="text"  class="form-control" id="serie" value="" >
+                                            <input v-else type="text"  class="form-control" id="serie" :value="serie_factura" >
                                         </div>
                                     </div>
                                     <div  v-if="tipo_comprobante==2" class="form-group row">
