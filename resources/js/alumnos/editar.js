@@ -161,4 +161,3 @@ var editar = new Vue({
         this.obtenerFamiliares();
     }
 });
-

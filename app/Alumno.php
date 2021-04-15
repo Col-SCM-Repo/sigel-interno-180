@@ -99,4 +99,3 @@ class Alumno extends Model
         return $this->MP_REL_ID;
     }
 }
-

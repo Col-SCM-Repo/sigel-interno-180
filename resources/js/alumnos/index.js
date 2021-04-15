@@ -38,7 +38,7 @@ var pagos = new Vue({
         verMatriculas:function(){
             let url = this.url_principal +'/matriculas/obtener_matriculas_por_alumno';
             let data={
-                'alumno_id':this.alumno_seleccionado.alumno_id,
+                'alumno_id':this.alumno_seleccionado.id,
             }
             axios.post(url,data).then((response) => {
                 this.matriculas = response.data;
@@ -100,7 +100,7 @@ var pagos = new Vue({
             }
         },
         editarMatricula:function(matricula_id){
-            window.open(this.url_principal+'/matriculas/nueva/'+this.alumno_seleccionado.alumno_id+'/'+matricula_id)
+            window.open(this.url_principal+'/matriculas/nueva/'+this.alumno_seleccionado.id+'/'+matricula_id)
         }
     },
     created: function(){

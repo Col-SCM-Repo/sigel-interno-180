@@ -28,12 +28,12 @@
                                 <tbody>
                                   <tr v-for="(alumno,i) in alumnos">
                                     <th scope="row">@{{i+1}}</th>
-                                    <td >@{{alumno.nombres}}</td>
+                                    <td >@{{alumno.apellidos+', '+ alumno.nombres}}</td>
                                     <td >@{{alumno.dni}}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <button type="button" class="btn btn-dark" v-on:click="abrirModalMatriculas(alumno)"><i class="far fa-eye"></i> Ver Matriculas</button>
-                                            <button type="button" class="btn btn-secondary" v-on:click="editarAlumno(alumno.alumno_id)"><i class="far fa-edit"></i> Editar</button>
+                                            <button type="button" class="btn btn-secondary" v-on:click="editarAlumno(alumno.id)"><i class="far fa-edit"></i> Editar</button>
                                         </div>
                                     </td>
                                   </tr>
