@@ -35,6 +35,9 @@
                                         <button type="button" class="btn btn-light" v-on:click="descargarPDF" style="color: red"><i class="fas fa-file-pdf " ></i> Exportar PDF</button>
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <h4><b>Total de alumnos matriculados en @{{nivel_id==1?'PRIMARIA':(nivel_id==2?'SECUNDARIA':'')}} : @{{vacantes_ocupadas}}</b> </h4>
+                                </div>
                             </div>
                             <table class="table table-striped">
                                 <thead>

@@ -19,7 +19,8 @@ var cronograma = new Vue({
         otros_pagos:[],
         editar: false,
         tipo_comprobante:1,
-        serie: $("#serie_empleado").val()
+        serie: $("#serie_empleado").val(),
+        serie_factura : 'E001'
     },
     methods: {
         obtenerDatos:function () {

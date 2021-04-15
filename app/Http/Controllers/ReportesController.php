@@ -120,7 +120,7 @@ class ReportesController extends Controller
     }
     public function DescargarListaSecciones(Request $request)
     {
-        $pdf = PDF::loadView('reportes.pdf.secciones_nivel_anio', ['secciones'=>$request->secciones, 'nivel'=>$request->nivel, 'anio'=>$request->anio] )->setPaper('a4');
+        $pdf = PDF::loadView('reportes.pdf.secciones_nivel_anio', ['secciones'=>$request->secciones, 'nivel'=>$request->nivel, 'anio'=>$request->anio, 'total_vacantes'=>$request->total_vacantes, 'vacantes_disponibles'=>$request->vacantes_disponibles, 'vacantes_ocupadas'=>$request->vacantes_ocupadas] )->setPaper('a4');
         return $pdf->stream('ficha_matricula.pdf');
     }
     //mover a helpers
