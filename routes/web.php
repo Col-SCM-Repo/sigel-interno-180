@@ -88,6 +88,7 @@ Route::prefix('reportes')->middleware('auth')->group(function () {
     Route::get('/descargar_ficha_matricula/{matricula_id}', ['uses' => 'ReportesController@DescargarFichaMatricula', 'as' => 'ficha.matricula.reportes']);
     Route::get('/descargar_cronograma/{matricula_id}', ['uses' => 'ReportesController@DescargarCronograma', 'as' => 'cronograma.reportes']);
     Route::post('/descargar_lista_secciones', ['uses' => 'ReportesController@DescargarListaSecciones', 'as' => 'descargar.lista.secciones.reprtes']);
+    Route::post('/descargar_lista_alumno_morosos', ['uses' => 'ReportesController@DescargarListaAlumnosMorosos', 'as' => 'descargar.lista.alumnos.morosos.reprtes']);
 });
 //Routes anios
 Route::prefix('paises')->middleware('auth')->group(function () {

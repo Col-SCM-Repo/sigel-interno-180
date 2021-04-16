@@ -71,17 +71,32 @@ var pagos = new Vue({
                     'estado':this.estado,
                 };
                 console.log(data);
-                axios.post(url,data).then((reponse)=>{
-                    //this.alumnos = response.data;
-                }).catch((error)=>{
-
-                }).finally(()=>{
-
+                axios.post(url,data).then((response) => {
+                    this.alumnos = response.data;
+                }).catch((error) => {
+                }).finally((response) => {
+                    this.alumnos.forEach(alumno => {
+                        this.total_monto+= parseFloat(alumno.monto);
+                    });
                 });
             }
         },
         descargarPDF:function(){
-
+            var url = this.url_principal + '/reportes/descargar_lista_alumno_morosos' ;
+            let nombre_archivo = 'Lista de Alumnos Morosos.pdf';
+            let data= {
+                'alumnos': this.alumnos,
+                'total_monto': this.total_monto,
+            }
+            axios.post(url,data, { responseType: 'blob' }).then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', nombre_archivo);
+                document.body.appendChild(link);
+                link.click();
+            }).catch((error) => {
+            });
         },
         restablecerValores:function () {
             this.nivel_id = '';

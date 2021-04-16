@@ -70,15 +70,21 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- <tr v-for="seccion in secciones">
-                                        <th scope="row">@{{seccion.grado}}</th>
-                                        <td >@{{seccion.seccion}}</td>
-                                        <td >@{{seccion.total_vacantes}}</td>
-                                        <td >@{{seccion.vacantes_disponibles}}</td>
-                                        <td >@{{seccion.vacantes_ocupadas}} </td>
-                                    </tr> --}}
+                                    <tr v-for="alumno in alumnos">
+                                        <th scope="row">@{{alumno.matricula_id}}</th>
+                                        <td>@{{alumno.apellidos+', '+alumno.nombres}}</td>
+                                        <td>@{{alumno.aula+' - '+alumno.nivel}}</td>
+                                        <td>@{{alumno.concepto}}</td>
+                                        <td>@{{alumno.monto}} </td>
+                                        <td>@{{alumno.estado}} </td>
+                                    </tr>
                                 </tbody>
-
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4">Total</td>
+                                        <td>@{{total_monto}}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

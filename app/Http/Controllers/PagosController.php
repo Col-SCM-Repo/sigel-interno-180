@@ -8,6 +8,7 @@ use App\Helpers\NumeroATexto;
 use App\Helpers\OrdenarArray;
 use App\Pago;
 use App\Seccion;
+use App\Vacante;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -167,15 +168,15 @@ class PagosController extends Controller
     }
     public function ObtenerAlumnosMorosos(Request $request)
     {
-        dd($request);
+        //dd($request);
         $anio_id = $request->anio_id;
         $nivel_id = $request->nivel_id;
         $seccion_id = $request->seccion_id;
         $concepto_id = $request->concepto_id;
         $estado = $request->estado==0?'TODOS':($request->estado==1?'SALDO':($request->estado==2?'PENDIENTE':''));
-        $alumnos = array();
+        $alumnos = [];
         if ($seccion_id == 0) {
-            $secciones = Seccion::where('MP_ANIO_ID', $anio_id)->where('MP_NIV_ID', $nivel_id)->get();
+            $secciones = Vacante::where('MP_ANIO_ID', $anio_id)->where('MP_NIV_ID', $nivel_id)->get();
             foreach ($secciones as $seccion) {
                 foreach ($seccion->Matriculas as $matricula) {
                     foreach ($matricula->CronogramaPagos as $cronograma) {
@@ -186,36 +187,142 @@ class PagosController extends Controller
                                     'matricula_id'=>$matricula->id(),
                                     'apellidos'=>$matricula->Alumno->apellidos(),
                                     'nombres'=>$matricula->Alumno->nombres(),
-                                    'aula'=>$seccion->Alumno->nombres(),
+                                    'aula'=>$seccion->Grado->grado() . '° '.$seccion->Seccion->seccion(),
+                                    'nivel'=>$seccion->Nivel->nivel(),
+                                    'concepto'=>$cronograma->ConceptoPago->Concepto->concepto(),
+                                    'monto'=>self::CalcularSaldo($cronograma),
+                                    'estado'=>$cronograma->estado(),
                                 ];
+                                //
+                                array_push($alumnos, $alumno);
                             } else {
-                                if($cronograma->ConceptoPago->concepto_id()==$concepto_id && ($cronograma->estado()=='PENDIENTE'||$cronograma->estado()=='SALDO')){
+                                if($cronograma->ConceptoPago->id()==$concepto_id && ($cronograma->estado()=='PENDIENTE'||$cronograma->estado()=='SALDO')){
                                     $alumno = [
-
+                                        'id'=>$matricula->Alumno->id(),
+                                        'matricula_id'=>$matricula->id(),
+                                        'apellidos'=>$matricula->Alumno->apellidos(),
+                                        'nombres'=>$matricula->Alumno->nombres(),
+                                        'aula'=>$seccion->Grado->grado() . '° '.$seccion->Seccion->seccion(),
+                                        'nivel'=>$seccion->Nivel->nivel(),
+                                        'concepto'=>$cronograma->ConceptoPago->Concepto->concepto(),
+                                        'monto'=>self::CalcularSaldo($cronograma),
+                                        'estado'=>$cronograma->estado(),
                                     ];
+                                    array_push($alumnos, $alumno);
                                 }
                             }
-                            array_push($alumnos, $alumno);
                         }else {
                             if ($concepto_id==0 && $cronograma->estado()==$estado) {
                                 $alumno = [
-
+                                    'id'=>$matricula->Alumno->id(),
+                                    'matricula_id'=>$matricula->id(),
+                                    'apellidos'=>$matricula->Alumno->apellidos(),
+                                    'nombres'=>$matricula->Alumno->nombres(),
+                                    'aula'=>$seccion->Grado->grado() . '° '.$seccion->Seccion->seccion(),
+                                    'nivel'=>$seccion->Nivel->nivel(),
+                                    'concepto'=>$cronograma->ConceptoPago->Concepto->concepto(),
+                                    'monto'=>self::CalcularSaldo($cronograma),
+                                    'estado'=>$cronograma->estado(),
                                 ];
+                                array_push($alumnos, $alumno);
                             } else {
-                                if($cronograma->ConceptoPago->concepto_id()==$concepto_id && $cronograma->estado()==$estado){
+                                if($cronograma->ConceptoPago->id()==$concepto_id && $cronograma->estado()==$estado){
                                     $alumno = [
-
+                                        'id'=>$matricula->Alumno->id(),
+                                        'matricula_id'=>$matricula->id(),
+                                        'apellidos'=>$matricula->Alumno->apellidos(),
+                                        'nombres'=>$matricula->Alumno->nombres(),
+                                        'aula'=>$seccion->Grado->grado() . '° '.$seccion->Seccion->seccion(),
+                                        'nivel'=>$seccion->Nivel->nivel(),
+                                        'concepto'=>$cronograma->ConceptoPago->Concepto->concepto(),
+                                        'monto'=>self::CalcularSaldo($cronograma),
+                                        'estado'=>$cronograma->estado(),
                                     ];
+                                    array_push($alumnos, $alumno);
                                 }
                             }
-                            array_push($alumnos, $alumno);
                         }
                     }
                 }
             }
         }else {
-            $seccion = Seccion::find($seccion_id);
+            $seccion = Vacante::find($seccion_id);
+            //dd($seccion);
+            foreach ($seccion->Matriculas as $matricula) {
+                foreach ($matricula->CronogramaPagos as $cronograma) {
+                    if ($estado =='TODOS') {
+                        if ($concepto_id==0&&($cronograma->estado()=='PENDIENTE'||$cronograma->estado()=='SALDO')) {
+                            $alumno = [
+                                'id'=>$matricula->Alumno->id(),
+                                'matricula_id'=>$matricula->id(),
+                                'apellidos'=>$matricula->Alumno->apellidos(),
+                                'nombres'=>$matricula->Alumno->nombres(),
+                                'aula'=>$seccion->Grado->grado() . '° '.$seccion->Seccion->seccion(),
+                                'nivel'=>$seccion->Nivel->nivel(),
+                                'concepto'=>$cronograma->ConceptoPago->Concepto->concepto(),
+                                'monto'=>self::CalcularSaldo($cronograma),
+                                'estado'=>$cronograma->estado(),
+                            ];
+                            array_push($alumnos, $alumno);
+                        } else {
+                            if($cronograma->ConceptoPago->id()==$concepto_id && ($cronograma->estado()=='PENDIENTE'||$cronograma->estado()=='SALDO')){
+                                $alumno = [
+                                    'id'=>$matricula->Alumno->id(),
+                                    'matricula_id'=>$matricula->id(),
+                                    'apellidos'=>$matricula->Alumno->apellidos(),
+                                    'nombres'=>$matricula->Alumno->nombres(),
+                                    'aula'=>$seccion->Grado->grado() . '° '.$seccion->Seccion->seccion(),
+                                    'nivel'=>$seccion->Nivel->nivel(),
+                                    'concepto'=>$cronograma->ConceptoPago->Concepto->concepto(),
+                                    'monto'=>self::CalcularSaldo($cronograma),
+                                    'estado'=>$cronograma->estado(),
+                                ];
+                                array_push($alumnos, $alumno);
+                            }
+                        }
+                    }else {
+                        if ($concepto_id==0 && $cronograma->estado()==$estado) {
+                            $alumno = [
+                                'id'=>$matricula->Alumno->id(),
+                                'matricula_id'=>$matricula->id(),
+                                'apellidos'=>$matricula->Alumno->apellidos(),
+                                'nombres'=>$matricula->Alumno->nombres(),
+                                'aula'=>$seccion->Grado->grado() . '° '.$seccion->Seccion->seccion(),
+                                'nivel'=>$seccion->Nivel->nivel(),
+                                'concepto'=>$cronograma->ConceptoPago->Concepto->concepto(),
+                                'monto'=>self::CalcularSaldo($cronograma),
+                                'estado'=>$cronograma->estado(),
+                            ];
+                            array_push($alumnos, $alumno);
+                        } else {
+                            if($cronograma->ConceptoPago->id()==$concepto_id && $cronograma->estado()==$estado){
+                                $alumno = [
+                                    'id'=>$matricula->Alumno->id(),
+                                    'matricula_id'=>$matricula->id(),
+                                    'apellidos'=>$matricula->Alumno->apellidos(),
+                                    'nombres'=>$matricula->Alumno->nombres(),
+                                    'aula'=>$seccion->Grado->grado() . '° '.$seccion->Seccion->seccion(),
+                                    'nivel'=>$seccion->Nivel->nivel(),
+                                    'concepto'=>$cronograma->ConceptoPago->Concepto->concepto(),
+                                    'monto'=>self::CalcularSaldo($cronograma),
+                                    'estado'=>$cronograma->estado(),
+                                ];
+                                array_push($alumnos, $alumno);
+                            }
+                        }
+                    }
+                }
+            }
         }
         return response()->json($this->ordenarArray->Ascendente($alumnos,'apellidos'));
+    }
+
+    private function CalcularSaldo($cronograma)
+    {
+        $monto = $cronograma->monto();
+        foreach ($cronograma->Pagos as $pago) {
+           $monto -= $pago->monto();
+        }
+        return $monto;
     }
 }

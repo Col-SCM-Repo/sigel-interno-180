@@ -123,6 +123,11 @@ class ReportesController extends Controller
         $pdf = PDF::loadView('reportes.pdf.secciones_nivel_anio', ['secciones'=>$request->secciones, 'nivel'=>$request->nivel, 'anio'=>$request->anio, 'total_vacantes'=>$request->total_vacantes, 'vacantes_disponibles'=>$request->vacantes_disponibles, 'vacantes_ocupadas'=>$request->vacantes_ocupadas] )->setPaper('a4');
         return $pdf->stream('ficha_matricula.pdf');
     }
+    public function DescargarListaAlumnosMorosos(Request $request)
+    {
+        $pdf = PDF::loadView('reportes.pdf.alumnos_morosos', ['alumnos'=>$request->alumnos, 'total_monto'=>$request->total_monto] )->setPaper('a4');
+        return $pdf->download('Lista Alumno Morosos.pdf');
+    }
     //mover a helpers
     private function ObtenerEstadoCivil($id)
     {
