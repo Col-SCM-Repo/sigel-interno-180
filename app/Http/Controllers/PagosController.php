@@ -7,6 +7,7 @@ use App\CronogramaPago;
 use App\Helpers\NumeroATexto;
 use App\Helpers\OrdenarArray;
 use App\Pago;
+use App\Seccion;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,12 @@ use PhpParser\Node\Stmt\Return_;
 class PagosController extends Controller
 {
     private $numeroATexto;
-    public function __construct( NumeroATexto $numeroATexto)
+    private $ordenarArray;
+    public function __construct( NumeroATexto $numeroATexto,
+                                OrdenarArray $ordenarArray)
     {
         $this->numeroATexto=$numeroATexto;
+        $this->ordenarArray=$ordenarArray;
     }
     public function ObtenerPagosPorCronogramaId(Request $request)
     {
@@ -58,7 +62,7 @@ class PagosController extends Controller
             $pago->MP_PAGO_NRO = substr($request->serie,0,1)=='E'?$request->numeracion:$num_serie+1;
             $pago->MP_PAGO_OBS = $request->observacion==null?'':$request->observacion;
             $pago->MP_SERCOM_ID = substr($request->serie,0,1)=='E'? NULL:$serie->id();
-            $pago->MP_TIPCOM_ID = substr($request->serie,0,1)=='E'?5:8; //TIPO DE FACTURA / TIPO DE BOLETA ELECTRONICA
+            $pago->MP_TIPCOM_ID = substr($request->serie,0,1)=='E'?4:8; //TIPO DE FACTURA / TIPO DE BOLETA ELECTRONICA
             $pago->USU_ID = Auth::user()->id();
             $pago->MP_CRO_ID = isset($request->cronograma_id)?$cronograma->id():null;
             $pago->MP_CONPAGO_ID = isset($request->concepto_pago_id)?$request->concepto_pago_id:null;
@@ -161,9 +165,57 @@ class PagosController extends Controller
         }
         return $pagos;
     }
-    public function ObtenerAlumnosMoross(Request $request)
+    public function ObtenerAlumnosMorosos(Request $request)
     {
-        return response()->json();
+        dd($request);
+        $anio_id = $request->anio_id;
+        $nivel_id = $request->nivel_id;
+        $seccion_id = $request->seccion_id;
+        $concepto_id = $request->concepto_id;
+        $estado = $request->estado==0?'TODOS':($request->estado==1?'SALDO':($request->estado==2?'PENDIENTE':''));
+        $alumnos = array();
+        if ($seccion_id == 0) {
+            $secciones = Seccion::where('MP_ANIO_ID', $anio_id)->where('MP_NIV_ID', $nivel_id)->get();
+            foreach ($secciones as $seccion) {
+                foreach ($seccion->Matriculas as $matricula) {
+                    foreach ($matricula->CronogramaPagos as $cronograma) {
+                        if ($estado =='TODOS') {
+                            if ($concepto_id==0&&($cronograma->estado()=='PENDIENTE'||$cronograma->estado()=='SALDO')) {
+                                $alumno = [
+                                    'id'=>$matricula->Alumno->id(),
+                                    'matricula_id'=>$matricula->id(),
+                                    'apellidos'=>$matricula->Alumno->apellidos(),
+                                    'nombres'=>$matricula->Alumno->nombres(),
+                                    'aula'=>$seccion->Alumno->nombres(),
+                                ];
+                            } else {
+                                if($cronograma->ConceptoPago->concepto_id()==$concepto_id && ($cronograma->estado()=='PENDIENTE'||$cronograma->estado()=='SALDO')){
+                                    $alumno = [
+
+                                    ];
+                                }
+                            }
+                            array_push($alumnos, $alumno);
+                        }else {
+                            if ($concepto_id==0 && $cronograma->estado()==$estado) {
+                                $alumno = [
+
+                                ];
+                            } else {
+                                if($cronograma->ConceptoPago->concepto_id()==$concepto_id && $cronograma->estado()==$estado){
+                                    $alumno = [
+
+                                    ];
+                                }
+                            }
+                            array_push($alumnos, $alumno);
+                        }
+                    }
+                }
+            }
+        }else {
+            $seccion = Seccion::find($seccion_id);
+        }
+        return response()->json($this->ordenarArray->Ascendente($alumnos,'apellidos'));
     }
 }
-

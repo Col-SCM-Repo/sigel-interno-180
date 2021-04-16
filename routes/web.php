@@ -52,6 +52,8 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     #pagos del dia
     Route::get('/del_dia', ['uses' => 'PagosController@PagosDelDiaVista', 'as' => 'vista.pagos.del.dia.pagos']);
     Route::post('/obtener_pagos_del_dia', ['uses' => 'PagosController@ObtenerPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
+    #Alumnos Morosos
+    Route::post('/obtener_alumnos_morosos', ['uses' => 'PagosController@ObtenerAlumnosMorosos', 'as' => 'obtener.alumnos.morosos.pagos']);
 });
 //Routes anio
 Route::prefix('anios')->middleware('auth')->group(function () {

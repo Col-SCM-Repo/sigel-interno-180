@@ -16,7 +16,7 @@
     </head>
     <body style="font-family: sans-serif">
 
-        <table style="width: 100%; margin-top: 175px">
+        <table style="width: 100%; margin-top: 160px">
             <tr>
                 <td style="font-size:0.6em; text-align:center"><b>FECHA DE MATRICULA:</b></td>
                 <td style="font-size:0.6em; text-align:left">{{date('d-m-Y H:i:s',strtotime($matricula->fecha()))}}</td>
@@ -25,7 +25,7 @@
                 <td style="font-size:0.6em; text-align:left">{{$matricula->id()}}</td>
             </tr>
         </table>
-<br><br>
+<br><br><br>
         <table style="margin-left:50px ;width: 100%">
             <tr>
                 <td style="font-size:0.75em; text-align:left"><b>Apellidos y Nombres:</b></td>
@@ -64,7 +64,7 @@
                 <td style="font-size:0.75em; text-align:left">{{$alumno->celular()}}</td>
             </tr>
         </table>
-        <br><br><br>
+        <br><br><br><br>
         <table style="margin-left:50px ;width: 100%">
             <tr>
                 <th class="border"></th>
