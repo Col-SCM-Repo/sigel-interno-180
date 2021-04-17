@@ -18,7 +18,7 @@ class AlumnoMapper
         $_alumnoViewModel->celular = $_alumno->MP_ALU_CELULAR;
         $_alumnoViewModel->correo = $_alumno->MP_ALU_EMAIL;
         $_alumnoViewModel->genero = $_alumno->MP_ALU_SEXO;
-        $_alumnoViewModel->fecha_nacimiento = date('d-m-Y',strtotime($_alumno->MP_ALU_FECHANAC));
+        $_alumnoViewModel->fecha_nacimiento = date('Y-m-d',strtotime($_alumno->MP_ALU_FECHANAC));
         $_alumnoViewModel->pais_id = $_alumno->MP_PAIS_ID;
         $_alumnoViewModel->distrito_nacimineto = $_alumno->MP_ALU_UBIGNAC;
         $_alumnoViewModel->religion_id = $_alumno->MP_REL_ID;

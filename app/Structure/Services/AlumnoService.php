@@ -1,6 +1,7 @@
 <?php
 namespace App\Structure\Services;
 
+use App\Enums\JsonEnums;
 use App\Mappers\AlumnoMapper;
 use App\Structure\Repository\AlumnoRepository;
 
@@ -19,6 +20,11 @@ class AlumnoService
     }
     public function BuscarPorDNI($dni)
     {
-        return $this->_alumnoMapper->ModelToViewModel($this->_alumnoRepository->BuscarPorDNI($dni));
+        $_alumnoModel = $this->_alumnoRepository->BuscarPorDNI($dni);
+        if(isset($_alumnoModel)){
+            return $this->_alumnoMapper->ModelToViewModel($_alumnoModel);
+        }else{
+            return JsonEnums::NoEncontrado;
+        }
     }
 }

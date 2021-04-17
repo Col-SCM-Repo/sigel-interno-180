@@ -44,8 +44,14 @@ var matricula = new Vue({
                     'alumno_dni':this.alumno.dni,
                 }
                 axios.post(url,data).then((response) => {
-                    this.alumno = response.data;
-                    this.alumno_id = this.alumno.id;
+                    if (response.data.hasOwnProperty('valor')) {
+                        showToastr('AVISO',response.data.mensaje, 'warning');
+                    } else {
+                        this.alumno = response.data;
+                        this.alumno_id = this.alumno.id;
+                        showToastr('CORRECTO','ALUMNO ENCONTRADO', 'success');
+                    }
+
                 }).catch((error) => {
                 }).finally((response) => {
                     this.obtenerApoderados();
