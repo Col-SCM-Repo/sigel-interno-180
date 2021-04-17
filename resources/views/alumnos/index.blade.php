@@ -74,17 +74,17 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="matricula in matriculas">
-                                                <td >@{{matricula.anio}}</td>
-                                                <td >@{{matricula.matricula_id}}</td>
-                                                <td >@{{matricula.nivel}}</td>
-                                                <td >@{{matricula.grado}}</td>
-                                                <td >@{{matricula.seccion}}</td>
+                                                <td >@{{matricula.vacante.anio.nombre}}</td>
+                                                <td >@{{matricula.id}}</td>
+                                                <td >@{{matricula.vacante.nivel.nivel}}</td>
+                                                <td >@{{matricula.vacante.grado.grado}} °</td>
+                                                <td >@{{matricula.vacante.seccion.seccion}}</td>
                                                 <td >@{{matricula.estado}}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <button type="button" class="btn btn-dark" v-on:click="verCronograma(matricula.matricula_id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
+                                                        <button type="button" class="btn btn-dark" v-on:click="verCronograma(matricula.id)"><i class="far fa-eye" ></i> Ver Cronograma</button>
                                                         <button type="button" class="btn btn-secondary" v-on:click="abrirModalOtrosPagos(matricula)"><i class="fas fa-money-check-alt"></i> Otros Pagos</button>
-                                                        <button type="button" class="btn btn-light" v-on:click="editarMatricula(matricula.matricula_id)"><i class="far fa-edit"></i> Editar</button>
+                                                        <button type="button" class="btn btn-light" v-on:click="editarMatricula(matricula.id)"><i class="far fa-edit"></i> Editar</button>
                                                     </div>
                                                 </td>
                                             </tr>

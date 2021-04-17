@@ -20,7 +20,9 @@ class Matricula extends Model
         'MP_MAT_FECHAMATRICULA',
         'MP_MAT_OBS',
         'MP_TIPMAT_ID',
-        'MP_IEPRO_ID'
+        'MP_IEPRO_ID',
+        'MP_PAG_OBS',
+        'USU_ID'
     ];
 
     public function Vacante()

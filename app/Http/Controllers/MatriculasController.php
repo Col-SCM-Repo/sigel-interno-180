@@ -7,32 +7,24 @@ use App\ConceptoPago;
 use App\CronogramaPago;
 use App\Helpers\OrdenarArray;
 use App\Matricula;
+use App\Structure\Services\MatriculaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MatriculasController extends Controller
 {
     protected $ordenarArray;
-    public function __construct(OrdenarArray $ordenarArray)
+    protected $_matriculaService;
+    public function __construct(OrdenarArray $ordenarArray,
+                                MatriculaService $_matriculaService)
     {
        $this->ordenarArray = $ordenarArray;
+       $this->_matriculaService = $_matriculaService;
     }
     public function ObtenerMatriculasPorAlumno(Request $request)
     {
-        $matriculas=[];
-        $matriculas_aux = Matricula::where('MP_ALU_ID',$request->alumno_id)->get();
-        foreach ($matriculas_aux as $matricula_aux) {
-            $matricula =[
-                'matricula_id'=>$matricula_aux->id(),
-                'anio'=>$matricula_aux->Vacante->AnioAcademico->nombre(),
-                'nivel'=>$matricula_aux->Vacante->Nivel->nivel(),
-                'grado'=>$matricula_aux->Vacante->Grado->grado(),
-                'seccion'=>$matricula_aux->Vacante->Seccion->seccion(),
-                'estado'=>$matricula_aux->estado(),
-            ];
-            array_push($matriculas, $matricula);
-        }
-        return response()->json($this->ordenarArray->Descendete($matriculas,'anio'));
+        $_listMatriculas = $this->_matriculaService->ObtenerMatriculasPorAlumno($request->alumno_id);
+        return response()->json($_listMatriculas);
     }
 
     public function NuevaVista($alumno_id,$matricula_id)
@@ -161,8 +153,8 @@ class MatriculasController extends Controller
     }
     private function obtenerEstadoNumAletras($estado)
     {
-        $estado="NORMAL";
-        switch ($estado) {
+        $estado_num="NORMAL";
+        switch ($estado_num) {
             case 1:
                 $estado_num = "NUEVO";
                 break;
@@ -182,6 +174,6 @@ class MatriculasController extends Controller
                 # code...
                 break;
         }
-        return $estado;
+        return $estado_num;
     }
 }

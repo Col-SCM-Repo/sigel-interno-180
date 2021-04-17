@@ -21,4 +21,8 @@ class AnioAcademicoService
     {
         return $this->_anioAcademicoMapper->ModelToViewModel($this->_anioAcademicoRepository->ObtenerAnioVigente());
     }
+    public function BuscarPorId($anio_id)
+    {
+        return $this->_anioAcademicoMapper->ModelToViewModel($this->_anioAcademicoRepository->BuscarPorId($anio_id));
+    }
 }

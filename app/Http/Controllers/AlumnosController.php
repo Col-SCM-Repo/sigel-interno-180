@@ -25,7 +25,7 @@ class AlumnosController extends Controller
     public function ObtenerAlumnos(Request $request)
     {
         $texto = mb_strtoupper($request->cadena);
-        return response()->json($this->ordenarArray->Ascendente($this->_alumnoService->BuscarPorNombresApellidosDNI($texto),"apellidos"));
+        return response()->json($this->_alumnoService->BuscarPorNombresApellidosDNI($texto));
     }
     public function ObtenerAlumnosPorAula(Request $request)
     {

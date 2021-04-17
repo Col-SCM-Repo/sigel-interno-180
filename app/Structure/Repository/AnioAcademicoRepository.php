@@ -13,4 +13,8 @@ class AnioAcademicoRepository extends AnioAcademico
     {
         return $this::where("MP_ANIO_ESTADO","VIGENTE")->first();
     }
+    public function BuscarPorId($anio_id)
+    {
+        return $this::find($anio_id);
+    }
 }
