@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from 'vue';
 var pagos = new Vue({
     el: '#aulas',
@@ -7,7 +8,10 @@ var pagos = new Vue({
         anios: [],
         anio_id: '',
         nivel_id: '',
+        seccion_id: '',
+        concepto_id: '',
         secciones: [],
+        estado: '',
         alumnos: [],
         conceptos: [],
         total_monto: 0,
@@ -22,6 +26,9 @@ var pagos = new Vue({
             });
         },
         obtenerSecciones:function(){
+            this.seccion_id = '';
+            this.estado ='';
+            this.concepto_id ='';
             if (this.nivel_id!='') {
                 let url = this.url_principal +'/vacantes/cant_alumno_nivel_anio';
                 let data ={
@@ -54,10 +61,48 @@ var pagos = new Vue({
             }
         },
         obtenerAlumnosMorosos:function () {
-
+            if (this.estado!='') {
+                let url = this.url_principal+'/pagos/obtener_alumnos_morosos';
+                let data = {
+                    'anio_id':this.anio_id,
+                    'nivel_id':this.nivel_id,
+                    'seccion_id':this.seccion_id,
+                    'concepto_id':this.concepto_id,
+                    'estado':this.estado,
+                };
+                console.log(data);
+                axios.post(url,data).then((response) => {
+                    this.alumnos = response.data;
+                }).catch((error) => {
+                }).finally((response) => {
+                    this.alumnos.forEach(alumno => {
+                        this.total_monto+= parseFloat(alumno.monto);
+                    });
+                });
+            }
         },
         descargarPDF:function(){
-
+            var url = this.url_principal + '/reportes/descargar_lista_alumno_morosos' ;
+            let nombre_archivo = 'Lista de Alumnos Morosos.pdf';
+            let data= {
+                'alumnos': this.alumnos,
+                'total_monto': this.total_monto,
+            }
+            axios.post(url,data, { responseType: 'blob' }).then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', nombre_archivo);
+                document.body.appendChild(link);
+                link.click();
+            }).catch((error) => {
+            });
+        },
+        restablecerValores:function () {
+            this.nivel_id = '';
+            this.seccion_id = '';
+            this.concepto_id ='';
+            this.estado ='';
         }
     },
     created: function(){
