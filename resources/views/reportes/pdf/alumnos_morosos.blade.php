@@ -13,9 +13,13 @@
     </head>
     <body >
         <h1 style="text-align: center;">Lista de Alumnos Morosos</h1>
+        @php
+            $i = 0;
+        @endphp
         <table style="width: 100%;">
             <thead>
               <tr>
+                <th class="border" scope="col">#</th>
                 <th class="border" scope="col">Cod. Matricula</th>
                 <th class="border" scope="col">Alumno</th>
                 <th class="border" scope="col">Aula / Nivel</th>
@@ -27,6 +31,7 @@
             <tbody>
                 @foreach ($alumnos as $alumno)
                     <tr >
+                        <th class="border" scope="row">{{$i+1}}</th>
                         <th class="border" scope="row">{{$alumno['matricula_id']}}</th>
                         <td class="border">{{$alumno['apellidos'].', '.$alumno['nombres']}}</td>
                         <td class="border">{{$alumno['aula'].' - '.$alumno['nivel']}}</td>
@@ -34,11 +39,14 @@
                         <td class="border">{{$alumno['monto']}} </td>
                         <td class="border">{{$alumno['estado']}} </td>
                     </tr>
+                    @php
+                        $i++;
+                    @endphp
                 @endforeach
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="border" colspan="4"><b>Total</b></td>
+                    <td class="border" colspan="5"><b>Total</b></td>
                     <td class="border"><b>{{$total_monto}}</b></td>
                     <td></td>
                 </tr>

@@ -80,12 +80,10 @@ var pagos = new Vue({
         agregarEliminarAlumno:function(matricula_id, e){
             if (e.target.checked) {
                 this.matriculas_seleccionadas.push(matricula_id);
-                console.log(this.matriculas_seleccionadas);
                 return
             }
             if (!e.target.checked) {
                 this.matriculas_seleccionadas = this.matriculas_seleccionadas.filter(item => item !== matricula_id);
-                console.log(this.matriculas_seleccionadas);
                 return
             }
         }

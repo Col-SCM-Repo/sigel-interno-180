@@ -38,7 +38,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2">
-                                    <select v-model="estado" :disabled="nivel_id==''" class="form-control" aria-label="Default select example" v-on:change="obtenerAlumnosMorosos">
+                                    <select v-model="estado" :disabled="nivel_id==''" class="form-control" aria-label="Default select example" >
                                         <option value=''>Seleccione Estado</option>
                                         <option value='0'>TODOS</option>
                                         <option value='1'>SALDO</option>
@@ -47,12 +47,12 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="btn-group"  role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-light" v-on:click="descargarPDF" style="color: red"><i class="fas fa-file-pdf " ></i> Buscar</button>
+                                        <button type="button" class="btn btn-dark" v-on:click="obtenerAlumnosMorosos" ><i class="fas fa-search" ></i> Buscar</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div v-if="estado!=''" class="col-md-12">
+                        <div v-if="alumnos.length>0" class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h3>Lista de Morosos</h3>
@@ -66,6 +66,7 @@
                             <table class="table table-striped">
                                 <thead>
                                   <tr>
+                                    <th scope="col">#</th>
                                     <th scope="col">Cod. Matricula</th>
                                     <th scope="col">Alumno</th>
                                     <th scope="col">Aula / Nivel</th>
@@ -75,7 +76,8 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="alumno in alumnos">
+                                    <tr v-for="(alumno,i) in alumnos">
+                                        <th scope="row">@{{i+1}}</th>
                                         <th scope="row">@{{alumno.matricula_id}}</th>
                                         <td>@{{alumno.apellidos+', '+alumno.nombres}}</td>
                                         <td>@{{alumno.aula+' - '+alumno.nivel}}</td>
@@ -86,7 +88,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="4">Total</td>
+                                        <td colspan="5">Total</td>
                                         <td>@{{total_monto}}</td>
                                     </tr>
                                 </tfoot>

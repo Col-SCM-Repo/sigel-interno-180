@@ -61,25 +61,44 @@ var pagos = new Vue({
             }
         },
         obtenerAlumnosMorosos:function () {
-            if (this.estado!='') {
-                let url = this.url_principal+'/pagos/obtener_alumnos_morosos';
-                let data = {
-                    'anio_id':this.anio_id,
-                    'nivel_id':this.nivel_id,
-                    'seccion_id':this.seccion_id,
-                    'concepto_id':this.concepto_id,
-                    'estado':this.estado,
-                };
-                console.log(data);
-                axios.post(url,data).then((response) => {
-                    this.alumnos = response.data;
-                }).catch((error) => {
-                }).finally((response) => {
-                    this.alumnos.forEach(alumno => {
-                        this.total_monto+= parseFloat(alumno.monto);
-                    });
-                });
+            this.total_monto = 0;
+            this.alumnos = [];
+            if (this.anio_id=='') {
+                showToastr('Aviso','Debe seleccionar un AÑO.', 'warning');
+                return;
             }
+            if (this.nivel_id=='') {
+                showToastr('Aviso','Debe seleccionar un NIVEL.', 'warning');
+                return;
+            }
+            if (this.seccion_id=='') {
+                showToastr('Aviso','Debe seleccionar una SECCIÒN.', 'warning');
+                return;
+            }
+            if (this.concepto_id=='') {
+                showToastr('Aviso','Debe seleccionar un CONCEPTO.', 'warning');
+                return;
+            }
+            if (this.estado=='') {
+                showToastr('Aviso','Debe seleccionar un ESTADO.', 'warning');
+                return;
+            }
+            let url = this.url_principal+'/pagos/obtener_alumnos_morosos';
+            let data = {
+                'anio_id':this.anio_id,
+                'nivel_id':this.nivel_id,
+                'seccion_id':this.seccion_id,
+                'concepto_id':this.concepto_id,
+                'estado':this.estado,
+            };
+            axios.post(url,data).then((response) => {
+                this.alumnos = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+                this.alumnos.forEach(alumno => {
+                    this.total_monto+= parseFloat(alumno.monto);
+                });
+            });
         },
         descargarPDF:function(){
             var url = this.url_principal + '/reportes/descargar_lista_alumno_morosos' ;

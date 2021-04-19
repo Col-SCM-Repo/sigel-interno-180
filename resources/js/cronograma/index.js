@@ -101,7 +101,6 @@ var cronograma = new Vue({
                 'monto': this.monto_pago,
                 'saldo': this.saldo,
             };
-            console.log(data);
             axios.post(url, data).then((response) => {
                 if(response.data!='false'){
                     window.open(this.url_principal+'/reportes/boleta/'+response.data)
