@@ -30,7 +30,7 @@
                                         <option v-for="seccion in secciones" :value='seccion.id'>@{{seccion.grado +'° '+seccion.seccion}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <select v-model="concepto_id" :disabled="nivel_id==''" class="form-control" aria-label="Default select example" >
                                         <option value=''>Seleccione Conceptos</option>
                                         <option value='0'>TODOS</option>
@@ -44,6 +44,11 @@
                                         <option value='1'>SALDO</option>
                                         <option value='2'>PENDIENTE</option>
                                     </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="btn-group"  role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-light" v-on:click="descargarPDF" style="color: red"><i class="fas fa-file-pdf " ></i> Buscar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
