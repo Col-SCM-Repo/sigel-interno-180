@@ -12,7 +12,7 @@ var pagos = new Vue({
     },
     methods: {
         obtenerPagos:function(){
-            this.pago = [];
+            this.pagos = [];
             if (this.usuario_id=='') {
                 showToastr('Aviso', "Debe Seleccionar un USUARIO","warning");
                 return;
