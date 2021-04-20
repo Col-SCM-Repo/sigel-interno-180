@@ -45,7 +45,7 @@
         <table >
             <tr>
                 <td width="40%" style="font-size:0.55em; text-align:left">
-                    {{substr($pago->serie(),0,1)=='E'?'Factura':'Boleta'}} Electrónica:
+                    {{number_format($pago->monto(),2)<=0?'Nota de Credito':(substr($pago->serie(),0,1)=='E'?'Factura Electrónica':'Boleta Electrónica')}} :
                 </td>
                 <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->serie()}} -  {{$pago->numero()}}</td>
             </tr>
