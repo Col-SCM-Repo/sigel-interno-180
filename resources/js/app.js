@@ -29,12 +29,13 @@
         "hideMethod": "fadeOut"
     }
 };
-window.loading = function(data) {
+
+window.cargando = function(data) {
     if (data !== "show") {
-        $(".spiner-content").hide();
+        $("#spiner").hide();
     } else {
-        $(".spiner-content").show();
+        $("#spiner").show();
     }
 };
 
-loading('hide')
+cargando('hide');

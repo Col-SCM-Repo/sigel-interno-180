@@ -17,6 +17,8 @@ var pagos = new Vue({
                 showToastr('Aviso', "Debe Seleccionar un USUARIO","warning");
                 return;
             }
+            cargando('show');
+
             let url = this.baseUrl +'/obtener_entre_fechas';
             this.total =0;
             let data={
@@ -28,13 +30,16 @@ var pagos = new Vue({
             axios.post(url,data).then((response) => {
                 this.pagos = response.data;
             }).catch((error) => {
-            }).finally((response) => {
+            }).finally((response) => {                cargando('hide');
+
             });
         },
         verBoleta:function(pago_id){
             window.open(this.url_principal+'/reportes/boleta/'+pago_id);
         },
         descargarPDF:function(){
+            cargando('show');
+
             var url = this.url_principal + '/reportes/descargar_pagos_entre_fechas_pdf' ;
             let nombre_archivo = 'Pagos de las fechas '+this.fecha_inicial +' - '+this.fecha_final + '.pdf';
             let data= {
@@ -50,9 +55,14 @@ var pagos = new Vue({
                 document.body.appendChild(link);
                 link.click();
             }).catch((error) => {
+            }).finally(()=>{
+                cargando('hide');
+
             });
         },
         descargarExcel:function(){
+            cargando('show');
+
             var url = this.url_principal + '/reportes/descargar_pagos_entre_fechas_excel' ;
             let nombre_archivo = 'Pagos de las fechas '+this.fecha_inicial +' - '+this.fecha_final + '.xls';
             let data= {
@@ -68,7 +78,9 @@ var pagos = new Vue({
                 document.body.appendChild(link);
                 link.click();
             }).catch((error) => {
-            });
+            }).finally(()=>{
+                cargando('hide');
+            });;
         },
     },
     created: function(){

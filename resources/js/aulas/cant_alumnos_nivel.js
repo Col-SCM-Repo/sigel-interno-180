@@ -46,6 +46,7 @@ var pagos = new Vue({
             }
         },
         descargarPDF:function(){
+            cargando('show');
             let nivel =  $('#niveles option:selected').text();
             let anio = $('#anios option:selected').text();
             var url = this.url_principal + '/reportes/descargar_lista_secciones' ;
@@ -66,6 +67,8 @@ var pagos = new Vue({
                 document.body.appendChild(link);
                 link.click();
             }).catch((error) => {
+            }).finally(()=>{
+                cargando('hide');
             });
         }
     },

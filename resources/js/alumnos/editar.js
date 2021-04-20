@@ -71,6 +71,7 @@ var editar = new Vue({
             });
         },
         guardarAlumno:function(){
+            cargando('show');
             this.alumno.correo = this.alumno.dni+'@colegiocabrera.edu.pe';
             let url = this.baseUrl +'/guardar';
             let data = {
@@ -81,6 +82,7 @@ var editar = new Vue({
             }).catch((error) => {
             }).finally((response) => {
                 location.href = this.baseUrl+'/editar/'+this.alumno_id;
+                cargando('hide');
             });
         },
         obtenerTipoDocumentos:function(){

@@ -38,6 +38,7 @@ var pagos = new Vue({
         },
         obtenerAlumnos:function(){
             if (this.aula_id!='') {
+                cargando('show');
                 let url = this.url_principal +'/alumnos/obtener_alumnos_por_aula';
                 let data ={
                     'aula_id': this.aula_id
@@ -46,6 +47,7 @@ var pagos = new Vue({
                     this.alumnos = response.data;
                 }).catch((error) => {
                 }).finally((response) => {
+                    cargando('hide');
                 });
             } else {
                 this.alumnos = [];
@@ -55,6 +57,7 @@ var pagos = new Vue({
             location.href=this.url_principal+'/cronograma/'+matricula_id;
         },
         descargarLista:function(){
+            cargando('show');
             let seccion =  $('#seccion option:selected').text();
             let anio = $('#anios option:selected').text();
             var url = this.url_principal + '/reportes/descargar_lista' ;
@@ -72,6 +75,8 @@ var pagos = new Vue({
                 document.body.appendChild(link);
                 link.click();
             }).catch((error) => {
+            }).finally(()=>{
+                cargando('hide');
             });
         },
         editarAlumno:function(alumno_id){

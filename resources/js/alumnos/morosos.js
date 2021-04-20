@@ -83,6 +83,8 @@ var pagos = new Vue({
                 showToastr('Aviso','Debe seleccionar un ESTADO.', 'warning');
                 return;
             }
+            cargando('show');
+
             let url = this.url_principal+'/pagos/obtener_alumnos_morosos';
             let data = {
                 'anio_id':this.anio_id,
@@ -98,9 +100,13 @@ var pagos = new Vue({
                 this.alumnos.forEach(alumno => {
                     this.total_monto+= parseFloat(alumno.monto);
                 });
+            cargando('hide');
+
             });
         },
         descargarPDF:function(){
+            cargando('show');
+
             var url = this.url_principal + '/reportes/descargar_lista_alumno_morosos' ;
             let nombre_archivo = 'Lista de Alumnos Morosos.pdf';
             let data= {
@@ -115,7 +121,9 @@ var pagos = new Vue({
                 document.body.appendChild(link);
                 link.click();
             }).catch((error) => {
-            });
+            }).finally((response) => {
+                cargando('hide');
+            });;
         },
         restablecerValores:function () {
             this.nivel_id = '';

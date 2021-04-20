@@ -19,8 +19,8 @@
 </head>
 <body>
     <div id="app">
-        <div class="spiner-content">
-            <div class="d-flex justify-content-center">
+        <div id="spiner" class="">
+            <div class="spiner-content d-flex justify-content-center">
                 <div class="spinner-border" role="status">
                   <span class="sr-only">Loading...</span>
                 </div>
