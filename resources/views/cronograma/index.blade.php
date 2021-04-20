@@ -312,7 +312,7 @@
                                     <div class="form-group row">
                                         <label for="serie" class="col-sm-4 col-form-label">Serie</label>
                                         <div class="col-sm-8">
-                                            <input type="text"  class="form-control" id="serie" v-model="pago_seleccionado.serie" >
+                                            <input type="text"  class="form-control" id="serie" v-model="serie" >
                                         </div>
                                     </div>
                                     <div class="form-group row">

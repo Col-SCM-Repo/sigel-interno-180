@@ -125,6 +125,7 @@ var cronograma = new Vue({
         guardaNotaCredito:function(){
             let url = this.url_principal +'/pagos/guardar_nota_credito';
             this.pago_seleccionado.observacion = 'ANULA TICKET Nº '+this.pago_seleccionado.serie +'-' +this.pago_seleccionado.numero+', POR ' + this.pago_seleccionado.observacion;
+            this.pago_seleccionado.serie = this.serie;
             let data = {
                 'pago': this.pago_seleccionado,
             };
