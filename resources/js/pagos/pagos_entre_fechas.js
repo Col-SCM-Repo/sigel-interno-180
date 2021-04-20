@@ -7,16 +7,24 @@ var pagos = new Vue({
         pagos: [],
         fecha_inicial: '',
         fecha_final: '',
-        total:0
+        total:0,
+        usuario_id : ''
     },
     methods: {
         obtenerPagos:function(){
+            this.pago = [];
+            if (this.usuario_id=='') {
+                showToastr('Aviso', "Debe Seleccionar un USUARIO","warning");
+                return;
+            }
             let url = this.baseUrl +'/obtener_entre_fechas';
             this.total =0;
             let data={
                 'fecha_inicial':this.fecha_inicial,
-                'fecha_final':this.fecha_final
+                'fecha_final':this.fecha_final,
+                'usuario_id':this.usuario_id
             }
+            console.log(data);
             axios.post(url,data).then((response) => {
                 this.pagos = response.data;
             }).catch((error) => {

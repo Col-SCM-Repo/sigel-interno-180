@@ -10,21 +10,30 @@
                     <div class="row">
                         <div class="col-md-12 " style="margin-bottom: 10px">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group row">
-                                        <label for="comprobante"class="col-sm-4 col-form-label">Fecha Inicial</label>
-                                        <div class="col-sm-8">
+                                        <label for="comprobante"class="col-md-4 col-form-label">Fecha Inicial</label>
+                                        <div class="col-md-8">
                                             <input type="date"  class="form-control" id="fecha_inicial" v-model="fecha_inicial">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group row">
-                                        <label for="comprobante"class="col-sm-4 col-form-label">Fecha Final</label>
-                                        <div class="col-sm-8">
+                                        <label for="comprobante"class="col-md-4 col-form-label">Fecha Final</label>
+                                        <div class="col-md-8">
                                             <input type="date"  class="form-control" id="fecha_final" v-model="fecha_final">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-2">
+                                   <select class="form-control" name="" id="" v-model="usuario_id">
+                                       <option value="">Seleccione Usuario</option>
+                                       <option value="0">TODOS</option>
+                                       @foreach ($usuarios as $usuario)
+                                            <option value="{{$usuario->id()}}">{{$usuario->nombres()}}</option>
+                                       @endforeach
+                                   </select>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="btn-group"  role="group" aria-label="Basic example">
