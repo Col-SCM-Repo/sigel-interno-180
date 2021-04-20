@@ -45,5 +45,6 @@
                 </tr>
             </tfoot>
         </table>
+        <p style="text-align: right;"><b>Fecha de consulta:</b>  {{date('d/m/Y H:i:s')}}</p>
     </body>
 </html>

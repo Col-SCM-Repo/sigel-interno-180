@@ -50,7 +50,8 @@ class VacantesController extends Controller
                 'vacantes_ocupadas'=> count($vacante->Matriculas->where('MP_MAT_ESTADO','!=','RETIRADO')),
                 'vacantes_disponibles'=>$vacante->total_vacantes()- count($vacante->Matriculas->where('MP_MAT_ESTADO','!=','RETIRADO')),
             ];
-            array_push($secciones,$seccion);
+            if($seccion['vacantes_ocupadas']!=0)
+                array_push($secciones,$seccion);
         }
         return response()->json($secciones);
     }

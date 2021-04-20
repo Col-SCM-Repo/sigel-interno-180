@@ -49,7 +49,6 @@ var pagos = new Vue({
         },
     },
     created: function(){
-
         $('#pagos-nav').addClass('active');
     }
 });
