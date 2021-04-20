@@ -23,6 +23,6 @@ mix.js('resources/js/alumnos/index.js', 'public/js/alumnos')
 mix.js('resources/js/aulas/index.js', 'public/js/aulas')
    .js('resources/js/aulas/cant_alumnos_nivel.js', 'public/js/aulas');
 //reportes - pagos
-mix.js('resources/js/pagos/del_dia.js', 'public/js/pagos');
+mix.js('resources/js/pagos/pagos_entre_fechas.js', 'public/js/pagos');
 //matriculas
 mix.js('resources/js/matriculas/nueva.js', 'public/js/matriculas');

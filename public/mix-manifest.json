@@ -8,5 +8,5 @@
     "/js/aulas/index.js": "/js/aulas/index.js",
     "/js/cronograma/index.js": "/js/cronograma/index.js",
     "/js/matriculas/nueva.js": "/js/matriculas/nueva.js",
-    "/js/pagos/del_dia.js": "/js/pagos/del_dia.js"
+    "/js/pagos/pagos_entre_fechas.js": "/js/pagos/pagos_entre_fechas.js"
 }

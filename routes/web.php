@@ -54,6 +54,9 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     Route::post('/obtener_pagos_del_dia', ['uses' => 'PagosController@ObtenerPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
     #Alumnos Morosos
     Route::post('/obtener_alumnos_morosos', ['uses' => 'PagosController@ObtenerAlumnosMorosos', 'as' => 'obtener.alumnos.morosos.pagos']);
+    #pagos entre fechas
+    Route::get('/pagos_entre_fechas', ['uses' => 'PagosController@PagosEntreFechasView', 'as' => 'vista.pagos.entre.fechas.pagos']);
+    Route::post('/obtener_entre_fechas', ['uses' => 'PagosController@ObtenerPagosEntreFechas', 'as' => 'obtener.pagos.entre.fechas.pagos']);
 });
 //Routes anio
 Route::prefix('anios')->middleware('auth')->group(function () {
@@ -84,11 +87,13 @@ Route::prefix('reportes')->middleware('auth')->group(function () {
     Route::get('/boleta/{pago_id}', ['uses' => 'ReportesController@VerBoleta', 'as' => 'boleta.reportes']);
     Route::post('/descargar_lista', ['uses' => 'ReportesController@DescargarListaAlumnos', 'as' => 'descargar.lista.alumnos.reportes']);
     Route::post('/descargar_resumen', ['uses' => 'ReportesController@DescargarResumen', 'as' => 'obtener.pagos.del.dia.pagos.reprtes']);
-    // Route::post('/descargar_pagos_del_dia', ['uses' => 'ReportesController@DescargarPagosDelDia', 'as' => 'obtener.pagos.del.dia.pagos']);
+    Route::post('/descargar_pagos_entre_fechas', ['uses' => 'ReportesController@DescargarPagosEntreFechas', 'as' => 'obtener.pagos.del.dia.pagos']);
     Route::get('/descargar_ficha_matricula/{matricula_id}', ['uses' => 'ReportesController@DescargarFichaMatricula', 'as' => 'ficha.matricula.reportes']);
     Route::get('/descargar_cronograma/{matricula_id}', ['uses' => 'ReportesController@DescargarCronograma', 'as' => 'cronograma.reportes']);
     Route::post('/descargar_lista_secciones', ['uses' => 'ReportesController@DescargarListaSecciones', 'as' => 'descargar.lista.secciones.reprtes']);
     Route::post('/descargar_lista_alumno_morosos', ['uses' => 'ReportesController@DescargarListaAlumnosMorosos', 'as' => 'descargar.lista.alumnos.morosos.reprtes']);
+    Route::post('/descargar_pagos_entre_fechas_pdf', ['uses' => 'ReportesController@DescargarPagosEntreFechasPDF', 'as' => 'descargar.pagos.entre.fechas.pdf.reprtes']);
+    Route::post('/descargar_pagos_entre_fechas_excel', ['uses' => 'ReportesController@DescargarPagosEntreFechasExcel', 'as' => 'descargar.pagos.entre.fechas.excel.reprtes']);
 });
 //Routes anios
 Route::prefix('paises')->middleware('auth')->group(function () {

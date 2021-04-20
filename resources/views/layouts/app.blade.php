@@ -72,6 +72,9 @@
                                     <a class="dropdown-item" href="{{ route('vista.morosos.alumnos') }}">
                                         Alumnos Morosos
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('vista.pagos.entre.fechas.pagos') }}">
+                                        Pagos Entre Fechas
+                                    </a>
                                 </div>
                             </li>
                         @endguest

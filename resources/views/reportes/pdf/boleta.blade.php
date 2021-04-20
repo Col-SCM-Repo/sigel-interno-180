@@ -113,7 +113,7 @@
             </tr>
             <tr>
                 <td style="font-size:0.55em; text-align:center" colspan="2">
-                    Fecha de consulta: {{date('Y-m-d H:i:s')}}
+                    Fecha de consulta: {{date('d/m/Y H:i:s')}}
                 </td>
             </tr>
         </table>
