@@ -232,6 +232,40 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label for="comprobante"class="col-sm-4 col-form-label">Modalidad de Pago</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="" id="" v-model="modalidad">
+                                                <option value="">SELECIONE MODALIDAD</option>
+                                                <option value="1">EFECTIVO</option>
+                                                <option value="2">DEPOSITO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <template v-if="modalidad==2">
+                                        <div class="form-group row">
+                                            <label for="comprobante"class="col-sm-4 col-form-label">Banco</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" name="" id="" v-model="banco">
+                                                    <option value="">SELECIONE BANCO</option>
+                                                    <option value="1">BCP</option>
+                                                    <option value="2">BBVA</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="comprobante"class="col-sm-4 col-form-label">N° Operación</label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  class="form-control" v-model="num_operacion" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="comprobante"class="col-sm-4 col-form-label">Fecha de Deposito</label>
+                                            <div class="col-sm-8">
+                                                <input type="date"  class="form-control" v-model="fecha_deposito" >
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <div class="form-group row">
                                         <label for="serie" class="col-sm-4 col-form-label">Serie</label>
                                         <div class="col-sm-8">
                                             <input v-if="tipo_comprobante==1" type="text"  class="form-control" :value="serie" disabled>

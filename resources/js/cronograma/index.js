@@ -20,7 +20,11 @@ var cronograma = new Vue({
         editar: false,
         tipo_comprobante:1,
         serie: $("#serie_empleado").val(),
-        serie_factura : 'E001'
+        serie_factura : 'E001',
+        modalidad:1,
+        banco:'',
+        num_operacion:'',
+        fecha_deposito:'',
     },
     methods: {
         obtenerDatos:function () {
@@ -100,6 +104,10 @@ var cronograma = new Vue({
                 'observacion': this.observacion_pago,
                 'monto': this.monto_pago,
                 'saldo': this.saldo,
+                'modalidad':this.modalidad,
+                'banco':this.banco,
+                'num_operacion':this.num_operacion,
+                'fecha_deposito':this.fecha_deposito,
             };
             axios.post(url, data).then((response) => {
                 if(response.data!='false'){
@@ -109,6 +117,11 @@ var cronograma = new Vue({
                 }
             }).catch((error) => {
             }).finally((response) => {
+                this.tipo_comprobante = 1;
+                this.modalidad = 1;
+                this.banco = '';
+                this.fecha_deposito = '';
+                this.num_operacion = '';
                 this.cerrarModalPagar();
                 this.obtenerDatos();
             });
