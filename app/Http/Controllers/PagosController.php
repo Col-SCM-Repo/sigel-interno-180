@@ -8,6 +8,7 @@ use App\Helpers\NumeroATexto;
 use App\Helpers\OrdenarArray;
 use App\Pago;
 use App\Seccion;
+use App\User;
 use App\Vacante;
 use DateTime;
 use Illuminate\Http\Request;
@@ -316,7 +317,6 @@ class PagosController extends Controller
         }
         return response()->json($this->ordenarArray->Ascendente($alumnos,'apellidos'));
     }
-
     private function CalcularSaldo($cronograma)
     {
         $monto = $cronograma->monto();
@@ -324,5 +324,37 @@ class PagosController extends Controller
            $monto -= $pago->monto();
         }
         return $monto;
+    }
+    public function PagosEntreFechasView()
+    {
+        $usurios = User::where('USU_ESTADO', 'ACTIVO')->orderBy('USU_NOMBRES')->get();
+        return view('pagos.pagos_entre_fechas')->with('usuarios',$usurios);
+    }
+    public function ObtenerPagosEntreFechas(Request $request)
+    {
+        $pagos=array();
+        $fecha_inicial = date('Y-m-d\T00:00:00',strtotime($request->fecha_inicial));
+        $fecha_final = date('Y-m-d\T23:59:59',strtotime($request->fecha_final));
+        $usuario_id = $request->usuario_id;
+        if ($usuario_id==0) {
+            $pagos_aux = Pago::where('MP_PAGO_FECHA','>=', $fecha_inicial)->where('MP_PAGO_FECHA','<=', $fecha_final)->orderBy('MP_PAGO_FECHA')->get();
+        } else {
+            $pagos_aux = Pago::where('MP_PAGO_FECHA','>=', $fecha_inicial)->where('MP_PAGO_FECHA','<=', $fecha_final)->where('USU_ID','<=', $usuario_id)->orderBy('MP_PAGO_FECHA')->get();
+        }
+        foreach ($pagos_aux as $p ) {
+            $pago = [
+                'id'=>$p->id(),
+                'fecha'=>date('d/m/Y H:i:s',strtotime($p->fecha())),
+                'concepto'=>$p->ConceptoPago?$p->ConceptoPago->Concepto->concepto():$p->CronogramaPago->ConceptoPago->Concepto->concepto(),
+                'tipo'=>$p->TipoComprobante->tipo(),
+                'alumno'=>$p->Matricula->Alumno->apellidos().', '.$p->Matricula->Alumno->nombres(),
+                'serie'=>$p->serie(),
+                'numero'=>$p->numero(),
+                'monto'=>$p->monto(),
+                'usuario'=>$p->Usuario->nombres(),
+            ];
+            array_push($pagos, $pago);
+        }
+        return response()->json($pagos);
     }
 }

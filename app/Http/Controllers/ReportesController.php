@@ -31,12 +31,11 @@ class ReportesController extends Controller
         $pdf = PDF::loadView('reportes.pdf.resumen_pagos', ['total'=>$total, 'fecha'=>$request->fecha, 'cant'=>$cant] )->setPaper('a5');
         return $pdf->download('invoice.pdf');
     }
-    //se puede eliminar si no se llega a usar
-    // public function DescargarPagosDelDia(Request $request)
-    // {
-    //     $pdf = PDF::loadView('reportes.pdf.pagos_del_dia', ['pagos'=>$request->pagos, 'fecha'=>$request->fecha] );
-    //     return $pdf->download('invoice.pdf');
-    // }
+    public function DescargarPagosDelDia(Request $request)
+    {
+        $pdf = PDF::loadView('reportes.pdf.pagos_del_dia', ['pagos'=>$request->pagos, 'fecha'=>$request->fecha] );
+        return $pdf->download('invoice.pdf');
+    }
 
     public function DescargarFichaMatricula($matricula_id)
     {
@@ -128,6 +127,15 @@ class ReportesController extends Controller
         $pdf = PDF::loadView('reportes.pdf.alumnos_morosos', ['alumnos'=>$request->alumnos, 'total_monto'=>$request->total_monto] )->setPaper('a4');
         return $pdf->download('Lista Alumno Morosos.pdf');
     }
+    public function DescargarPagosEntreFechasPDF(Request $request)
+    {
+        $pdf = PDF::loadView('reportes.pdf.pagos_entre_fechas', ['pagos'=>$request->pagos, 'fecha_inicial'=>$request->fecha_inicial, 'fecha_final'=>$request->fecha_final] )->setPaper('a4');
+        return $pdf->download('Lista Alumno Morosos.pdf');
+    }
+    public function DescargarPagosEntreFechasExcel(Request $request)
+    {
+        return view('reportes.excel.pagos_entre_fechas')->with('pagos',$request->pagos)->with('fecha_inicial', $request->fecha_inicial)->with('fecha_final', $request->fecha_final);
+    }
     //mover a helpers
     private function ObtenerEstadoCivil($id)
     {
@@ -157,4 +165,5 @@ class ReportesController extends Controller
         }
         return $estado;
     }
+
 }

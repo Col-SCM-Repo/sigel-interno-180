@@ -30,3 +30,12 @@
     }
 };
 
+window.cargando = function(data) {
+    if (data !== "show") {
+        $("#spiner").hide();
+    } else {
+        $("#spiner").show();
+    }
+};
+
+cargando('hide');

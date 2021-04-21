@@ -93,7 +93,6 @@ var matricula = new Vue({
         },
         guardar:function(){
             this.matricula.alumno_id = this.alumno_id;
-            console.log(this.matricula);
             let url = this.baseUrl +'/guardar';
             let data = {
                 matricula:this.matricula
