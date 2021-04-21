@@ -16,4 +16,8 @@ class AlumnoRepository extends Alumno
     {
         return $this::where('MP_ALU_DNI',$dni)->first();
     }
+    public function BuscarPorId($alumno_id)
+    {
+        return $this::where('MP_ALU_DNI',$dni)->first();
+    }
 }

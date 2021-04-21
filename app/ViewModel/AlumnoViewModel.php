@@ -19,4 +19,5 @@ class AlumnoViewModel
     public $religion_id = 1;
     public $religion;
     public $distrito_residencia = '';
+    public $apoderados = [];
 }

@@ -27,4 +27,10 @@ class AlumnoService
             return JsonEnums::NoEncontrado;
         }
     }
+    public function BuscarPorId($alumno_id)
+    {
+        $_alumnoVM = $this->_alumnoMapper->ModelToViewModel( $this->_alumnoRepository->BuscarPorId($alumno_id));
+        $_alumnoVM->apoderados =;
+        return $_alumnoVM;
+    }
 }
