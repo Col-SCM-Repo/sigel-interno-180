@@ -72,6 +72,12 @@ class PagosController extends Controller
             $pago->MP_PAGO_SERIE = substr($request->serie,0,1)=='E'? $request->serie:$serie->serie();
             $pago->MP_MAT_ID = isset($request->cronograma_id)?$cronograma->matriculaId():$request->matricula_id;
             $pago->MP_PAGO_LEE_MONTO= $this->numeroATexto->Soles($request->monto);
+            if ($request->modalidad == 2) //si la modaldiad de pago es en deposito
+            {
+                $pago->MP_PAGO_FECHAEMISION= date('Y-m-d\T00:00:00',strtotime($request->fecha_deposito));
+                $pago->BANCO= $request->banco == 1?'BCP':'BBVA';
+                $pago->NUMERO_OPERACION= $request->num_operacion;
+            }
             $pago->save();
             if (isset($request->cronograma_id)) {
                 $cronograma->MP_CRO_ESTADO = $estado_cronograma;

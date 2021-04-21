@@ -24,6 +24,9 @@ class Pago extends Model
         'USU_ID',
         'MP_PAGO_SERIE',
         'MP_PAGO_LEE_MONTO',
+        'BANCO',
+        'NUMERO_OPERACION',
+        'MP_PAGO_FECHAEMISION',
     ];
 
      /**
