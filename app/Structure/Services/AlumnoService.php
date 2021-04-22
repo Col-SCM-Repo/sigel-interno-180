@@ -4,17 +4,16 @@ namespace App\Structure\Services;
 use App\Enums\JsonEnums;
 use App\Mappers\AlumnoMapper;
 use App\Structure\Repository\AlumnoRepository;
+use App\ViewModel\AlumnoViewModel;
 
 class AlumnoService
 {
     private $_alumnoRepository ;
     private $_alumnoMapper ;
-    private $_parentescoService ;
     public function __construct()
     {
         $this->_alumnoRepository =  new AlumnoRepository();
         $this->_alumnoMapper =  new AlumnoMapper();
-        $this->_parentescoService =  new ParentescoService();
     }
     public function BuscarPorNombresApellidosDNI($texto)
     {
@@ -32,7 +31,21 @@ class AlumnoService
     public function BuscarPorId($alumno_id)
     {
         $_alumnoVM = $this->_alumnoMapper->ModelToViewModel( $this->_alumnoRepository->BuscarPorId($alumno_id));
-        $_alumnoVM->apoderados = $this->_parentescoService->BuscarPorAlumnoId($alumno_id);
         return $_alumnoVM;
+    }
+    public function CrearViewModel()
+    {
+        return $this->_alumnoMapper->ViewModel();
+    }
+    public function GuardarAlumno($alumnoVM)
+    {
+        $_alumnoModel = $this->_alumnoMapper->ViewModelToModel($alumnoVM);
+       //dd($_alumnoModel);
+        if ($_alumnoModel->id()!=null) {
+            $this->_alumnoRepository->Actualizar($_alumnoModel);
+            return $_alumnoModel->id();
+        }else{
+            return $this->_alumnoRepository->Crear($_alumnoModel);
+        }
     }
 }

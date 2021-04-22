@@ -19,13 +19,23 @@ var editar = new Vue({
         ocupaciones:[]
     },
     methods: {
-        obtenerDatosAlumno:function(){
-            let url = this.baseUrl +'/obtener_datos_alumno';
+        obtenerDatos:function(){
+            let url = this.baseUrl +'/obtener_datos';
             let data={
                 'alumno_id':this.alumno_id,
             }
             axios.post(url,data).then((response) => {
-                this.alumno = response.data;
+                this.paises = response.data.paises;
+                this.distritos = response.data.distritos;
+                this.religiones = response.data.religiones;
+                this.tipo_documentos = response.data.tipo_documentos;
+                this.tipo_parentescos = response.data.tipo_parentescos;
+                this.grados_intruccion = response.data.grados_intruccion;
+                this.centro_laborales = response.data.centro_laborales;
+                this.ocupaciones = response.data.ocupaciones;
+                this.alumno = response.data.alumno;
+                this.familiares = this.alumno.apoderados;
+                console.log(this.familiares);
             }).catch((error) => {
             }).finally((response) => {
             });
@@ -71,7 +81,7 @@ var editar = new Vue({
             });
         },
         guardarAlumno:function(){
-            cargando('show');
+           // cargando('show');
             this.alumno.correo = this.alumno.dni+'@colegiocabrera.edu.pe';
             let url = this.baseUrl +'/guardar';
             let data = {
@@ -79,9 +89,10 @@ var editar = new Vue({
             };
             axios.post(url,data).then((response) => {
                 this.alumno_id = response.data;
+                console.log(response.data);
             }).catch((error) => {
             }).finally((response) => {
-                location.href = this.baseUrl+'/editar/'+this.alumno_id;
+                //location.href = this.baseUrl+'/editar/'+this.alumno_id;
                 cargando('hide');
             });
         },
@@ -156,10 +167,6 @@ var editar = new Vue({
         }
     },
     created: function(){
-        this.obtenerDistritos();
-        this.obtenerPaises();
-        this.obtenerReligiones();
-        this.obtenerDatosAlumno();
-        this.obtenerFamiliares();
+        this.obtenerDatos();
     }
 });

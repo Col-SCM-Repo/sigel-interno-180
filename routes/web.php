@@ -27,7 +27,7 @@ Route::prefix('alumnos')->middleware('auth')->group(function () {
     Route::post('/obtener_alumnos_por_aula', ['uses' => 'AlumnosController@ObtenerAlumnosPorAula', 'as' => 'obtener.por.aula.alumnos']);
     #editar
     Route::get('/editar/{alumno_id}', ['uses' => 'AlumnosController@Editar', 'as' => 'editar.alumno.alumnos']);
-    Route::post('/obtener_datos_alumno', ['uses' => 'AlumnosController@ObtenerAlumnoPorID', 'as' => 'datos.alumno.por.id.alumnos']);
+    Route::post('/obtener_datos', ['uses' => 'AlumnosController@ObtenerDatos', 'as' => 'obtener.datos.alumnos']);
     Route::post('/guardar', ['uses' => 'AlumnosController@Guardar', 'as' => 'datos.alumno.por.id.alumnos']);
     #
     Route::post('/buscar_por_dni', ['uses' => 'AlumnosController@ObtenerAlumnoPorDNI', 'as' => 'buscar.alumno.por.dni.alumnos']);

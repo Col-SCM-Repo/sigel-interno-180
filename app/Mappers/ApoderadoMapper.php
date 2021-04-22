@@ -19,10 +19,10 @@ class ApoderadoMapper
         $_apoderadoVM->celular = $_apoderado->MP_APO_CELULAR;
         $_apoderadoVM->telefono = $_apoderado->MP_APO_TELEFONO;
         $_apoderadoVM->correo = $_apoderado->MP_APO_EMAIL;
-        $_apoderadoVM->fecha_nacimineto = $_apoderado->MP_APO_FECHANAC;
+        $_apoderadoVM->fecha_nacimiento = date('Y-m-d',strtotime($_apoderado->MP_APO_FECHANAC));
         $_apoderadoVM->genero = $_apoderado->MP_APO_SEXO;
         $_apoderadoVM->vive = $_apoderado->MP_APO_VIVE;
-        $_apoderadoVM->estacocivil_id = $_apoderado->MP_EC_ID;
+        $_apoderadoVM->estado_civil_id = $_apoderado->MP_EC_ID;
         $_apoderadoVM->religion_id = $_apoderado->MP_REL_ID;
         $_apoderadoVM->pais_nacimiento_id= $_apoderado->MP_PAIS_ID;
         $_apoderadoVM->pais_residencia_id= $_apoderado->MP_PAIS_DIR_ID;

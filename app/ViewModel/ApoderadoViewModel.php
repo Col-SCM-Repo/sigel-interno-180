@@ -11,11 +11,11 @@ class ApoderadoViewModel
     public $celular = '';
     public $telefono = '';
     public $correo = '';
-    public $fecha_nacimineto = '';
+    public $fecha_nacimiento = '';
     public $genero = '';
     public $vive = '';
-    public $estacocivil_id = '';
-    public $estacocivil = '';
+    public $estado_civil_id = '';
+    public $estado_civil = '';
     public $religion_id = '';
     public $religion = '';
     public $pais_nacimiento_id= '';

@@ -15,7 +15,7 @@ class AlumnoViewModel
     public $fecha_nacimiento = '';
     public $pais_id = '';
     public $pais;
-    public $distrito_nacimineto = '';
+    public $distrito_nacimiento = '';
     public $religion_id = 1;
     public $religion;
     public $distrito_residencia = '';

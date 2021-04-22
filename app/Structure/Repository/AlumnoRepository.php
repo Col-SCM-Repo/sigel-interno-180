@@ -16,4 +16,12 @@ class AlumnoRepository extends Alumno
     {
         return $this::where('MP_ALU_DNI',$dni)->first();
     }
+    public function Crear($alumno)
+    {
+        return Alumno::insertGetId((array)$alumno);
+    }
+    public function Actualizar($alumno)
+    {
+        return Alumno::update((array)$alumno);
+    }
 }

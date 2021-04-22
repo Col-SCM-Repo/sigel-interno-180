@@ -16,6 +16,9 @@ class ParentescoService
     public function BuscarPorAlumnoId($alumno_id)
     {
         $_listApoderadosVM = $this->_apoderadoMapper->ListModelToViewModel($this->_parentescoRepository->BuscarPorAlumnoId($alumno_id));
+        // foreach ($_listApoderadosVM as $apoderado ) {
+        //     $apoderado->tipo_parentesco =
+        // }
         return $_listApoderadosVM;
     }
 

@@ -6,8 +6,17 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 v-if="alumno_id==0">Registrar Alumno</h3>
-                    <h3 v-else>Editar Alumno</h3>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3 v-if="alumno_id==0">Registrar Alumno</h3>
+                            <h3 v-else>Editar Alumno</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button v-if="familiares.length!=0" type="button" class="btn btn-secondary" v-on:click="matricularAlumno"><i class="fas fa-file-invoice"></i> Matricular</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
 
@@ -128,7 +137,7 @@
                                                         </div>
                                                        <select class="form-control" name=""  v-model="alumno.pais_id">
                                                            <option value="">SELECCIONE PAÍS</option>
-                                                           <option v-for="pais in paises" :value="pais.id">@{{pais.nombre}}</option>
+                                                           <option v-for="pais in paises" :value="pais.id">@{{pais.pais}}</option>
                                                        </select>
                                                        <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
 
@@ -141,7 +150,7 @@
                                                         </div>
                                                        <select class="form-control" name=""  v-model="alumno.distrito_nacimiento">
                                                            <option value="">SELECCIONE DISTRITO</option>
-                                                           <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.provincia}}</option>
+                                                           <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.distrito}}</option>
                                                        </select>
                                                        <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
 
@@ -154,7 +163,7 @@
                                                         </div>
                                                        <select class="form-control" name=""  v-model="alumno.distrito_residencia">
                                                            <option value="">SELECCIONE DISTRITO</option>
-                                                           <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.provincia}}</option>
+                                                           <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.distrito}}</option>
                                                        </select>
                                                        <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                     </div>
@@ -189,7 +198,6 @@
                                                 <div class="col-md-4">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <button v-if="alumno_id!=0" type="button" class="btn btn-dark" v-on:click="editarFamiliar([],true,true)"><i class="fas fa-plus"></i> Agregar Familiar</button>
-                                                        <button v-if="familiares.length!=0" type="button" class="btn btn-secondary" v-on:click="matricularAlumno"><i class="fas fa-file-invoice"></i> Matricular</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -346,7 +354,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text" >Parentesco</span>
                                                                 </div>
-                                                                <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.tipo_id">
+                                                                <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.tipo_parentesco_id">
                                                                     <option value="">SELECCIONE PARENTESCO</option>
                                                                     <option v-for="parentesco in tipo_parentescos" :value="parentesco.id">@{{parentesco.nombre}}</option>
                                                                 </select>
@@ -364,7 +372,7 @@
                                                                 </div>
                                                                <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.pais_nacimiento_id">
                                                                    <option value="">SELECCIONE PAÍS</option>
-                                                                   <option v-for="pais in paises" :value="pais.id">@{{pais.nombre}}</option>
+                                                                   <option v-for="pais in paises" :value="pais.id">@{{pais.pais}}</option>
                                                                </select>
                                                                 <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
@@ -376,7 +384,7 @@
                                                                 </div>
                                                                <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.distrito_nacimiento_id">
                                                                    <option value="">SELECCIONE DISTRITO</option>
-                                                                   <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.provincia}}</option>
+                                                                   <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.distrito}}</option>
                                                                </select>
                                                                 <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
@@ -388,7 +396,7 @@
                                                                 </div>
                                                                <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.pais_residencia_id">
                                                                    <option value="">SELECCIONE PAÍS</option>
-                                                                   <option v-for="pais in paises" :value="pais.id">@{{pais.nombre}}</option>
+                                                                   <option v-for="pais in paises" :value="pais.id">@{{pais.pais}}</option>
                                                                </select>
                                                                 <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
@@ -400,7 +408,7 @@
                                                                 </div>
                                                                 <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.distrito_residencia_id">
                                                                    <option value="">SELECCIONE DISTRITO</option>
-                                                                   <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.provincia}}</option>
+                                                                   <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.distrito}}</option>
                                                                 </select>
                                                                 <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
@@ -423,7 +431,7 @@
                                                                 <div class="input-group-prepend">
                                                                   <span class="input-group-text" >Grado de Instruccion</span>
                                                                 </div>
-                                                               <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.grado_intruccion_id">
+                                                               <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.grado_instruccion_id">
                                                                    <option value="">SELECCIONE GRADO</option>
                                                                    <option v-for="grado in grados_intruccion" :value="grado.id">@{{grado.nombre}}</option>
                                                                </select>
