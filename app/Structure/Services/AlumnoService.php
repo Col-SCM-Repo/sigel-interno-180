@@ -9,10 +9,12 @@ class AlumnoService
 {
     private $_alumnoRepository ;
     private $_alumnoMapper ;
+    private $_parentescoService ;
     public function __construct()
     {
         $this->_alumnoRepository =  new AlumnoRepository();
         $this->_alumnoMapper =  new AlumnoMapper();
+        $this->_parentescoService =  new ParentescoService();
     }
     public function BuscarPorNombresApellidosDNI($texto)
     {
@@ -30,7 +32,7 @@ class AlumnoService
     public function BuscarPorId($alumno_id)
     {
         $_alumnoVM = $this->_alumnoMapper->ModelToViewModel( $this->_alumnoRepository->BuscarPorId($alumno_id));
-        $_alumnoVM->apoderados =;
+        $_alumnoVM->apoderados = $this->_parentescoService->BuscarPorAlumnoId($alumno_id);
         return $_alumnoVM;
     }
 }
