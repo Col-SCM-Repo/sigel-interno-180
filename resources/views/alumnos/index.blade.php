@@ -15,6 +15,14 @@
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-8">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="{{route('editar.alumno.alumnos', ['alumno_id' => 0])}}" type="button" class="btn btn-dark" ><i class="fas fa-plus"></i> Nuevo Alumno</a>
+                                </div>
+                            </div>
                             <h3>Lista de Alumnos</h3>
                             <table class="table table-striped">
                                 <thead>
