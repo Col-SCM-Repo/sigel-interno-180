@@ -111,6 +111,7 @@
                                                             <option value="">SELECCIONE RELIGIÓN</option>
                                                             <option v-for="religion in religiones" :value="religion.id">@{{religion.religion}}</option>
                                                         </select>
+                                                        <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,6 +130,8 @@
                                                            <option value="">SELECCIONE PAÍS</option>
                                                            <option v-for="pais in paises" :value="pais.id">@{{pais.nombre}}</option>
                                                        </select>
+                                                       <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -140,6 +143,8 @@
                                                            <option value="">SELECCIONE DISTRITO</option>
                                                            <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.provincia}}</option>
                                                        </select>
+                                                       <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -151,6 +156,7 @@
                                                            <option value="">SELECCIONE DISTRITO</option>
                                                            <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.provincia}}</option>
                                                        </select>
+                                                       <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -183,7 +189,7 @@
                                                 <div class="col-md-4">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <button v-if="alumno_id!=0" type="button" class="btn btn-dark" v-on:click="editarFamiliar([],true,true)"><i class="fas fa-plus"></i> Agregar Familiar</button>
-                                                        <button v-if="familiares.length!=0" type="button" class="btn btn-ligth" v-on:click="matricularAlumno"><i class="fas fa-plus"></i> Matricular</button>
+                                                        <button v-if="familiares.length!=0" type="button" class="btn btn-secondary" v-on:click="matricularAlumno"><i class="fas fa-file-invoice"></i> Matricular</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -314,6 +320,7 @@
                                                                     <option value="">SELECCIONE RELIGIÓN</option>
                                                                     <option v-for="religion in religiones" :value="religion.id">@{{religion.religion}}</option>
                                                                 </select>
+                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -359,6 +366,7 @@
                                                                    <option value="">SELECCIONE PAÍS</option>
                                                                    <option v-for="pais in paises" :value="pais.id">@{{pais.nombre}}</option>
                                                                </select>
+                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -370,6 +378,7 @@
                                                                    <option value="">SELECCIONE DISTRITO</option>
                                                                    <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.provincia}}</option>
                                                                </select>
+                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -381,6 +390,7 @@
                                                                    <option value="">SELECCIONE PAÍS</option>
                                                                    <option v-for="pais in paises" :value="pais.id">@{{pais.nombre}}</option>
                                                                </select>
+                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -388,10 +398,11 @@
                                                                 <div class="input-group-prepend">
                                                                   <span class="input-group-text" >Distrito de Residencia</span>
                                                                 </div>
-                                                               <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.distrito_residencia_id">
+                                                                <select :disabled="!editar_familiar" class="form-control" name=""  v-model="familiar_seleccionado.distrito_residencia_id">
                                                                    <option value="">SELECCIONE DISTRITO</option>
                                                                    <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.provincia}}</option>
-                                                               </select>
+                                                                </select>
+                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -416,6 +427,7 @@
                                                                    <option value="">SELECCIONE GRADO</option>
                                                                    <option v-for="grado in grados_intruccion" :value="grado.id">@{{grado.nombre}}</option>
                                                                </select>
+                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -427,6 +439,7 @@
                                                                    <option value="">SELECCION CENTRO</option>
                                                                    <option v-for="centro in centro_laborales" :value="centro.id">@{{centro.nombre}}</option>
                                                                </select>
+                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -438,6 +451,7 @@
                                                                    <option value="">SELECCIONE OCUPACIÓN</option>
                                                                    <option v-for="ocupacion in ocupaciones" :value="ocupacion.id">@{{ocupacion.nombre}}</option>
                                                                </select>
+                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
