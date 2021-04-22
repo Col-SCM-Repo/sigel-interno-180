@@ -41,7 +41,9 @@ class AlumnoMapper
     public function ViewModelToModel($_alumnoViewModel)
     {
         $_alumnoModel = new Alumno();
-        $_alumnoModel->MP_ALU_ID = $_alumnoViewModel->id == 0? null:$_alumnoViewModel->id;
+        if ($_alumnoViewModel->id != 0) {
+            $_alumnoModel->MP_ALU_ID =$_alumnoViewModel->id;
+        }
         $_alumnoModel->MP_ALU_APELLIDOS = mb_strtoupper($_alumnoViewModel->apellidos);
         $_alumnoModel->MP_ALU_NOMBRES = mb_strtoupper($_alumnoViewModel->nombres);
         $_alumnoModel->MP_ALU_DNI = $_alumnoViewModel->dni;
