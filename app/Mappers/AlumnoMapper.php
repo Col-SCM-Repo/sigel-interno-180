@@ -52,7 +52,7 @@ class AlumnoMapper
         $_alumnoModel->MP_ALU_CELULAR = $_alumnoViewModel->celular;
         $_alumnoModel->MP_ALU_EMAIL = $_alumnoViewModel->correo;
         $_alumnoModel->MP_ALU_SEXO = $_alumnoViewModel->genero;
-        $_alumnoModel->MP_ALU_FECHANAC = date('Y-m-d H:i:s',strtotime($_alumnoViewModel->fecha_nacimiento));
+        $_alumnoModel->MP_ALU_FECHANAC = date('Y-m-d\TH:i:s',strtotime($_alumnoViewModel->fecha_nacimiento));
         $_alumnoModel->MP_PAIS_ID = $_alumnoViewModel->pais_id;
         $_alumnoModel->MP_ALU_UBIGNAC = $_alumnoViewModel->distrito_nacimiento;
         $_alumnoModel->MP_REL_ID = $_alumnoViewModel->religion_id;

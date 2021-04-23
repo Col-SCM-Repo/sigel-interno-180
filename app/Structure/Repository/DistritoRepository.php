@@ -9,4 +9,11 @@ class DistritoRepository extends Distrito
     {
         return $this::all();
     }
+    public function Crear($distritoM)
+    {
+        $nuevoDistrito = new Distrito();
+        $nuevoDistrito = $distritoM;
+        $nuevoDistrito->save();
+        return $nuevoDistrito->id();
+    }
 }

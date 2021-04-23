@@ -99,10 +99,14 @@ Route::prefix('reportes')->middleware('auth')->group(function () {
 Route::prefix('paises')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_paises', ['uses' => 'PaisesController@ObtenerPaises', 'as' => 'obtener.paises']);
+    Route::get('/modelo', ['uses' => 'PaisesController@ObtenerModelo', 'as' => 'obtener.modelo.paises']);
+    Route::post('/guardar', ['uses' => 'PaisesController@Guardar', 'as' => 'guardar.paises']);
 });
 Route::prefix('distritos')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_distritos', ['uses' => 'DistritosController@ObtenerDistritos', 'as' => 'obtener.distritos']);
+    Route::get('/modelo', ['uses' => 'DistritosController@ObtenerModelo', 'as' => 'obtener.modelo.distritos']);
+    Route::post('/guardar', ['uses' => 'DistritosController@Guardar', 'as' => 'guardar.distritos']);
 });
 Route::prefix('apoderados')->middleware('auth')->group(function () {
     #Dashboard
@@ -119,6 +123,8 @@ Route::prefix('vacantes')->middleware('auth')->group(function () {
 Route::prefix('religiones')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_religiones', ['uses' => 'ReligionesController@ObtenerReligiones', 'as' => 'obtener.religiones']);
+    Route::get('/modelo', ['uses' => 'ReligionesController@ObtenerModelo', 'as' => 'obtener.modelo.religiones']);
+    Route::post('/guardar', ['uses' => 'ReligionesController@Guardar', 'as' => 'guardar.religiones']);
 });
 Route::prefix('tipo_documento')->middleware('auth')->group(function () {
     #Dashboard
@@ -135,6 +141,8 @@ Route::prefix('grado_instrucion')->middleware('auth')->group(function () {
 Route::prefix('centro_laboral')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_centros', ['uses' => 'CentroLaboralController@ObtenerCentros', 'as' => 'obtener.centro_laboral']);
+    Route::get('/modelo', ['uses' => 'CentroLaboralController@ObtenerModelo', 'as' => 'obtener.modelo.centro_laboral']);
+    Route::post('/guardar', ['uses' => 'CentroLaboralController@Guardar', 'as' => 'guardar.centro_laboral']);
 });
 Route::prefix('ocupacion')->middleware('auth')->group(function () {
     #Dashboard

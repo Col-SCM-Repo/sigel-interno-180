@@ -328,7 +328,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Nota de Credito de B.E. - @{{pago_seleccionado.numero}} </h5>
-                    <button type="button" class="close" v-on:click="cerrarModalPagar">
+                    <button type="button" class="close" v-on:click="cerrarModalNota">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

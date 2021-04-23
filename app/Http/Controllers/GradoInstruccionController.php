@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\GradoInstruccion;
+use App\Structure\Services\GradoInstruccionService;
 use Illuminate\Http\Request;
 
 class GradoInstruccionController extends Controller
 {
+    protected $_gradoInstruccionService;
+    public function __construct(GradoInstruccionService $_gradoInstruccionService)
+    {
+        $this->_gradoInstruccionService=$_gradoInstruccionService;
+    }
     public function ObtenerGrados()
     {
-        $grados =[];
-        $aux = GradoInstruccion::all();
-        foreach ($aux as $g) {
-            $grado=[
-                'id'=> $g->id(),
-                'nombre'=> $g->nombre()
-            ];
-            array_push($grados,$grado);
-        }
-        return $grados;
+        return $this->_gradoInstruccionService->ObtenerGradosInstruccion();
     }
 }

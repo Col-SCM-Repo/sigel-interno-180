@@ -120,7 +120,7 @@
                                                             <option value="">SELECCIONE RELIGIÓN</option>
                                                             <option v-for="religion in religiones" :value="religion.id">@{{religion.religion}}</option>
                                                         </select>
-                                                        <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                        <button class="btn btn-secondary btn-sm" v-on:click="crearReligion(1)"><i class="fas fa-plus"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,7 +139,7 @@
                                                            <option value="">SELECCIONE PAÍS</option>
                                                            <option v-for="pais in paises" :value="pais.id">@{{pais.pais}}</option>
                                                        </select>
-                                                       <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                       <button class="btn btn-secondary btn-sm" v-on:click="crearPais(1,2)"><i class="fas fa-plus"></i></button>
 
                                                     </div>
                                                 </div>
@@ -152,7 +152,7 @@
                                                            <option value="">SELECCIONE DISTRITO</option>
                                                            <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.distrito}}</option>
                                                        </select>
-                                                       <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                       <button class="btn btn-secondary btn-sm" v-on:click="crearDistrito(1,3)"><i class="fas fa-plus"></i></button>
 
                                                     </div>
                                                 </div>
@@ -165,7 +165,7 @@
                                                            <option value="">SELECCIONE DISTRITO</option>
                                                            <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.distrito}}</option>
                                                        </select>
-                                                       <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                       <button class="btn btn-secondary btn-sm" v-on:click="crearDistrito(1,4)"><i class="fas fa-plus"></i></button>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -187,6 +187,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Seccion familiares --}}
                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                     <br>
                                     <div class="row">
@@ -328,7 +329,7 @@
                                                                     <option value="">SELECCIONE RELIGIÓN</option>
                                                                     <option v-for="religion in religiones" :value="religion.id">@{{religion.religion}}</option>
                                                                 </select>
-                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" v-on:click="crearReligion(2)"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -374,7 +375,7 @@
                                                                    <option value="">SELECCIONE PAÍS</option>
                                                                    <option v-for="pais in paises" :value="pais.id">@{{pais.pais}}</option>
                                                                </select>
-                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" v-on:click="crearPais(2,2)"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -386,7 +387,7 @@
                                                                    <option value="">SELECCIONE DISTRITO</option>
                                                                    <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.distrito}}</option>
                                                                </select>
-                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" v-on:click="crearDistrito(2,4)"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -398,7 +399,7 @@
                                                                    <option value="">SELECCIONE PAÍS</option>
                                                                    <option v-for="pais in paises" :value="pais.id">@{{pais.pais}}</option>
                                                                </select>
-                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" v-on:click="crearPais(2,3)"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -410,7 +411,7 @@
                                                                    <option value="">SELECCIONE DISTRITO</option>
                                                                    <option v-for="distrito in distritos" :value="distrito.id">@{{distrito.region+' - '+distrito.provincia+' - '+distrito.distrito}}</option>
                                                                 </select>
-                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" v-on:click="crearDistrito(2,5)"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -435,7 +436,6 @@
                                                                    <option value="">SELECCIONE GRADO</option>
                                                                    <option v-for="grado in grados_intruccion" :value="grado.id">@{{grado.nombre}}</option>
                                                                </select>
-                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -447,7 +447,7 @@
                                                                    <option value="">SELECCION CENTRO</option>
                                                                    <option v-for="centro in centro_laborales" :value="centro.id">@{{centro.nombre}}</option>
                                                                </select>
-                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" v-on:click="crearCentroLaboral(2,6)"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -476,6 +476,134 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal para Religiones-->
+    <div class="modal fade" id="religionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nueva Religión </h5>
+                    <button type="button" class="close" v-on:click="cerraModalReligion">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-left: 75px; background: #fafafa">
+                    <div class="row">
+                        <div class="'col-md-12">
+                            <div class="form-group row">
+                                <label for="monto" class="col-sm-4 col-form-label">Religion</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  class="form-control" id="nueva_religion" value="" placeholder="Ingrese la religión">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" v-on:click="cerraModalReligion" >Cerrar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="GuardarReligion" >Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para Paises-->
+    <div class="modal fade" id="paisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nuevo País </h5>
+                    <button type="button" class="close" v-on:click="cerraModalPais">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-left: 75px; background: #fafafa">
+                    <div class="row">
+                        <div class="'col-md-12">
+                            <div class="form-group row">
+                                <label for="monto" class="col-sm-4 col-form-label">País</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  class="form-control" id="nuevo_pais" value="" placeholder="Ingrese el País">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" v-on:click="cerraModalPais" >Cerrar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="GuardarPais" >Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para Distritos-->
+    <div class="modal fade" id="distritoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nuevo Distrito </h5>
+                    <button type="button" class="close" v-on:click="cerraModalDistrito">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-left: 75px; background: #fafafa">
+                    <div class="row">
+                        <div class="'col-md-12">
+                            <div class="form-group row">
+                                <label for="monto" class="col-sm-4 col-form-label">Región</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  class="form-control" v-model="modelo.region" value="" placeholder="Ingrese la Región">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="monto" class="col-sm-4 col-form-label">Provincia</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  class="form-control" v-model="modelo.provincia" value="" placeholder="Ingrese la Provincia">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="monto" class="col-sm-4 col-form-label">Distrito</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  class="form-control" v-model="modelo.distrito" value="" placeholder="Ingrese el Distrito">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" v-on:click="cerraModalDistrito" >Cerrar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="GuardarDistrito" >Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para Centro laboral-->
+    <div class="modal fade" id="centroLaboralModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nuevo Centro Laboral </h5>
+                    <button type="button" class="close" v-on:click="cerraCentroLaboral">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-left: 75px; background: #fafafa">
+                    <div class="row">
+                        <div class="'col-md-12">
+                            <div class="form-group row">
+                                <label for="monto" class="col-sm-4 col-form-label">Centro Laboral</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  class="form-control" v-model="modelo.nombre" value="" placeholder="Ingrese el Centro Laboral">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" v-on:click="cerraCentroLaboral" >Cerrar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="guardarCentroLaboral" >Guardar</button>
                 </div>
             </div>
         </div>

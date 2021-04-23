@@ -17,5 +17,4 @@ class GradoInstruccionService
     {
         return $this->_gradoInstruccionMapper->ListModelToViewModel($this->_gradoInstruccionRepository->ObtenerTodos());
     }
-
 }

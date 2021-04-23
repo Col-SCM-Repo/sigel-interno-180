@@ -1,6 +1,5 @@
 <!-- Left Side Of Navbar -->
 <ul class="navbar-nav mr-auto">
-
     <li id="alumnos-nav" class="nav-item dropdown ">
         <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             ALUMNOS
@@ -37,6 +36,12 @@
             </a>
             <a class="dropdown-item" href="{{ route('vista.por.nivel.anio_actual.vacantes') }}">
                 Alumnos Por Año y Nivel
+            </a>
+            <a class="dropdown-item" href="{{ route('vista.morosos.alumnos') }}">
+                Alumnos Morosos
+            </a>
+            <a class="dropdown-item" href="{{ route('vista.pagos.entre.fechas.pagos') }}">
+                Pagos Entre Fechas
             </a>
         </div>
     </li>

@@ -17,5 +17,12 @@ class ReligionService
     {
         return $this->_religionMapper->ListModelToViewModel($this->_religionRepository->ObtenerTodos());
     }
-
+    public function CrearViewModel()
+    {
+        return $this->_religionMapper->ViewModel();
+    }
+    public function Guardar($religion_nombre)
+    {
+        return $this->_religionRepository->Crear($this->_religionMapper->ViewModelToModel($religion_nombre));
+    }
 }

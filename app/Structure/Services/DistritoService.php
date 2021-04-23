@@ -17,5 +17,12 @@ class DistritoService
     {
         return $this->_distritoMapper->ListModelToViewModel($this->_distritoRepository->ObtenerTodos());
     }
-
+    public function CrearViewModel()
+    {
+        return $this->_distritoMapper->ViewModel();
+    }
+    public function Guardar($distritoVM)
+    {
+        return $this->_distritoRepository->Crear($this->_distritoMapper->ViewModelToModel($distritoVM));
+    }
 }

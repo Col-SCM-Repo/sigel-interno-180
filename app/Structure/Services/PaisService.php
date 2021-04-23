@@ -17,5 +17,12 @@ class PaisService
     {
         return $this->_paisMapper->ListModelToViewModel($this->_paisRepository->ObtenerTodos());
     }
-
+    public function CrearViewModel()
+    {
+        return $this->_paisMapper->ViewModel();
+    }
+    public function Guardar($pais_nombre)
+    {
+        return $this->_paisRepository->Crear($this->_paisMapper->ViewModelToModel($pais_nombre));
+    }
 }

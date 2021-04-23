@@ -2,9 +2,7 @@
 namespace App\Mappers;
 
 use App\CentroLaboral;
-use App\Pais;
 use App\ViewModel\CentroLaboralViewModel;
-use App\ViewModel\PaisViewModel;
 
 class CentroLaboralMapper
 {
@@ -22,5 +20,18 @@ class CentroLaboralMapper
             array_push($_listPaises, self::ModelToViewModel($pais));
         }
         return $_listPaises;
+    }
+    public function ViewModel()
+    {
+        return new CentroLaboralViewModel();
+    }
+    public function ViewModelToModel($_centroLaboralVM)
+    {
+        $_centroLaboralM = new CentroLaboral();
+        if ($_centroLaboralVM->id!=0) {
+            $_centroLaboralM->MP_CL_ID = $_centroLaboralVM->id;
+        }
+        $_centroLaboralM->MP_CL_NOMBRE = mb_strtoupper($_centroLaboralVM->nombre);
+        return $_centroLaboralM;
     }
 }

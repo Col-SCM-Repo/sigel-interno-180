@@ -64,7 +64,7 @@ class ApoderadoMapper
         $_apoderadoModel->MP_APO_CELULAR = $_apoderadoViewModel->celular ;
         $_apoderadoModel->MP_APO_TELEFONO = $_apoderadoViewModel->telefono ;
         $_apoderadoModel->MP_APO_EMAIL = $_apoderadoViewModel->correo ;
-        $_apoderadoModel->MP_APO_FECHANAC = date('Y-m-d H:i:s',strtotime($_apoderadoViewModel->fecha_nacimiento));
+        $_apoderadoModel->MP_APO_FECHANAC = date('Y-m-d\TH:i:s',strtotime($_apoderadoViewModel->fecha_nacimiento));
         $_apoderadoModel->MP_APO_SEXO = $_apoderadoViewModel->genero ;
         $_apoderadoModel->MP_APO_VIVE = $_apoderadoViewModel->vive ;
         $_apoderadoModel->MP_EC_ID = $_apoderadoViewModel->estado_civil_id ;

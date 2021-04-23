@@ -21,4 +21,14 @@ class ReligionMapper
         }
         return $_listReligiones;
     }
+    public function ViewModel()
+    {
+        return new ReligionViewModel();
+    }
+    public function ViewModelToModel($religion_nombre)
+    {
+        $_religionModel = new Religion();
+        $_religionModel->MP_REL_NOMBRE = mb_strtoupper($religion_nombre);
+        return $_religionModel;
+    }
 }

@@ -23,4 +23,19 @@ class DistritoMapper
         }
         return $_listDistritos;
     }
+    public function ViewModel()
+    {
+        return new DistritoViewModel();
+    }
+    public function ViewModelToModel($_distritoVM)
+    {
+        $_distritoM = new Distrito();
+        if ($_distritoVM->id!=0) {
+            $_distritoM->MP_UBIG_ID = $_distritoVM->id;
+        }
+        $_distritoM->MP_UBIG_REGION = mb_strtoupper($_distritoVM->region);
+        $_distritoM->MP_UBIG_PROVINCIA = mb_strtoupper($_distritoVM->provincia);
+        $_distritoM->MP_UBIG_DISTRITO = mb_strtoupper($_distritoVM->distrito);
+        return $_distritoM;
+    }
 }

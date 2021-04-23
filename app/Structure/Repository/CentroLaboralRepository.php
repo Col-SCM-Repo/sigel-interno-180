@@ -9,4 +9,11 @@ class CentroLaboralRepository extends CentroLaboral
     {
         return $this::all();
     }
+    public function Crear($centroLaboralM)
+    {
+        $nuevoCentroLaboral = new CentroLaboral();
+        $nuevoCentroLaboral = $centroLaboralM;
+        $nuevoCentroLaboral->save();
+        return $nuevoCentroLaboral->id();
+    }
 }

@@ -17,5 +17,12 @@ class CentroLaboralService
     {
         return $this->_centroLaboralMapper->ListModelToViewModel($this->_centroLaboralRepository->ObtenerTodos());
     }
-
+    public function CrearViewModel()
+    {
+        return $this->_centroLaboralMapper->ViewModel();
+    }
+    public function Guardar($distritoVM)
+    {
+        return $this->_centroLaboralRepository->Crear($this->_centroLaboralMapper->ViewModelToModel($distritoVM));
+    }
 }

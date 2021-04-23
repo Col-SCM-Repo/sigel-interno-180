@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Vue from 'vue';
-var pagos = new Vue({
+var aulas = new Vue({
     el: '#aulas',
     data: {
         url_principal: $("#baseUrl").val(),
@@ -100,13 +100,11 @@ var pagos = new Vue({
                 this.alumnos.forEach(alumno => {
                     this.total_monto+= parseFloat(alumno.monto);
                 });
-            cargando('hide');
-
+                cargando('hide');
             });
         },
         descargarPDF:function(){
             cargando('show');
-
             var url = this.url_principal + '/reportes/descargar_lista_alumno_morosos' ;
             let nombre_archivo = 'Lista de Alumnos Morosos.pdf';
             let data= {

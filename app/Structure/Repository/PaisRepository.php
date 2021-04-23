@@ -9,4 +9,11 @@ class PaisRepository extends Pais
     {
         return $this::all();
     }
+    public function Crear($paisM)
+    {
+        $nuevoPais = new Pais();
+        $nuevoPais = $paisM;
+        $nuevoPais->save();
+        return $nuevoPais->id();
+    }
 }

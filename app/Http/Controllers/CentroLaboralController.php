@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\CentroLaboral;
+use App\Structure\Services\CentroLaboralService;
 use Illuminate\Http\Request;
 
 class CentroLaboralController extends Controller
 {
+    protected $_centroLaboralService;
+    public function __contruct(CentroLaboralService $_centroLaboralService)
+    {
+        $this->_centroLaboralService = $_centroLaboralService;
+    }
     public function ObtenerCentros()
     {
-        $centros =[];
-        $aux = CentroLaboral::all();
-        foreach ($aux as $c) {
-            $centro=[
-                'id'=> $c->id(),
-                'nombre'=> $c->nombre()
-            ];
-            array_push($centros,$centro);
-        }
-        return $centros;
+        return response()->json($this->_centroLaboralService->ObtenerCentros());
+    }
+    public function ObtenerModelo()
+    {
+        dd($this->_centroLaboralService->CrearViewModel());
+        return response()->json($this->_centroLaboralService->CrearViewModel());
+    }
+    public function Guardar(Request $request)
+    {
+       return $this->_centroLaboralService->Guardar((object)$request->centro_laboral);
     }
 }

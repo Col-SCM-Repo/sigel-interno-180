@@ -21,4 +21,14 @@ class PaisMapper
         }
         return $_listPaises;
     }
+    public function ViewModel()
+    {
+        return new PaisViewModel();
+    }
+    public function ViewModelToModel($pais_nombre)
+    {
+        $_paisModel = new Pais();
+        $_paisModel->MP_PAIS_NOMBRE = mb_strtoupper($pais_nombre);
+        return $_paisModel;
+    }
 }
