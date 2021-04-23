@@ -4,7 +4,6 @@ namespace App\Mappers;
 use App\Apoderado;
 use App\Parentesco;
 use App\ViewModel\ApoderadoViewModel;
-use App\ViewModel\NivelViewModel;
 
 class ApoderadoMapper
 {
@@ -44,5 +43,50 @@ class ApoderadoMapper
             array_push($_listApoderados, self::ModelToViewModel($parentesco, $parentesco->Apoderado));
         }
         return $_listApoderados;
+    }
+    public function ViewModel()
+    {
+        return new ApoderadoViewModel();
+    }
+    public function ViewModelToModel($_apoderadoViewModel)
+    {
+        $_apoderadoModel = new Apoderado();
+        $_parentescoModel = new Parentesco();
+
+        if ($_apoderadoViewModel->id != 0) {
+            $_apoderadoModel->MP_APO_ID =$_apoderadoViewModel->id;
+        }
+
+        $_apoderadoModel->MP_APO_NOMBRES = mb_strtoupper($_apoderadoViewModel->nombres) ;
+        $_apoderadoModel->MP_APO_APELLIDOS = mb_strtoupper($_apoderadoViewModel->apellidos) ;
+        $_apoderadoModel->MP_APO_NRODOC = $_apoderadoViewModel->dni ;
+        $_apoderadoModel->MP_APO_DIRECCION = mb_strtoupper($_apoderadoViewModel->direccion) ;
+        $_apoderadoModel->MP_APO_CELULAR = $_apoderadoViewModel->celular ;
+        $_apoderadoModel->MP_APO_TELEFONO = $_apoderadoViewModel->telefono ;
+        $_apoderadoModel->MP_APO_EMAIL = $_apoderadoViewModel->correo ;
+        $_apoderadoModel->MP_APO_FECHANAC = date('Y-m-d H:i:s',strtotime($_apoderadoViewModel->fecha_nacimiento));
+        $_apoderadoModel->MP_APO_SEXO = $_apoderadoViewModel->genero ;
+        $_apoderadoModel->MP_APO_VIVE = $_apoderadoViewModel->vive ;
+        $_apoderadoModel->MP_EC_ID = $_apoderadoViewModel->estado_civil_id ;
+        $_apoderadoModel->MP_REL_ID = $_apoderadoViewModel->religion_id ;
+        $_apoderadoModel->MP_PAIS_ID = $_apoderadoViewModel->pais_nacimiento_id;
+        $_apoderadoModel->MP_PAIS_DIR_ID = $_apoderadoViewModel->pais_residencia_id ;
+        $_apoderadoModel->MP_APO_UBIGNAC = $_apoderadoViewModel->distrito_nacimiento_id;
+        $_apoderadoModel->MP_APO_UBIGDIR = $_apoderadoViewModel->distrito_residencia_id;
+        $_apoderadoModel->MP_CL_ID = $_apoderadoViewModel->centro_laboral_id;
+        $_apoderadoModel->MP_OCU_ID = $_apoderadoViewModel->ocupacion_id;
+        $_apoderadoModel->MP_GI_ID= $_apoderadoViewModel->grado_instruccion_id;
+        $_apoderadoModel->MP_TIPDOC_ID = $_apoderadoViewModel->tipo_documento_id;
+
+        if ($_apoderadoViewModel->parentesco_id != 0) {
+            $_parentescoModel->MP_PAR_ID = $_apoderadoViewModel->parentesco_id;
+        }
+        $_parentescoModel->MP_TIPAR_ID = $_apoderadoViewModel->tipo_parentesco_id;
+        $_parentescoModel->MP_ALU_ID = $_apoderadoViewModel->alumno_id;
+
+        return (object)[
+            'apoderadoModel'=> $_apoderadoModel,
+            'parentesModel'=> $_parentescoModel,
+        ];
     }
 }

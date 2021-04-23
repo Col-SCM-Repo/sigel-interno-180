@@ -35,7 +35,6 @@ var editar = new Vue({
                 this.ocupaciones = response.data.ocupaciones;
                 this.alumno = response.data.alumno;
                 this.familiares = this.alumno.apoderados;
-                console.log(this.familiares);
             }).catch((error) => {
             }).finally((response) => {
             });
@@ -73,11 +72,6 @@ var editar = new Vue({
                 this.familiares = response.data;
             }).catch((error) => {
             }).finally((response) => {
-                this.obtenerTipoDocumentos();
-                this.obtenerTipoParentescos();
-                this.obtenerGradosInstruccion();
-                this.obtenerCentroLaborales();
-                this.obtenerOcupaciones();
             });
         },
         guardarAlumno:function(){
@@ -89,10 +83,9 @@ var editar = new Vue({
             };
             axios.post(url,data).then((response) => {
                 this.alumno_id = response.data;
-                console.log(response.data);
             }).catch((error) => {
             }).finally((response) => {
-                //location.href = this.baseUrl+'/editar/'+this.alumno_id;
+                location.href = this.baseUrl+'/editar/'+this.alumno_id;
                 cargando('hide');
             });
         },
@@ -150,16 +143,20 @@ var editar = new Vue({
             this.editar_familiar = editar;
         },
         guardaFamiliar:function(){
+            cargando('show');
             let url = this.url_principal +'/apoderados/guardar';
+            this.familiar_seleccionado.alumno_id = this.alumno_id;
             let data = {
-                'familiar':this.familiar_seleccionado,
-                'alumno_id':this.alumno_id,
+                'familiar':this.familiar_seleccionado
             };
             axios.post(url,data).then((response) => {
+                showToastr('Correcto','Se guardó CORRECTAMENTE al FAMILIAR.', 'success');
             }).catch((error) => {
+                showToastr('Error','Ocurrio un error inesperado. POR FAVOR RECARGUE LA PÁGINA', 'error');
             }).finally((response) => {
                 this.obtenerFamiliares();
                 this.familiar_seleccionado = [];
+                cargando('hide');
             });
         },
         matricularAlumno:function(){

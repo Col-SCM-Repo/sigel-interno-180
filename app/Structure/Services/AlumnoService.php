@@ -40,9 +40,8 @@ class AlumnoService
     public function GuardarAlumno($alumnoVM)
     {
         $_alumnoModel = $this->_alumnoMapper->ViewModelToModel($alumnoVM);
-        //dd($_alumnoModel);
         if ($alumnoVM->id!=0) {
-            return $this->_alumnoRepository->Actualizar($_alumnoModel);;
+            return $this->_alumnoRepository->Actualizar($_alumnoModel);
         }else{
             return $this->_alumnoRepository->Crear($_alumnoModel);
         }

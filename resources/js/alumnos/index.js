@@ -42,7 +42,6 @@ var pagos = new Vue({
             }
             axios.post(url,data).then((response) => {
                 this.matriculas = response.data;
-                console.log(this.matriculas);
             }).catch((error) => {
             }).finally((response) => {
             });

@@ -13,7 +13,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button v-if="familiares.length!=0" type="button" class="btn btn-secondary" v-on:click="matricularAlumno"><i class="fas fa-file-invoice"></i> Matricular</button>
+                                <button v-if="familiares.length!=0" type="button" class="btn btn-dark" v-on:click="matricularAlumno"><i class="fas fa-file-invoice"></i> Matricular</button>
                             </div>
                         </div>
                     </div>
@@ -216,11 +216,11 @@
                                                     <th scope="row">@{{i+1}}</th>
                                                     <td>@{{familiar.apellidos+', '+ familiar.nombres}}</td>
                                                     <td>@{{familiar.dni}}</td>
-                                                    <td>@{{familiar.tipo}}</td>
+                                                    <td>@{{familiar.tipo_parentesco.nombre}}</td>
                                                     <td>
                                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                                            <button type="button" class="btn btn-light" v-on:click="editarFamiliar(familiar,false,false)"><i class="far fa-eye" ></i> Info</button>
-                                                            <button type="button" class="btn btn-light" v-on:click="editarFamiliar(familiar,true, false)"><i class="far fa-edit"></i> Editar</button>
+                                                            <button type="button" class="btn btn-secondary" v-on:click="editarFamiliar(familiar,false,false)"><i class="far fa-eye" ></i> Info</button>
+                                                            <button type="button" class="btn btn-dark" v-on:click="editarFamiliar(familiar,true, false)"><i class="far fa-edit"></i> Editar</button>
                                                         </div>
                                                     </td>
                                                     </tr>

@@ -19,5 +19,8 @@ class TipoParentescoService
     {
         return $this->_tipoParentescoMapper->ListModelToViewModel($this->_tipoParentescoRepository->ObtenerTodos());
     }
-
+    public function BuscarPorId($tipo_parentesco_id)
+    {
+        return $this->_tipoParentescoMapper->ModelToViewModel( $this->_tipoParentescoRepository->BuscarPorId($tipo_parentesco_id));;
+    }
 }

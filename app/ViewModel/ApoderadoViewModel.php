@@ -13,7 +13,7 @@ class ApoderadoViewModel
     public $correo = '';
     public $fecha_nacimiento = '';
     public $genero = '';
-    public $vive = '';
+    public $vive = 'SI';
     public $estado_civil_id = '';
     public $estado_civil = '';
     public $religion_id = '';
