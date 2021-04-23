@@ -120,7 +120,6 @@ var editar = new Vue({
                 this.obtenerDistritos();
                 this.AsisgnarId(this.tipo_persona, this.segundo_tipo,distrito_id);
                 this.cerraModalDistrito();
-                this.modelo=[];
             });
         },
         crearCentroLaboral:function(tipo_persona, segundo_tipo){
@@ -144,10 +143,35 @@ var editar = new Vue({
                 grado_id = response.data;
             }).catch((error) => {
             }).finally((response) => {
-                this.obtenerDistritos();
+                this.obtenerCentroLaborales();
                 this.AsisgnarId(this.tipo_persona, this.segundo_tipo,grado_id);
-                this.cerraModalDistrito();
-                this.modelo=[];
+                this.cerraCentroLaboral();
+            });
+        },
+        crearOcupacion:function(tipo_persona, segundo_tipo){
+            this.obtenerModelo(5);
+            this.tipo_persona = tipo_persona;
+            this.segundo_tipo = segundo_tipo;
+            $('#ocupacionModal').modal({backdrop: 'static', keyboard: false});
+            $('#ocupacionModal').modal('show');
+        },
+        cerraOcupacion:function(){
+            this.modelo=[]
+            $('#ocupacionModal').modal('hide');
+        },
+        guardarOcupacion:function(){
+            let url = this.url_principal +'/ocupacion/guardar';
+            let grado_id='';
+            let data = {
+                'ocupacion':this.modelo
+            };
+            axios.post(url, data).then((response) => {
+                grado_id = response.data;
+            }).catch((error) => {
+            }).finally((response) => {
+                this.obtenerOcupaciones();
+                this.AsisgnarId(this.tipo_persona, this.segundo_tipo,grado_id);
+                this.cerraOcupacion();
             });
         },
         obtenerModelo:function(tipo_modelo){
@@ -165,6 +189,9 @@ var editar = new Vue({
                     break;
                 case 4://se obtiene el modelo de grado de instruccion
                     url = this.url_principal +'/centro_laboral/modelo';
+                    break;
+                case 5://se obtiene el modelo de ocupacion
+                    url = this.url_principal +'/ocupacion/modelo';
                     break;
                 default:
                     break;
@@ -214,6 +241,9 @@ var editar = new Vue({
                             break;
                         case 6://el id va al centro laboral
                             this.familiar_seleccionado.centro_laboral_id = id;
+                            break;
+                        case 7://el id va a la ocupacion
+                            this.familiar_seleccionado.ocupacion_id = id;
                             break;
                         default:
                             break;
@@ -275,23 +305,6 @@ var editar = new Vue({
                 location.href = this.baseUrl+'/editar/'+this.alumno_id;
             });
         },
-        obtenerTipoDocumentos:function(){
-            let url = this.url_principal +'/tipo_documento/obtener_tipos';
-            axios.get(url).then((response) => {
-                this.tipo_documentos = response.data;
-            }).catch((error) => {
-            }).finally((response) => {
-            });
-        },
-        obtenerTipoParentescos:function(){
-            let url = this.url_principal +'/tipo_parentesco/obtener_tipos';
-            axios.get(url).then((response) => {
-                this.tipo_parentescos = response.data;
-            }).catch((error) => {
-            }).finally((response) => {
-            });
-        },
-
         obtenerCentroLaborales:function(){
             let url = this.url_principal +'/centro_laboral/obtener_centros';
             axios.get(url).then((response) => {

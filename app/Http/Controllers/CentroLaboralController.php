@@ -8,17 +8,16 @@ use Illuminate\Http\Request;
 class CentroLaboralController extends Controller
 {
     protected $_centroLaboralService;
-    public function __contruct(CentroLaboralService $_centroLaboralService)
+    public function __construct(CentroLaboralService $_centroLaboralService)
     {
         $this->_centroLaboralService = $_centroLaboralService;
     }
     public function ObtenerCentros()
     {
-        return response()->json($this->_centroLaboralService->ObtenerCentros());
+        return response()->json($this->_centroLaboralService->ObtenerCentrosLaboral());
     }
     public function ObtenerModelo()
     {
-        dd($this->_centroLaboralService->CrearViewModel());
         return response()->json($this->_centroLaboralService->CrearViewModel());
     }
     public function Guardar(Request $request)

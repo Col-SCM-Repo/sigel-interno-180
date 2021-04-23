@@ -147,6 +147,8 @@ Route::prefix('centro_laboral')->middleware('auth')->group(function () {
 Route::prefix('ocupacion')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_ocupaciones', ['uses' => 'OcupacionesController@ObtenerOcupaciones', 'as' => 'obtener.ocupacion']);
+    Route::get('/modelo', ['uses' => 'OcupacionesController@ObtenerModelo', 'as' => 'obtener.modelo.ocupacion']);
+    Route::post('/guardar', ['uses' => 'OcupacionesController@Guardar', 'as' => 'guardar.ocupacion']);
 });
 Route::prefix('conceptos')->middleware('auth')->group(function () {
     #Dashboard

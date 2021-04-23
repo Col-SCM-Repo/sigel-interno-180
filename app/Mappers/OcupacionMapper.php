@@ -22,4 +22,17 @@ class OcupacionMapper
         }
         return $_listOcupaciones;
     }
+    public function ViewModel()
+    {
+        return new OcupacionesViewModel();
+    }
+    public function ViewModelToModel($_ocupacionVM)
+    {
+        $_ocupacionM = new Ocupacion();
+        if ($_ocupacionVM->id!=0) {
+            $_ocupacionM->MP_OCU_ID = $_ocupacionVM->id;
+        }
+        $_ocupacionM->MP_OCU_NOMBRE = mb_strtoupper($_ocupacionVM->nombre);
+        return $_ocupacionM;
+    }
 }

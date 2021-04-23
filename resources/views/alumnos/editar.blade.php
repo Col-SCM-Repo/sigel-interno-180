@@ -459,7 +459,7 @@
                                                                    <option value="">SELECCIONE OCUPACIÓN</option>
                                                                    <option v-for="ocupacion in ocupaciones" :value="ocupacion.id">@{{ocupacion.nombre}}</option>
                                                                </select>
-                                                                <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i></button>
+                                                                <button class="btn btn-secondary btn-sm" v-on:click="crearOcupacion(2,7)"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -604,6 +604,35 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" v-on:click="cerraCentroLaboral" >Cerrar</button>
                     <button type="button" class="btn btn-primary" v-on:click="guardarCentroLaboral" >Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para Ocupacion-->
+    <div class="modal fade" id="ocupacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nueva Ocupación </h5>
+                    <button type="button" class="close" v-on:click="cerraOcupacion">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-left: 75px; background: #fafafa">
+                    <div class="row">
+                        <div class="'col-md-12">
+                            <div class="form-group row">
+                                <label for="monto" class="col-sm-4 col-form-label">Ocupación</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  class="form-control" v-model="modelo.nombre" value="" placeholder="Ingrese la Ocupación">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" v-on:click="cerraOcupacion" >Cerrar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="guardarOcupacion" >Guardar</button>
                 </div>
             </div>
         </div>

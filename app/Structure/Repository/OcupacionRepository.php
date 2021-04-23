@@ -9,4 +9,11 @@ class OcupacionRepository extends Ocupacion
     {
         return $this::all();
     }
+    public function Crear($ocupacionM)
+    {
+        $nuevaOcupacion = new Ocupacion();
+        $nuevaOcupacion = $ocupacionM;
+        $nuevaOcupacion->save();
+        return $nuevaOcupacion->id();
+    }
 }

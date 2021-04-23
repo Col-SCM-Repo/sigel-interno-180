@@ -17,5 +17,12 @@ class OcupacionService
     {
         return $this->_ocupacionMapper->ListModelToViewModel($this->_ocupacionRepository->ObtenerTodos());
     }
-
+    public function CrearViewModel()
+    {
+        return $this->_ocupacionMapper->ViewModel();
+    }
+    public function Guardar($ocupacionVM)
+    {
+        return $this->_ocupacionRepository->Crear($this->_ocupacionMapper->ViewModelToModel($ocupacionVM));
+    }
 }
