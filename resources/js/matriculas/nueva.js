@@ -13,23 +13,18 @@ var matricula = new Vue({
         instituciones_educativas:[]
     },
     methods: {
-        obtenerDatosAlumno:function(){
-            let url = this.url_principal +'/alumnos/obtener_datos_alumno';
-            let data={
-                'alumno_id':this.alumno_id,
+        obtenerModeloMatricula:function(){
+            let url = this.baseUrl +'/obtener_modelos';
+            let data ={
+                'matricula_id' : this.matricula_id,
+                'alumno_id' : this.alumno_id
             }
             axios.post(url,data).then((response) => {
-                this.alumno = response.data;
-            }).catch((error) => {
-            }).finally((response) => {
-                this.obtenerApoderados();
-                this.obtenerInstituciones();
-            });
-        },
-        obtenerModeloMatricula:function(){
-            let url = this.baseUrl +'/obtener_modelo/'+this.matricula_id;
-            axios.get(url).then((response) => {
-                this.matricula = response.data;
+                this.alumno = response.data.alumno;
+                this.instituciones_educativas = response.data.instituciones_educativas;
+                this.apoderados = this.alumno.apoderados;
+                this.matricula = response.data.matricula;
+                console.log(this.matricula);
             }).catch((error) => {
             }).finally((response) => {
                 if(this.matricula.nivel!=''&&this.matricula.grado!=''){
@@ -105,7 +100,6 @@ var matricula = new Vue({
         }
     },
     created: function(){
-        this.obtenerDatosAlumno();
         this.obtenerModeloMatricula();
     }
 });

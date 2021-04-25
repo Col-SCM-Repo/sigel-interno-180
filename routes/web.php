@@ -28,7 +28,7 @@ Route::prefix('alumnos')->middleware('auth')->group(function () {
     #editar
     Route::get('/editar/{alumno_id}', ['uses' => 'AlumnosController@Editar', 'as' => 'editar.alumno.alumnos']);
     Route::post('/obtener_datos', ['uses' => 'AlumnosController@ObtenerDatos', 'as' => 'obtener.datos.alumnos']);
-    Route::post('/guardar', ['uses' => 'AlumnosController@Guardar', 'as' => 'datos.alumno.por.id.alumnos']);
+    Route::post('/guardar', ['uses' => 'AlumnosController@Guardar', 'as' => 'guardar.alumnos']);
     #
     Route::post('/buscar_por_dni', ['uses' => 'AlumnosController@ObtenerAlumnoPorDNI', 'as' => 'buscar.alumno.por.dni.alumnos']);
     #morosos
@@ -39,7 +39,7 @@ Route::prefix('matriculas')->middleware('auth')->group(function () {
     Route::post('/obtener_matriculas_por_alumno', ['uses' => 'MatriculasController@ObtenerMatriculasPorAlumno', 'as' => 'obtener.alumnos.matriculas']);
     #nueva
     Route::get('/nueva/{alumno_id}/{matricula_id}', ['uses' => 'MatriculasController@NuevaVista', 'as' => 'nueva.matriculas']);
-    Route::get('/obtener_modelo/{matricula_id}', ['uses' => 'MatriculasController@ModeloMatricula', 'as' => 'modelo.matriculas']);
+    Route::post('/obtener_modelos', ['uses' => 'MatriculasController@ObtenerModelos', 'as' => 'modelo.matriculas']);
     Route::post('/guardar', ['uses' => 'MatriculasController@Guardar', 'as' => 'guardar.matriculas']);
 });
 //Routes pagos
@@ -57,11 +57,6 @@ Route::prefix('pagos')->middleware('auth')->group(function () {
     #pagos entre fechas
     Route::get('/pagos_entre_fechas', ['uses' => 'PagosController@PagosEntreFechasView', 'as' => 'vista.pagos.entre.fechas.pagos']);
     Route::post('/obtener_entre_fechas', ['uses' => 'PagosController@ObtenerPagosEntreFechas', 'as' => 'obtener.pagos.entre.fechas.pagos']);
-});
-//Routes anio
-Route::prefix('anios')->middleware('auth')->group(function () {
-    #Dashboard
-    Route::get('/obtener_anios', ['uses' => 'AniosController@ObtenerAnios', 'as' => 'obtener.anios']);
 });
 //Routes Cronograma Pagos
 Route::prefix('cronograma')->middleware('auth')->group(function () {
@@ -126,14 +121,6 @@ Route::prefix('religiones')->middleware('auth')->group(function () {
     Route::get('/modelo', ['uses' => 'ReligionesController@ObtenerModelo', 'as' => 'obtener.modelo.religiones']);
     Route::post('/guardar', ['uses' => 'ReligionesController@Guardar', 'as' => 'guardar.religiones']);
 });
-Route::prefix('tipo_documento')->middleware('auth')->group(function () {
-    #Dashboard
-    Route::get('/obtener_tipos', ['uses' => 'TipoDocumentoController@ObtenerTipos', 'as' => 'obtener.tipo_documento']);
-});
-Route::prefix('tipo_parentesco')->middleware('auth')->group(function () {
-    #Dashboard
-    Route::get('/obtener_tipos', ['uses' => 'TipoParentescoController@ObtenerTipos', 'as' => 'obtener.tipo_parentesco']);
-});
 Route::prefix('grado_instrucion')->middleware('auth')->group(function () {
     #Dashboard
     Route::get('/obtener_grados', ['uses' => 'GradoInstruccionController@ObtenerGrados', 'as' => 'obtener.grados_instruccion']);
@@ -157,6 +144,6 @@ Route::prefix('conceptos')->middleware('auth')->group(function () {
 });
 Route::prefix('ie_procedencia')->middleware('auth')->group(function () {
     #Dashboard
-    Route::get('/obtener_instituciones', ['uses' => 'InstitucionEducativaProcedenciaController@ObtenerInstituciones', 'as' => 'obtener.ie_prodecendia']);
+    Route::get('/obtener_instituciones', ['uses' => 'InstitucionEducativaController@ObtenerInstituciones', 'as' => 'obtener.ie_prodecendia']);
 });
 Route::get('/pruebas', 'Pruebas@ObtenerUsuarios')->name('pruebas');

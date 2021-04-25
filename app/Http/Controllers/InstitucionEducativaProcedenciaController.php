@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\InstitucionEducativaProcedencia;
-use Illuminate\Http\Request;
+use App\InstitucionEducativa;
+use App\Structure\Services\InstitucionEducativaService;
 
-class InstitucionEducativaProcedenciaController extends Controller
+class InstitucionEducativaController extends Controller
 {
+    protected $_institucionEducativaservice;
+    public function __construct(InstitucionEducativaService $_institucionEducativaservice)
+    {
+        $this->_institucionEducativaservice = $_institucionEducativaservice;
+    }
     public function ObtenerInstituciones()
     {
-        $instituciones =[];
-        $aux = InstitucionEducativaProcedencia::all();
-        foreach ($aux as $ie) {
-            $institucion=[
-                'id'=>$ie->id(),
-                'nombre'=>$ie->nombre(),
-                'referencia'=>$ie->referencia(),
-            ];
-            array_push($instituciones,$institucion);
-        }
-        return $instituciones;
+        return response()->json($this->_institucionEducativaservice->ObtenerTodas());
     }
 }

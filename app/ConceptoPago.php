@@ -13,7 +13,9 @@ class ConceptoPago extends Model
         'MP_CONPAGO_MONTO',
         'MP_CON_ID',
         'MP_ANIO_ID',
-        'FECHA_VENCIMIENTO'
+        'FECHA_VENCIMIENTO',
+        'MP_NIV_ID',
+        'MP_LOC_ID'
     ];
 
     public function CronogramasPago()

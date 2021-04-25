@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InstitucionEducativaProcedencia extends Model
+class InstitucionEducativa extends Model
 {
     protected $table = 'MP_IEPROCEDENCIA';
     protected $primaryKey = 'MP_IEPRO_ID';

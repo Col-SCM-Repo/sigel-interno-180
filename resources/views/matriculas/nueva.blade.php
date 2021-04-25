@@ -64,7 +64,7 @@
                                         </div>
                                        <select class="form-control" name=""  v-model="matricula.pariente_id" >
                                            <option value="">SELECCIONE APODERADO</option>
-                                           <option v-for="apoderado in apoderados" :value="apoderado.parentesco_id">@{{apoderado.apellidos +', '+ apoderado.nombres + ' - ' +apoderado.tipo }}</option>
+                                           <option v-for="apoderado in apoderados" :value="apoderado.parentesco_id">@{{apoderado.apellidos +', '+ apoderado.nombres + ' - ' +apoderado.tipo_parentesco.nombre }}</option>
                                        </select>
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@
                                         <div class="input-group-prepend">
                                           <span class="input-group-text" >I.E. de Prodecedencia</span>
                                         </div>
-                                       <select class="form-control" name=""  v-model="matricula.ie_procedencia_id" >
+                                       <select class="form-control" name=""  v-model="matricula.institucion_educativa_procedencia_id" >
                                            <option value="">SELECCIONE I.E.</option>
                                            <option v-for="institucion in instituciones_educativas" :value="institucion.id">@{{institucion.nombre}}</option>
                                        </select>
@@ -88,7 +88,7 @@
                                         <div class="input-group-prepend">
                                           <span class="input-group-text" >Tipo Matricula</span>
                                         </div>
-                                       <select class="form-control" name=""  v-model="matricula.tipo_id" >
+                                       <select class="form-control" name=""  v-model="matricula.tipo_matricula_id" >
                                            <option value="">SELECCIONE TIPO</option>
                                            <option value="1">NORMAL</option>
                                            <option value="2">BECA</option>

@@ -10,6 +10,7 @@ class Concepto extends Model
     protected $primaryKey = 'MP_CON_ID';
     protected $fillable = ['MP_CON_ID',
                             'MP_CON_CONCEPTO',
+                            'MP_TIPO_CON_ID'
                           ];
     /**
      * The attributes that should be hidden for arrays.
