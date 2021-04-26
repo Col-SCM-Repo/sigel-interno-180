@@ -27,7 +27,7 @@
                         <div v-if="aula_id!=''" class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3>Lista de Alumnos</h3>
+                                    <h3>Lista de Alumnos (@{{alumnos.length}})</h3>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="btn-group"  role="group" aria-label="Basic example">
@@ -38,6 +38,7 @@
                             <table class="table table-striped">
                                 <thead>
                                   <tr>
+                                    <th scope="col">#</th>
                                     <th scope="col">Cod. Matrícula</th>
                                     <th scope="col">Alumno</th>
                                     <th scope="col">DNI</th>
@@ -48,8 +49,9 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="alumno in alumnos">
-                                        <th scope="row">@{{alumno.matricula_id}}</th>
+                                    <tr v-for="(alumno,i) in alumnos">
+                                        <th scope="row">@{{i+1}}</th>
+                                        <th >@{{alumno.matricula_id}}</th>
                                         <td >@{{alumno.nombres}}</td>
                                         <td >@{{alumno.dni}}</td>
                                         <td >@{{alumno.apoderado.nombres}}</td>
@@ -63,6 +65,13 @@
                                         </td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="8">
+                                            <h3>Total de Alumnos: @{{alumnos.length}}</h3>
+                                        </th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

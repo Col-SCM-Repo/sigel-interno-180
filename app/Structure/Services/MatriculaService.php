@@ -1,6 +1,7 @@
 <?php
 namespace App\Structure\Services;
 
+use App\Helpers\EstadoMatricula;
 use App\Mappers\CronogramaMapper;
 use App\Mappers\MatriculaMapper;
 use App\Structure\Repository\CronogramaRepository;
@@ -32,6 +33,7 @@ class MatriculaService
         $_listMatriculasVM = $this->_matriculaMapper->ListModelToViewModel($this->_matriculaRepository->ObtenerMatriculasPorAlumno($alumno_id));
         foreach ($_listMatriculasVM as $matriculaVM) {
             $matriculaVM->vacante =  $this->_vacanteService->BuscarPorId($matriculaVM->vacante_id);
+            $matriculaVM->estado = EstadoMatricula::ALetras($matriculaVM->estado);
         }
         return $_listMatriculasVM;
     }
