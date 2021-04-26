@@ -56,7 +56,7 @@ class Matricula extends Model
     }
     public function IEProcedencia()
     {
-        return $this->belongsTo('App\InstitucionEducativaProcedencia', 'MP_IEPRO_ID', 'MP_IEPRO_ID');
+        return $this->belongsTo('App\InstitucionEducativa', 'MP_IEPRO_ID', 'MP_IEPRO_ID');
     }
     //campos de manera resumida
     public function estado()
