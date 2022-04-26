@@ -23,4 +23,8 @@ class ParentescoService
         }
         return $_listApoderadosVM;
     }
+    public function BuscarPorID($parentesco_id)
+    {
+        return $this->_apoderadoMapper->ParentescoModelToViewModel($this->_parentescoRepository->BuscarPorID($parentesco_id));
+    }
 }

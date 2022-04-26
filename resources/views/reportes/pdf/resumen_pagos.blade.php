@@ -21,7 +21,13 @@
             <strong>Cajero:</strong> {{Auth::user()->nombres()}}
         </h2>
         <h2 >
-            <strong>Total:</strong> S/ {{number_format($total, 2, '.', ' ')}}
+            <strong>Total Efectivo:</strong> S/ {{number_format($total_efectivo, 2, '.', ' ')}}
+        </h2>
+        <h2 >
+            <strong>Total Deposito:</strong> S/ {{number_format($total_deposito, 2, '.', ' ')}}
+        </h2>
+        <h2 >
+            <strong>Total:</strong> S/ {{number_format(($total_deposito + $total_efectivo), 2, '.', ' ')}}
         </h2>
         <h2 >
             <strong>Nro. Tickects:</strong> {{$cant}}

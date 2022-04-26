@@ -20,4 +20,5 @@ class AlumnoViewModel
     public $religion;
     public $distrito_residencia = '';
     public $apoderados = [];
+    public $url_foto = 'images/user.jpg';
 }

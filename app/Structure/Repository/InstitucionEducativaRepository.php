@@ -9,4 +9,11 @@ class InstitucionEducativaRepository extends InstitucionEducativa
     {
         return $this::all();
     }
+    public function Crear(InstitucionEducativa $_institucionEducativa)
+    {
+        $_nuevaInstitucionEducativa = New InstitucionEducativa();
+        $_nuevaInstitucionEducativa = $_institucionEducativa;
+        $_nuevaInstitucionEducativa->save();
+        return $_nuevaInstitucionEducativa->id();
+    }
 }

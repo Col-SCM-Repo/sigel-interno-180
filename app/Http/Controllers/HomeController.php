@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Usuario;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -26,11 +24,16 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->estado()=='ACTIVO') {
-            return redirect('alumnos');
+            return redirect('/dashboard');
         }else{
             Auth::logout();
             return redirect('/login');
         }
+    }
+
+    public function Dashboard()
+    {
+        return view("home");
     }
 
     // public function mostarUsaurios()

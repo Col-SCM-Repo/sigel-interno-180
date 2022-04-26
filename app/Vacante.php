@@ -8,14 +8,18 @@ class Vacante extends Model
 {
     protected $table = 'MP_VACANTES';
     protected $primaryKey = 'MP_VAC_ID';
+    public $timestamps = false;
+
     protected $fillable = [
         'MP_VAC_ID',
         'MP_VAC_TOT',
         'MP_VAC_OCU',
         'MP_VAC_DISP',
+        'MP_VAC_OBS',
         'MP_ANIO_ID',
         'MP_GRAD_ID',
         'MP_NIV_ID',
+        'MP_LOC_ID',
         'MP_SEC_ID'];
     /**
      * The attributes that should be hidden for arrays.
@@ -53,6 +57,10 @@ class Vacante extends Model
     public function id()
     {
       return $this->MP_VAC_ID;
+    }
+    public function anioId()
+    {
+      return $this->MP_ANIO_ID;
     }
     public function total_vacantes()
     {

@@ -23,6 +23,7 @@
                 <th class="border" scope="col">Cod. Matricula</th>
                 <th class="border" scope="col">Alumno</th>
                 <th class="border" scope="col">Aula / Nivel</th>
+                <th class="border" scope="col">Estado Matrícula</th>
                 <th class="border" scope="col">Concepto</th>
                 <th class="border" scope="col">Monto</th>
                 <th class="border" scope="col">Estado</th>
@@ -32,12 +33,13 @@
                 @foreach ($alumnos as $alumno)
                     <tr >
                         <th class="border" scope="row">{{$i+1}}</th>
-                        <th class="border" scope="row">{{$alumno['matricula_id']}}</th>
-                        <td class="border">{{$alumno['apellidos'].', '.$alumno['nombres']}}</td>
-                        <td class="border">{{$alumno['aula'].' - '.$alumno['nivel']}}</td>
-                        <td class="border">{{$alumno['concepto']}}</td>
-                        <td class="border">{{$alumno['monto']}} </td>
-                        <td class="border">{{$alumno['estado']}} </td>
+                        <th class="border" scope="row">{{$alumno->matricula_id}}</th>
+                        <td class="border">{{$alumno->apellidos.', '.$alumno->nombres}}</td>
+                        <td class="border">{{$alumno->aula.' - '.$alumno->nivel}}</td>
+                        <td class="border">{{$alumno->estado_matricula}}</td>
+                        <td class="border">{{$alumno->concepto}}</td>
+                        <td class="border">S/ {{$alumno->saldo}} </td>
+                        <td class="border">{{$alumno->estado}} </td>
                     </tr>
                     @php
                         $i++;
@@ -46,8 +48,8 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="border" colspan="5"><b>Total</b></td>
-                    <td class="border"><b>{{$total_monto}}</b></td>
+                    <td class="border" colspan="6"><b>Total</b></td>
+                    <td class="border"><b>S/ {{$totalSaldo}}</b></td>
                     <td></td>
                 </tr>
             </tfoot>

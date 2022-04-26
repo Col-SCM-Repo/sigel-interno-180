@@ -25,7 +25,7 @@
                 <td style="font-size:0.6em; text-align:left">{{$matricula->id()}}</td>
             </tr>
         </table>
-<br><br><br>
+<br><br><br><br>
         <table style="margin-left:50px ;width: 100%">
             <tr>
                 <td style="font-size:0.75em; text-align:left"><b>Apellidos y Nombres:</b></td>
@@ -64,79 +64,104 @@
                 <td style="font-size:0.75em; text-align:left">{{$alumno->celular()}}</td>
             </tr>
         </table>
-        <br><br><br><br>
+        <br><br><br><br><br><br>
         <table style="margin-left:50px ;width: 100%">
             <tr>
                 <th class="border"></th>
-                <th class="border">Padre</th>
-                <th class="border">Madre</th>
-                <th class="border">Apoderado ({{$responsable->relacion}})</th>
+                <th class="border">Padre {{$responsable->relacion=="PADRE"?"(APODERADO)":''}}</th>
+                <th class="border">Madre {{$responsable->relacion=="MADRE"?"(APODERADO)":''}}</th>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <th class="border">Apoderado ({{$responsable->relacion}})</th>
+                @endif
+
             </tr>
             <tr>
                 <td class="border"><b>Apellidos</b></td>
                 <td class="border">{{$padre->apellidos}}</td>
                 <td class="border">{{$madre->apellidos}}</td>
-                <td class="border">{{$responsable->apellidos}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->apellidos}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Nombres</b></td>
                 <td class="border">{{$padre->nombres}}</td>
                 <td class="border">{{$madre->nombres}}</td>
-                <td class="border">{{$responsable->nombres}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->nombres}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>DNI</b></td>
                 <td class="border">{{$padre->dni}}</td>
                 <td class="border">{{$madre->dni}}</td>
-                <td class="border">{{$responsable->dni}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->dni}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Grado Inst</b></td>
                 <td class="border">{{$padre->grado_instruccion}}</td>
                 <td class="border">{{$madre->grado_instruccion}}</td>
-                <td class="border">{{$responsable->grado_instruccion}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->grado_instruccion}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Ocupación</b></td>
                 <td class="border">{{$padre->ocupacion}}</td>
                 <td class="border">{{$madre->ocupacion}}</td>
-                <td class="border">{{$responsable->ocupacion}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->ocupacion}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Centro Lab</b></td>
                 <td class="border">{{$padre->centro_laboral}}</td>
                 <td class="border">{{$madre->centro_laboral}}</td>
-                <td class="border">{{$responsable->centro_laboral}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->centro_laboral}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Fecha Nac</b></td>
                 <td class="border">{{$padre->fecha_nacimiento}}</td>
                 <td class="border">{{$madre->fecha_nacimiento}}</td>
-                <td class="border">{{$responsable->fecha_nacimiento}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->fecha_nacimiento}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Estado Civil</b></td>
                 <td class="border">{{$padre->estado_civil}}</td>
                 <td class="border">{{$madre->estado_civil}}</td>
-                <td class="border">{{$responsable->estado_civil}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->estado_civil}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Dirección</b></td>
                 <td class="border">{{$padre->direccion}}</td>
                 <td class="border">{{$madre->direccion}}</td>
-                <td class="border">{{$responsable->direccion}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->direccion}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Telefono</b></td>
                 <td class="border">{{$padre->telefono}}</td>
                 <td class="border">{{$madre->telefono}}</td>
-                <td class="border">{{$responsable->telefono}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->telefono}}</td>
+                @endif
             </tr>
             <tr>
                 <td class="border"><b>Celular</b></td>
                 <td class="border">{{$padre->celular}}</td>
                 <td class="border">{{$madre->celular}}</td>
-                <td class="border">{{$responsable->celular}}</td>
+                @if ($responsable->relacion!="MADRE"&&$responsable->relacion!="PADRE")
+                    <td class="border">{{$responsable->celular}}</td>
+                @endif
             </tr>
         </table>
     </body>

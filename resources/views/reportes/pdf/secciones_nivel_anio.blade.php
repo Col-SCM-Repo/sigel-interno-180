@@ -12,33 +12,33 @@
         </style>
     </head>
     <body >
-        <h1 style="text-align: center;">Lista de Secciones de {{$nivel}} - {{$anio}}</h1>
-        <h3 style="text-align: center;">Total de alumnos matriculados en {{$nivel}} : {{$vacantes_ocupadas}}</h3>
+        <h1 style="text-align: center;">Lista de Secciones de {{$nivel->nivel}} - {{$anio->nombre}}</h1>
+        <h3 style="text-align: center;">Total de alumnos matriculados en {{$nivel->nivel}} : {{$vacantes_ocupadas}}</h3>
 
         <table style="width: 100%;">
             <thead>
               <tr>
-                <th class="border" scope="col">Grado</th>
-                <th class="border" scope="col">Seccion</th>
-                <th class="border" scope="col">Total Vacantes</th>
-                <th class="border" scope="col">Vacantes Disponibles</th>
-                <th class="border" scope="col">Vacantes Ocupadas</th>
+                <th scope="col">Nivel - Grado - Seccion</th>
+                <th scope="col">Total Vacantes</th>
+                <th scope="col">Vacantes Disponibles</th>
+                <th scope="col">Vacantes Ocupadas</th>
               </tr>
             </thead>
             <tbody>
-                @foreach ($secciones as $seccion)
-                    <tr >
-                        <td class="border">{{$seccion['grado']}}</td>
-                        <td class="border">{{$seccion['seccion']}}</td>
-                        <td class="border">{{$seccion['total_vacantes']}}</td>
-                        <td class="border">{{$seccion['vacantes_disponibles']}}</td>
-                        <td class="border"><b>{{$seccion['vacantes_ocupadas']}}</b></td>
-                    </tr>
+                @foreach ($aulas as $aula)
+                    @if ($aula->vacantes_ocupadas>0)
+                        <tr >
+                            <td class="border">{{$aula->nombre_completo}}</td>
+                            <td class="border">{{$aula->total_vacantes}}</td>
+                            <td class="border">{{$aula->vacantes_disponibles}}</td>
+                            <td class="border"><b>{{$aula->vacantes_ocupadas}}</b></td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="border" colspan="2"><b>Total</b></td>
+                    <td class="border"><b>Total</b></td>
                     <td class="border"><b>{{$total_vacantes}}</b></td>
                     <td class="border"><b>{{$vacantes_disponibles}}</b></td>
                     <td class="border"><b>{{$vacantes_ocupadas}}</b></td>

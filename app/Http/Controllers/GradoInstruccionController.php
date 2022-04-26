@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Structure\Services\GradoInstruccionService;
-use Illuminate\Http\Request;
 
 class GradoInstruccionController extends Controller
 {

@@ -20,4 +20,12 @@ class InstitucionEducativaService
         $_institucionEducativaVM = $this->_institucionEducativaMapper->ListModelToViewModel($this->_institucionEducativaRepository->ObtenerTodas());
         return $_institucionEducativaVM;
     }
+    public function CrearViewModel()
+    {
+        return $this->_institucionEducativaMapper->ViewModel();
+    }
+    public function Guardar($_institucion)
+    {
+        return $this->_institucionEducativaRepository->Crear($this->_institucionEducativaMapper->ViewModelToModel($_institucion));
+    }
 }

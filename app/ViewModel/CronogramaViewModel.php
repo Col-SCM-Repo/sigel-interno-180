@@ -13,4 +13,5 @@ class CronogramaViewModel
     public $concepto = [];
     public $matricula = [];
     public $pagos = [];
+    public $venido = [];
 }

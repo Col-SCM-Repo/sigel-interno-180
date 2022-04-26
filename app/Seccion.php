@@ -8,6 +8,8 @@ class Seccion extends Model
 {
     protected $table = 'MP_SECCION';
     protected $primaryKey = 'MP_SEC_ID';
+    public $timestamps = false;
+
     protected $fillable = [
         'MP_SEC_ID',
         'MP_SEC_NOMBRE'

@@ -4,7 +4,6 @@ namespace App\Structure\Services;
 use App\Enums\JsonEnums;
 use App\Mappers\AlumnoMapper;
 use App\Structure\Repository\AlumnoRepository;
-use App\ViewModel\AlumnoViewModel;
 
 class AlumnoService
 {
@@ -44,6 +43,38 @@ class AlumnoService
             return $this->_alumnoRepository->Actualizar($_alumnoModel);
         }else{
             return $this->_alumnoRepository->Crear($_alumnoModel);
+        }
+    }
+    public function GuardarImagen($imagen, $alumno_id)
+    {
+        $_alumnoVM=self::BuscarPorId($alumno_id);
+        //Save image
+        $fileExtencion = pathinfo($imagen->getClientOriginalName())['extension'];
+        $fileName = $_alumnoVM->dni .'.'. $fileExtencion;
+        $folder = 'images/alumno';
+        $imagen->storeAs($folder,$fileName,'publicFile');
+        return $_alumnoVM->id;
+    }
+    public function BuscarDeuda($_listaMatriculasVM)
+    {
+        $_pagoService =  new PagoService();
+        $deuda =0;
+        foreach ($_listaMatriculasVM as $matricula_VM) {
+            foreach ($matricula_VM->cronogramas  as $cronograma) {
+                if ($cronograma->estado!='CANCELADO'||$cronograma->estado!='EXONERADO') {
+                    $cronograma->pagos = $_pagoService->ObtenerPagosPorCronograma($cronograma->id);
+                    $saldo =$cronograma->monto;
+                    foreach ($cronograma->pagos as $pago) {
+                        $saldo -= $pago->monto;
+                    }
+                    $deuda += $saldo;
+                }
+            }
+        }
+        if ($deuda==0) {
+            return false;
+        } else {
+            return $deuda;
         }
     }
 }

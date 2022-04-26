@@ -3,7 +3,7 @@ var pagos = new Vue({
     el: '#pagos',
     data: {
         url_principal: $("#baseUrl").val(),
-        baseUrl: $("#baseUrl").val()+'/pagos',
+        baseUrl: $("#baseUrl").val()+'pagos',
         pagos: [],
         fecha_inicial: '',
         fecha_final: '',
@@ -18,29 +18,30 @@ var pagos = new Vue({
                 return;
             }
             cargando('show');
-
             let url = this.baseUrl +'/obtener_entre_fechas';
-            this.total =0;
+            this.total=0;
             let data={
                 'fecha_inicial':this.fecha_inicial,
                 'fecha_final':this.fecha_final,
                 'usuario_id':this.usuario_id
             }
-            console.log(data);
             axios.post(url,data).then((response) => {
                 this.pagos = response.data;
+                this.pagos.forEach(pago => {
+                    this.total += parseFloat(pago.monto);
+                });
             }).catch((error) => {
             }).finally((response) => {                cargando('hide');
 
             });
         },
         verBoleta:function(pago_id){
-            window.open(this.url_principal+'/reportes/boleta/'+pago_id);
+            window.open(this.url_principal+'reportes/boleta/'+pago_id);
         },
         descargarPDF:function(){
             cargando('show');
 
-            var url = this.url_principal + '/reportes/descargar_pagos_entre_fechas_pdf' ;
+            var url = this.url_principal + 'reportes/descargar_pagos_entre_fechas_pdf' ;
             let nombre_archivo = 'Pagos de las fechas '+this.fecha_inicial +' - '+this.fecha_final + '.pdf';
             let data= {
                 'pagos': this.pagos,
@@ -63,7 +64,7 @@ var pagos = new Vue({
         descargarExcel:function(){
             cargando('show');
 
-            var url = this.url_principal + '/reportes/descargar_pagos_entre_fechas_excel' ;
+            var url = this.url_principal + 'reportes/descargar_pagos_entre_fechas_excel' ;
             let nombre_archivo = 'Pagos de las fechas '+this.fecha_inicial +' - '+this.fecha_final + '.xls';
             let data= {
                 'pagos': this.pagos,

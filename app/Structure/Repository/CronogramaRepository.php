@@ -28,4 +28,12 @@ class CronogramaRepository extends CronogramaPago
     {
         return CronogramaPago::select('MP_CRO_ID')->max('MP_CRO_ID');
     }
+    public function BuscarPorMatriculaId($matricula_id)
+    {
+        return $this::where('MP_MAT_ID',$matricula_id)->get();
+    }
+    public function BuscarPorId($_cronogramaId)
+    {
+        return $this::find($_cronogramaId);
+    }
 }

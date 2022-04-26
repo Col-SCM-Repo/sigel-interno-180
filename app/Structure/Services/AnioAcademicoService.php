@@ -25,4 +25,17 @@ class AnioAcademicoService
     {
         return $this->_anioAcademicoMapper->ModelToViewModel($this->_anioAcademicoRepository->BuscarPorId($anio_id));
     }
+    public function ObtenerViewModel()
+    {
+        return $this->_anioAcademicoMapper->ViewModel();
+    }
+    public function Guardar($_anioVM)
+    {
+        $_anioModel = $this->_anioAcademicoMapper->ViewModelToModel($_anioVM);
+        if ($_anioVM->id!=0) {
+            return $this->_anioAcademicoRepository->Actualizar($_anioModel);
+        }else{
+            return $this->_anioAcademicoRepository->Crear($_anioModel);
+        }
+    }
 }

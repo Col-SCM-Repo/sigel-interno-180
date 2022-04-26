@@ -13,6 +13,8 @@ class MatriculaMapper
         $_matriculaVM = new MatriculaViewModel();
         $_matriculaVM->id = $_matricula->MP_MAT_ID;
         $_matriculaVM->fecha_matricula = date('Y-m-d H:i:s',strtotime($_matricula->MP_MAT_FECHAMATRICULA));
+        $_matriculaVM->fecha_ingreso = $_matricula->MP_MAT_FECHAINGRESO? date('Y-m-d',strtotime($_matricula->MP_MAT_FECHAINGRESO)):'';
+        $_matriculaVM->fecha_fin = $_matricula->MP_MAT_FECHAFIN? date('Y-m-d',strtotime($_matricula->MP_MAT_FECHAFIN)):'';
         $_matriculaVM->pariente_id = $_matricula->MP_PAR_ID;
         $_matriculaVM->tipo_matricula_id = $_matricula->MP_TIPMAT_ID;
         $_matriculaVM->observacion = $_matricula->MP_MAT_OBS;
@@ -25,6 +27,7 @@ class MatriculaMapper
         $_matriculaVM->vacante_id = $_matricula->MP_VAC_ID;
         $_matriculaVM->nivel = $_matricula->Vacante->Nivel->id();
         $_matriculaVM->grado = $_matricula->Vacante->Grado->id();
+        $_matriculaVM->puede_retirarse = EstadoMatricula::PueedeRetirarse($_matricula->Vacante->anioId());
         return $_matriculaVM;
     }
     public function ListModelToViewModel($_matriculas)
@@ -37,7 +40,9 @@ class MatriculaMapper
     }
     public function ViewModel()
     {
-        return new MatriculaViewModel();
+        $_matriculaVM = new MatriculaViewModel();
+        $_matriculaVM->fecha_ingreso = strtotime(date('Y-m-d'))< strtotime(date('Y-m-d',strtotime(date('Y').'-03-06')))?date('Y-m-d H:i:s',strtotime(date('Y').'03-06')):date('Y-m-d');
+        return  $_matriculaVM;
     }
     public function ViewModelToModel($_matriculaVM)
     {
@@ -46,6 +51,8 @@ class MatriculaMapper
             $_matriculaM->MP_MAT_ID = $_matriculaVM->id;
         }
         $_matriculaM->MP_MAT_FECHAMATRICULA = $_matriculaVM->fecha_matricula!=''?date('Y-m-d\TH:i:s',strtotime($_matriculaVM->fecha_matricula)):date('Y-m-d\TH:i:s');
+        $_matriculaM->MP_MAT_FECHAINGRESO = $_matriculaVM->fecha_ingreso?date('Y-m-d\TH:i:s',strtotime($_matriculaVM->fecha_ingreso)):null;
+        $_matriculaM->MP_MAT_FECHAFIN = $_matriculaVM->fecha_fin?date('Y-m-d\TH:i:s',strtotime($_matriculaVM->fecha_fin)):null;
         $_matriculaM->MP_PAR_ID =$_matriculaVM->pariente_id ;
         $_matriculaM->MP_TIPMAT_ID =$_matriculaVM->tipo_matricula_id;
         $_matriculaM->MP_MAT_OBS =$_matriculaVM->observacion ;

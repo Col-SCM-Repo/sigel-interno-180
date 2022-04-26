@@ -78,6 +78,19 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'bio_start' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', '1433'),
+            'database' => env('RELOJ_DB_DATABASE', 'forge'),
+            'username' => env('RELOJ_DB_USERNAME', 'forge'),
+            'password' => env('RELOJ_DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),

@@ -2,57 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\AnioAcademico;
 use App\Helpers\OrdenarArray;
-use App\Vacante;
+use App\Structure\Services\AnioAcademicoService;
+use App\Structure\Services\VacanteService;
 use Illuminate\Http\Request;
 
 class VacantesController extends Controller
 {
     protected $ordenarArray;
-    public function __construct(OrdenarArray $ordenarArray)
+    protected $_vacanteService;
+    protected $_anioService;
+    public function __construct(OrdenarArray $ordenarArray,
+                                VacanteService $_vacanteService,
+                                AnioAcademicoService $_anioService)
     {
-        return $this->ordenarArray = $ordenarArray;
+        $this->ordenarArray = $ordenarArray;
+        $this->_vacanteService = $_vacanteService;
+        $this->_anioService = $_anioService;
     }
-    public function ObtenerPorNivelGradoDelAnioActual(Request $request)
+    public function PorAnio()
     {
-        $secciones = [];
-        $anio = AnioAcademico::where('MP_ANIO_ESTADO', 'VIGENTE')->first();
-        $vacantes = Vacante::where('MP_NIV_ID',$request->nivel_id)->where('MP_GRAD_ID',$request->grado_id)->where('MP_ANIO_ID',$anio->id())->get();
-        foreach ($vacantes as $vacante ) {
-            $seccion = [
-                'vacante_id'=> $vacante->id(),
-                'grado'=>$vacante->Grado->grado(),
-                'seccion'=>$vacante->Seccion->seccion(),
-                'nivel'=>$vacante->Nivel->nivel()
-            ];
-            array_push($secciones,$seccion);
-        }
-        return response()->json($secciones);
+        return view('modulos.pagosMatriculas.vacantes.por_anio');
+    }
+    public function ObtenerAulasPorAnio(Request $request)
+    {
+        return response()->json($this->_vacanteService->ObtenerPorAnio($request->anio_id));
+    }
+    public function ObtenerPorNivelGradoAnio(Request $request)
+    {
+        $_anio = $this->_anioService->ObtenerAnioVigente();
+        return response()->json($this->_vacanteService->ObtenerPorAnioNivelGrado($_anio->id,$request->nivel_id,$request->grado_id));
     }
 
     public function VistaReportePorAnioNivel()
     {
-        return view('aulas.cant_alumnos_nivel');
+        return view('modulos.pagosMatriculas.vacantes.total_alumno_anio_nivel');
     }
     public function ObtenerSeccionesPorAnionivel(Request $request)
     {
-        $secciones = [];
-        $aux = Vacante::where('MP_ANIO_ID', $request->anio_id)
-                        ->where('MP_NIV_ID', $request->nivel_id)
-                        ->orderBy('MP_GRAD_ID')->orderBy('MP_SEC_ID')->get();
-        foreach ($aux as $vacante) {
-            $seccion = [
-                'id'=> $vacante->id(),
-                'grado'=> $vacante->Grado->grado(),
-                'seccion'=> $vacante->Seccion->seccion(),
-                'total_vacantes'=> $vacante->total_vacantes(),
-                'vacantes_ocupadas'=> count($vacante->Matriculas->where('MP_MAT_ESTADO','!=','RETIRADO')),
-                'vacantes_disponibles'=>$vacante->total_vacantes()- count($vacante->Matriculas->where('MP_MAT_ESTADO','!=','RETIRADO')),
-            ];
-            if($seccion['vacantes_ocupadas']!=0)
-                array_push($secciones,$seccion);
-        }
-        return response()->json($secciones);
+        return $this->_vacanteService->ObtenerAulasPorAnioNivel($request->anio_id,$request->nivel_id);
+    }
+    public function ObtenerViewModel()
+    {
+        return response()->json($this->_vacanteService->ObtenerViewModel());
+    }
+    public function Guardar(Request $request)
+    {
+        return response()->json($this->_vacanteService->Guardar((object) $request->vacante));
     }
 }

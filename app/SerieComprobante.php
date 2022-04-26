@@ -8,9 +8,12 @@ class SerieComprobante extends Model
 {
     protected $table = 'MP_SERIECOMPROBANTE';
     protected $primaryKey = 'MP_SERCOM_ID';
+    public $timestamps = false;
+
     protected $fillable = [
         'MP_SERCOM_ID',
         'MP_SERCOM_NOMBRE',
+        'MP_ETI_ID',
         'USU_ID'
     ];
      /**

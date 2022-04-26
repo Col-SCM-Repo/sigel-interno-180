@@ -89,4 +89,35 @@ class ApoderadoMapper
             'parentesModel'=> $_parentescoModel,
         ];
     }
+    public function ParentescoModelToViewModel($parentescoM)
+    {
+        $familiarVM = new ApoderadoViewModel();
+
+        $familiarVM->id = $parentescoM->Apoderado->MP_APO_ID;
+        $familiarVM->nombres = $parentescoM->Apoderado->MP_APO_NOMBRES;
+        $familiarVM->apellidos = $parentescoM->Apoderado->MP_APO_APELLIDOS;
+        $familiarVM->dni = $parentescoM->Apoderado->MP_APO_NRODOC ;
+        $familiarVM->direccion = $parentescoM->Apoderado->MP_APO_DIRECCION;
+        $familiarVM->celular = $parentescoM->Apoderado->MP_APO_CELULAR;
+        $familiarVM->telefono = $parentescoM->Apoderado->MP_APO_TELEFONO;
+        $familiarVM->correo = $parentescoM->Apoderado->MP_APO_EMAIL;
+        $familiarVM->fecha_nacimiento = date('Y-m-d',strtotime($parentescoM->Apoderado->MP_APO_FECHANAC));
+        $familiarVM->genero = $parentescoM->Apoderado->MP_APO_SEXO;
+        $familiarVM->vive = $parentescoM->Apoderado->MP_APO_VIVE;
+        $familiarVM->estado_civil_id = $parentescoM->Apoderado->MP_EC_ID;
+        $familiarVM->religion_id = $parentescoM->Apoderado->MP_REL_ID;
+        $familiarVM->pais_nacimiento_id = $parentescoM->Apoderado->MP_PAIS_ID;
+        $familiarVM->pais_residencia_id = $parentescoM->Apoderado->MP_PAIS_DIR_ID;
+        $familiarVM->distrito_nacimiento_id = $parentescoM->Apoderado->MP_APO_UBIGNAC;
+        $familiarVM->distrito_residencia_id = $parentescoM->Apoderado->MP_APO_UBIGDIR;
+        $familiarVM->centro_laboral_id = $parentescoM->Apoderado->MP_CL_ID;
+        $familiarVM->ocupacion_id = $parentescoM->Apoderado->MP_OCU_ID;
+        $familiarVM->grado_instruccion_id = $parentescoM->Apoderado->MP_GI_ID;
+        $familiarVM->tipo_documento_id = $parentescoM->Apoderado->MP_TIPDOC_ID;
+
+        $familiarVM->parentesco_id = $parentescoM->MP_PAR_ID;
+        $familiarVM->tipo_parentesco_id = $parentescoM->MP_TIPAR_ID;
+        $familiarVM->alumno_id = $parentescoM->MP_ALU_ID;
+        return $familiarVM;
+    }
 }

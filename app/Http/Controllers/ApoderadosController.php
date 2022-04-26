@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Apoderado;
-use App\Parentesco;
+use App\Http\Requests\StoreApoderado;
 use App\Structure\Services\ApoderadoService;
 use App\Structure\Services\ParentescoService;
 use Illuminate\Http\Request;
@@ -26,7 +25,7 @@ class ApoderadosController extends Controller
     {
         return response()->json($this->_apoderadoService->CrearViewModel());
     }
-    public function GuardarApoderado(Request $request)
+    public function GuardarApoderado(StoreApoderado $request)
     {
         return $this->_apoderadoService->GuardarApoderado((object)$request->familiar);
     }

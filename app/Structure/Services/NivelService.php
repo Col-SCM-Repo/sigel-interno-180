@@ -15,8 +15,7 @@ class NivelService
     }
     public function BuscarPorId($nivel_id)
     {
-        $_nivelVM = $this->_nivelMapper->ModelToViewModel($this->_nivelRepository->BuscarPorId($nivel_id));
-        return $_nivelVM;
+        return $this->_nivelMapper->ModelToViewModel($this->_nivelRepository->BuscarPorId($nivel_id));
     }
 
 }

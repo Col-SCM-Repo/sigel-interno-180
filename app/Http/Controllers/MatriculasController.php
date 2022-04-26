@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\OrdenarArray;
+use App\Http\Requests\StoreMatriculas;
 use App\Structure\Services\AlumnoService;
 use App\Structure\Services\InstitucionEducativaService;
 use App\Structure\Services\MatriculaService;
@@ -33,10 +34,9 @@ class MatriculasController extends Controller
         $_listMatriculas = $this->_matriculaService->ObtenerMatriculasPorAlumno($request->alumno_id);
         return response()->json($_listMatriculas);
     }
-
     public function NuevaVista($alumno_id,$matricula_id)
     {
-       return view('matriculas.nueva')->with('alumno_id', $alumno_id)->with('matricula_id', $matricula_id);
+       return view('modulos.pagosMatriculas.matriculas.nueva')->with('alumno_id', $alumno_id)->with('matricula_id', $matricula_id);
     }
     public function ObtenerModelos(Request $request)
     {
@@ -58,9 +58,25 @@ class MatriculasController extends Controller
         ];
         return response()->json($data);
     }
-
-    public function Guardar(Request $request)
+    //sirve para actulizar o crear nuevo registro
+    public function Guardar(StoreMatriculas $request)
     {
-        return $this->_matriculaService->Guardar((object)$request->matricula);
+        $_conDeuda=false;
+        $matriculaVM = (object)$request->matricula;
+        if ($matriculaVM->id==0) {
+            $_conDeuda = $this->_alumnoService->BuscarDeuda($this->_matriculaService->ObtenerMatriculasConCronogramaPorAlumno($matriculaVM->alumno_id));
+        }
+        if ($_conDeuda==false) {
+            return response()->json($this->_matriculaService->Guardar($matriculaVM));
+        } else {
+            return response()->json([
+                'con_deuda'=>true,
+                'monto'=>$_conDeuda
+            ]);
+        }
+    }
+    public function ObtenerMatriculasPorAula(Request $request)
+    {
+        return response()->json($this->ordenarArray->Ascendente($this->_matriculaService->ObtenerMatriculasPorAula($request->aula_id),'nombres_alumno'));
     }
 }

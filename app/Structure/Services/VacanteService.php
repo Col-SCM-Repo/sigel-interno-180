@@ -30,5 +30,29 @@ class VacanteService
         $_vacanteVM->nivel = $this->_nivelService->BuscarPorId($_vacanteVM->nivel_id) ;
         return $_vacanteVM;
     }
-
+    public function ObtenerPorAnio($anio_id)
+    {
+        return $this->_vacanteMapper->ListModelToViewModel($this->_vacanteRepository->BuscarPorAnioId($anio_id));
+    }
+    public function ObtenerPorAnioNivelGrado($anio_id,$nivel_id,$grado_id)
+    {
+        return $this->_vacanteMapper->ListModelToViewModel($this->_vacanteRepository->BuscarPorAnioNivelGrado($anio_id,$nivel_id,$grado_id));
+    }
+    public function ObtenerAulasPorAnioNivel($anio_id,$nivel_id)
+    {
+        return $this->_vacanteMapper->ListModelToViewModel($this->_vacanteRepository->BuscarAulasPorAnioNivel($anio_id,$nivel_id));
+    }
+    public function ObtenerViewModel()
+    {
+        return $this->_vacanteMapper->ViewModel();
+    }
+    public function Guardar($_vacanteVM)
+    {
+        $_vacanteModel = $this->_vacanteMapper->ViewModelToModel($_vacanteVM);
+        if ($_vacanteVM->id!=0) {
+            return $this->_vacanteRepository->Actualizar($_vacanteModel);
+        }else{
+            return $this->_vacanteRepository->Crear($_vacanteModel);
+        }
+    }
 }

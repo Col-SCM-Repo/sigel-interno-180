@@ -26,9 +26,6 @@ class Alumno extends Model
         'MP_REL_ID',
         'MP_ALU_UBIGDIR',
     ];
-    protected $hidden = [
-        'created_at', 'updated_at'
-    ];
     public function Matriculas()
     {
         return $this->hasMany('App\Matricula', 'MP_ALU_ID', 'MP_ALU_ID');

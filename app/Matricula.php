@@ -30,7 +30,10 @@ class Matricula extends Model
     {
         return $this->belongsTo('App\Vacante', 'MP_VAC_ID', 'MP_VAC_ID');
     }
-
+    public function Notas()
+    {
+        return $this->hasMany('App\NotaAcademica', 'matricula_id', 'MP_MAT_ID');
+    }
     public function Alumno()
     {
         return $this->belongsTo('App\Alumno', 'MP_ALU_ID', 'MP_ALU_ID');

@@ -32,7 +32,7 @@
             <tr>
                 <th class="border"><b>Item</b></th>
                 <th class="border">Concepto</th>
-                <th class="border">Monto S/.</th>
+                <th class="border">Monto S/</th>
                 <th class="border">Fecha Vencimiento</th>
                 <th class="border">Estado</th>
             </tr>

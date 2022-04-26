@@ -29,7 +29,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" minlength="8">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -70,4 +70,31 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalAutorizacion" tabindex="-1" role="dialog"  data-backdrop="static" >
+    <div class="modal-dialog modal-dialog-centered " role="document" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">ADVERTENCIA</h5>
+        </div>
+        <div class="modal-body">
+            El uso de este sistema sólo está permitido a los usuarios autorizados. <br> <br>
+            El acceso no autorizado está terminantemente prohibido y podrá ser objeto de acciones disciplinarias, sin perjuicio de las restantes acciones de naturaleza legal a las que hubiere lugar. <br> <br>
+            Toda la actividad de este sistema se registra y es revisada periódicamente por el personal designado por la Gerencia del COMPLEJO EDUCATIVO CABRERA EIRL. <br> <br>
+            Cualquier usuario que acceda al sistema lo hace declarando conocer y aceptar íntegramente estas reglas y la Normativa General de Utilización de los Recursos y Sistemas de Información del COMPLEJO.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnCondiciones"data-dismiss="modal" >Acepto</button>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection
+
+@section('scripts')
+<script>
+    //Lanzar modal
+    window.onload= function(){
+        $("#modalAutorizacion").modal("show");
+    }
+</script>
 @endsection

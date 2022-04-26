@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Ocupacion;
 use App\Structure\Services\OcupacionService;
 use Illuminate\Http\Request;
 

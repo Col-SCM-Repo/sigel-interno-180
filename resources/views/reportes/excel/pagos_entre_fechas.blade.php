@@ -27,6 +27,7 @@ header('Content-Disposition:attachment; filename=PAGOS DE LAS FECHAS '. $fecha_i
               <th class="border" scope="col">Serie</th>
               <th class="border" scope="col">Numero</th>
               <th class="border" scope="col">Monto</th>
+              <th class="border" scope="col">Efec. / Depo.</th>
               <th class="border" scope="col">Usuario</th>
             </tr>
           </thead>
@@ -44,7 +45,8 @@ header('Content-Disposition:attachment; filename=PAGOS DE LAS FECHAS '. $fecha_i
                       <td class="border" >{{$pago['tipo']}}</td>
                       <td class="border" >{{$pago['serie']}}</td>
                       <td class="border" >{{$pago['numero']}}</td>
-                      <td class="border" >S/{{$pago['monto']}}</td>
+                      <td class="border" >S/ {{$pago['monto']}}</td>
+                      <td class="border" >{{$pago['tipoPago']}}</td>
                       <td class="border" >{{$pago['usuario']}}</td>
                   </tr>
                   @php

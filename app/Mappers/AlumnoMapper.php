@@ -23,6 +23,7 @@ class AlumnoMapper
         $_alumnoViewModel->distrito_nacimiento = $_alumno->MP_ALU_UBIGNAC;
         $_alumnoViewModel->religion_id = $_alumno->MP_REL_ID;
         $_alumnoViewModel->distrito_residencia = $_alumno->MP_ALU_UBIGDIR;
+        $_alumnoViewModel->url_foto = asset('images/alumno/'.$_alumnoViewModel->dni.'.jpg'); //modificar el path
         return $_alumnoViewModel;
     }
     public function ListModelToViewModel($_alumnos)
@@ -59,4 +60,6 @@ class AlumnoMapper
         $_alumnoModel->MP_ALU_UBIGDIR = $_alumnoViewModel->distrito_residencia;
         return $_alumnoModel;
     }
+
+    
 }

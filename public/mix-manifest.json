@@ -2,11 +2,18 @@
     "/js/alumnos/editar.js": "/js/alumnos/editar.js",
     "/js/alumnos/index.js": "/js/alumnos/index.js",
     "/js/alumnos/morosos.js": "/js/alumnos/morosos.js",
+    "/js/anioAcademico/index.js": "/js/anioAcademico/index.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/aulas/cant_alumnos_nivel.js": "/js/aulas/cant_alumnos_nivel.js",
-    "/js/aulas/index.js": "/js/aulas/index.js",
     "/js/cronograma/index.js": "/js/cronograma/index.js",
     "/js/matriculas/nueva.js": "/js/matriculas/nueva.js",
-    "/js/pagos/pagos_entre_fechas.js": "/js/pagos/pagos_entre_fechas.js"
+    "/js/modulos/notasAcademicas/alumnos/index.js": "/js/modulos/notasAcademicas/alumnos/index.js",
+    "/js/modulos/notasAcademicas/notas/index.js": "/js/modulos/notasAcademicas/notas/index.js",
+    "/js/pagos/fecha_por_usuario_actual.js": "/js/pagos/fecha_por_usuario_actual.js",
+    "/js/pagos/pagos_entre_fechas.js": "/js/pagos/pagos_entre_fechas.js",
+    "/js/reloj/alumnos.js": "/js/reloj/alumnos.js",
+    "/js/reloj/index.js": "/js/reloj/index.js",
+    "/js/usuarios/index.js": "/js/usuarios/index.js",
+    "/js/vacantes/por_anio.js": "/js/vacantes/por_anio.js",
+    "/js/vacantes/total_alumno_anio_nivel.js": "/js/vacantes/total_alumno_anio_nivel.js"
 }

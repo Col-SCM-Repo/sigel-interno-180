@@ -28,6 +28,8 @@ class MatriculaRepository extends Matricula
     {
         $actualizarMatricula = Matricula::find($matriculaM->id());
         $actualizarMatricula->MP_MAT_FECHAMATRICULA = $matriculaM->MP_MAT_FECHAMATRICULA;
+        $actualizarMatricula->MP_MAT_FECHAINGRESO = $matriculaM->MP_MAT_FECHAINGRESO;
+        $actualizarMatricula->MP_MAT_FECHAFIN = $matriculaM->MP_MAT_FECHAFIN;
         $actualizarMatricula->MP_PAR_ID =$matriculaM->MP_PAR_ID ;
         $actualizarMatricula->MP_TIPMAT_ID =$matriculaM->MP_TIPMAT_ID;
         $actualizarMatricula->MP_MAT_OBS =$matriculaM->MP_MAT_OBS ;
@@ -41,5 +43,9 @@ class MatriculaRepository extends Matricula
         $actualizarMatricula->MP_MAT_MONTOPENSION = $matriculaM->MP_MAT_MONTOPENSION ;
         $actualizarMatricula->save();
         return $actualizarMatricula->id();
+    }
+    public function BuscarPorVacanteId($vacante_id)
+    {
+        return $this::where('MP_VAC_ID', $vacante_id)->get();
     }
 }

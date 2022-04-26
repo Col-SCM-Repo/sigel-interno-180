@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Alumno;
 use App\Helpers\OrdenarArray;
-use App\Matricula;
+use App\Http\Requests\StoreAlumnos;
 use App\Structure\Services\AlumnoService;
 use App\Structure\Services\CentroLaboralService;
 use App\Structure\Services\DistritoService;
@@ -56,38 +55,16 @@ class AlumnosController extends Controller
     }
     public function Index()
     {
-        return view('alumnos.index');
+        return view('modulos.pagosMatriculas.alumnos.index');
     }
     public function ObtenerAlumnos(Request $request)
     {
         $texto = mb_strtoupper($request->cadena);
         return response()->json($this->_alumnoService->BuscarPorNombresApellidosDNI($texto));
     }
-    public function ObtenerAlumnosPorAula(Request $request)
-    {
-        $alumnos =[];
-        $matriculas = Matricula::where('MP_VAC_ID', $request->aula_id)->get();
-        foreach ($matriculas as $matricula) {
-            //dd($matricula->Patentesco->Apoderado);
-            $alumno = [
-                'alumno_id'=>$matricula->Alumno->id(),
-                'matricula_id'=>$matricula->id(),
-                'nombres'=>$matricula->Alumno->apellidos().', '.$matricula->Alumno->nombres(),
-                'dni'=>$matricula->Alumno->dni(),
-                'direccion'=>$matricula->Alumno->direccion(),
-                'apoderado'=>[
-                    'nombres'=>$matricula->Patentesco->Apoderado->apellidos().', '.$matricula->Patentesco->Apoderado->nombres(),
-                    'celular'=>$matricula->Patentesco->Apoderado->celular(),
-                    'telefono'=>$matricula->Patentesco->Apoderado->telefono(),
-                ]
-            ];
-            array_push($alumnos, $alumno);
-        }
-        return response()->json($this->ordenarArray->Ascendente($alumnos, 'nombres'));
-    }
     public function Editar($alumno_id)
     {
-        return view('alumnos.editar')->with('alumno_id',$alumno_id);
+        return view('modulos.pagosMatriculas.alumnos.editar')->with('alumno_id',$alumno_id);
     }
     public function ObtenerDatos(Request $request)
     {
@@ -111,7 +88,8 @@ class AlumnosController extends Controller
         ];
         return response()->json($data);
     }
-    public function Guardar(Request $request)
+    //sirve para actualizar o crear nuevo registro
+    public function Guardar(StoreAlumnos $request)
     {
         return $this->_alumnoService->GuardarAlumno((object)$request->alumno);
     }
@@ -119,9 +97,14 @@ class AlumnosController extends Controller
     {
         return response()->json($this->_alumnoService->BuscarPorDNI($request->alumno_dni));
     }
+    public function GuardarImagen(Request $request)
+    {
+        $imagen = $request->file('imagenUsuario');
+        return response()->json($this->_alumnoService->GuardarImagen($imagen, $request->id));
+    }
     //morosos
     public function VistaMorosos()
     {
-        return view('alumnos.morosos');
+        return view('modulos.pagosMatriculas.alumnos.morosos');
     }
 }

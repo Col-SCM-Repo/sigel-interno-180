@@ -22,9 +22,10 @@ class User extends Authenticatable
         'USU_NOMBRES',
         'USU_APELLIDOS',
         'username',
-        'password',
         'USU_CONTRASENIA',
         'USU_USUARIO',
+        'USU_CARGO',
+        'USU_TIPO',
         'USU_ESTADO',
     ];
     /**

@@ -8,6 +8,8 @@ class ConceptoPago extends Model
 {
     protected $table = 'MP_CONCEPTOPAGO';
     protected $primaryKey = 'MP_CONPAGO_ID';
+    public $timestamps = false;
+
     protected $fillable = [
         'MP_CONPAGO_ID',
         'MP_CONPAGO_MONTO',

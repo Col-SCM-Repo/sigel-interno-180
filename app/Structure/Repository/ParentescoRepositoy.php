@@ -25,4 +25,8 @@ class ParentescoRepositoy extends Parentesco
         $nuevoParentesco->save();
         return $nuevoParentesco->id();
     }
+    public function BuscarPorId($_parentescoId)
+    {
+        return $this::find($_parentescoId);
+    }
 }

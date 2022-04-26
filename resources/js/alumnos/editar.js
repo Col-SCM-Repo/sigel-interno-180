@@ -4,7 +4,7 @@ var editar = new Vue({
     el: '#editar',
     data: {
         url_principal: $("#baseUrl").val(),
-        baseUrl: $("#baseUrl").val()+'/alumnos',
+        baseUrl: $("#baseUrl").val()+'alumnos',
         alumno_id:$("#alumno_id").val(),
         alumno:[],
         paises:[],
@@ -20,7 +20,10 @@ var editar = new Vue({
         ocupaciones:[],
         tipo_persona:'',
         segundo_tipo:'',
-        modelo:[]
+        modelo:[],
+        imagenUsuario:'',
+        validaciones:[],
+        error :false
     },
     methods: {
         obtenerDatos:function(){
@@ -54,7 +57,7 @@ var editar = new Vue({
             $('#nueva_religion').val('');
         },
         GuardarReligion:function(){
-            let url = this.url_principal +'/religiones/guardar';
+            let url = this.url_principal +'religiones/guardar';
             let religion_id='';
             let data = {
                 'religion':$('#nueva_religion').val()
@@ -81,7 +84,7 @@ var editar = new Vue({
             $('#nuevo_pais').val('');
         },
         GuardarPais:function(){
-            let url = this.url_principal +'/paises/guardar';
+            let url = this.url_principal +'paises/guardar';
             let pais_id='';
             let data = {
                 'pais':$('#nuevo_pais').val()
@@ -108,7 +111,7 @@ var editar = new Vue({
             $('#distritoModal').modal('hide');
         },
         GuardarDistrito:function(){
-            let url = this.url_principal +'/distritos/guardar';
+            let url = this.url_principal +'distritos/guardar';
             let distrito_id='';
             let data = {
                 'distrito':this.modelo
@@ -134,7 +137,7 @@ var editar = new Vue({
             $('#centroLaboralModal').modal('hide');
         },
         guardarCentroLaboral:function(){
-            let url = this.url_principal +'/centro_laboral/guardar';
+            let url = this.url_principal +'centro_laboral/guardar';
             let grado_id='';
             let data = {
                 'centro_laboral':this.modelo
@@ -160,7 +163,7 @@ var editar = new Vue({
             $('#ocupacionModal').modal('hide');
         },
         guardarOcupacion:function(){
-            let url = this.url_principal +'/ocupacion/guardar';
+            let url = this.url_principal +'ocupacion/guardar';
             let grado_id='';
             let data = {
                 'ocupacion':this.modelo
@@ -179,19 +182,19 @@ var editar = new Vue({
             let url ;
             switch (tipo_modelo) {
                 case 1://se obtiene el modelo de religion
-                    url = this.url_principal +'/religiones/modelo';
+                    url = this.url_principal +'religiones/modelo';
                     break;
                 case 2://se obtiene el modelo de pais
-                    url = this.url_principal +'/paises/modelo';
+                    url = this.url_principal +'paises/modelo';
                     break;
                 case 3://se obtiene el modelo de distrito
-                    url = this.url_principal +'/distritos/modelo';
+                    url = this.url_principal +'distritos/modelo';
                     break;
                 case 4://se obtiene el modelo de grado de instruccion
-                    url = this.url_principal +'/centro_laboral/modelo';
+                    url = this.url_principal +'centro_laboral/modelo';
                     break;
                 case 5://se obtiene el modelo de ocupacion
-                    url = this.url_principal +'/ocupacion/modelo';
+                    url = this.url_principal +'ocupacion/modelo';
                     break;
                 default:
                     break;
@@ -247,23 +250,22 @@ var editar = new Vue({
                             break;
                         default:
                             break;
-                }
+                    }
                     break;
                 default:
                     break;
             }
         },
         obtenerReligiones:function(){
-            let url = this.url_principal +'/religiones/obtener_religiones';
+            let url = this.url_principal +'religiones/obtener_religiones';
             axios.get(url).then((response) => {
                 this.religiones = response.data;
             }).catch((error) => {
             }).finally((response) => {
             });
         },
-
         obtenerPaises:function(){
-            let url = this.url_principal +'/paises/obtener_paises';
+            let url = this.url_principal +'paises/obtener_paises';
             axios.get(url).then((response) => {
                 this.paises = response.data;
             }).catch((error) => {
@@ -271,16 +273,15 @@ var editar = new Vue({
             });
         },
         obtenerDistritos:function(){
-            let url = this.url_principal +'/distritos/obtener_distritos';
+            let url = this.url_principal +'distritos/obtener_distritos';
             axios.get(url).then((response) => {
                 this.distritos = response.data;
             }).catch((error) => {
             }).finally((response) => {
             });
         },
-
         obtenerFamiliares:function(){
-            let url = this.url_principal +'/apoderados/obtener_por_alumno';
+            let url = this.url_principal +'apoderados/obtener_por_alumno';
             let data = {
                 'alumno_id':this.alumno_id,
             };
@@ -292,21 +293,31 @@ var editar = new Vue({
         },
         guardarAlumno:function(){
             cargando('show');
+            this.error = false;
+            this.validaciones = [];
             this.alumno.correo = this.alumno.dni+'@colegiocabrera.edu.pe';
             let url = this.baseUrl +'/guardar';
             let data = {
                 'alumno':this.alumno
             };
             axios.post(url,data).then((response) => {
-                this.alumno_id = response.data;
+                if(this.alumno_id=="0"){
+                    this.alumno_id = response.data;
+                    location.href = this.baseUrl+'/editar/'+this.alumno_id;
+                }else{
+                    showToastr('Correcto','Datos del ALUMNO actualizados.', 'success');
+                }
             }).catch((error) => {
+                if (error.response.status === 422) {
+                    this.validaciones = error.response.data.errors;
+                    this.error = true;
+                }
             }).finally((response) => {
                 cargando('hide');
-                location.href = this.baseUrl+'/editar/'+this.alumno_id;
             });
         },
         obtenerCentroLaborales:function(){
-            let url = this.url_principal +'/centro_laboral/obtener_centros';
+            let url = this.url_principal +'centro_laboral/obtener_centros';
             axios.get(url).then((response) => {
                 this.centro_laborales = response.data;
             }).catch((error) => {
@@ -314,7 +325,7 @@ var editar = new Vue({
             });
         },
         obtenerOcupaciones:function(){
-            let url = this.url_principal +'/ocupacion/obtener_ocupaciones';
+            let url = this.url_principal +'ocupacion/obtener_ocupaciones';
             axios.get(url).then((response) => {
                 this.ocupaciones = response.data;
             }).catch((error) => {
@@ -323,7 +334,7 @@ var editar = new Vue({
         },
         editarFamiliar:function(familiar,editar, nuevo){
             if (nuevo) {
-                let url = this.url_principal +'/apoderados/modelo';
+                let url = this.url_principal +'apoderados/modelo';
                 axios.get(url).then((response) => {
                     this.familiar_seleccionado = response.data;
                 }).catch((error) => {
@@ -336,26 +347,140 @@ var editar = new Vue({
         },
         guardaFamiliar:function(){
             cargando('show');
-            let url = this.url_principal +'/apoderados/guardar';
+            this.error = false;
+            this.validaciones = [];
+            let url = this.url_principal +'apoderados/guardar';
             this.familiar_seleccionado.alumno_id = this.alumno_id;
             let data = {
                 'familiar':this.familiar_seleccionado
             };
             axios.post(url,data).then((response) => {
                 showToastr('Correcto','Se guardó CORRECTAMENTE al FAMILIAR.', 'success');
-            }).catch((error) => {
-                showToastr('Error','Ocurrio un error inesperado. POR FAVOR RECARGUE LA PÁGINA', 'error');
-            }).finally((response) => {
                 this.obtenerFamiliares();
                 this.familiar_seleccionado = [];
+            }).catch((error) => {
+                if (error.response.status === 422) {
+                    this.validaciones = error.response.data.errors;
+                    this.error = true;
+                }else{
+                    showToastr('Error','Ocurrio un error inesperado. POR FAVOR RECARGUE LA PÁGINA', 'error');
+                }
+            }).finally((response) => {
+
                 cargando('hide');
             });
         },
         matricularAlumno:function(){
-            location.href=this.url_principal+'/matriculas/nueva/'+this.alumno_id+'/0';
+            location.href=this.url_principal+'matriculas/nueva/'+this.alumno_id+'/0';
+        },
+        precargarImagen:function(event){
+            let imagen = event.srcElement;
+            if (imagen.files&&imagen.files[0]) {
+                var reader = new FileReader();
+                this.imagenUsuario = imagen.files[0];
+                reader.onload = function (e) {
+                    var filePreview = document.getElementById('foto_alumno');
+                    filePreview.src = e.target.result;
+                }
+                reader.readAsDataURL(imagen.files[0]);
+            }
+        },
+        guardarImagen: function() {
+            if (this.imagenUsuario!='') {
+                var url = this.baseUrl + '/guardar_imagen';
+                let formData = new FormData();
+                formData.append('imagenUsuario', this.imagenUsuario);
+                formData.append('id', this.alumno_id);
+                axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then((response) => {
+                    showToastr('Correcto','Se actualizó correctamente la foto.', 'success');
+                }).catch((error) => {
+                }).finally((response) => {
+                });
+            }else{
+                showToastr('Aviso','No ha seleccionado una foto.', 'warning');
+            }
+        },
+        cargarImagen: function (){
+            var img1 = document.getElementById('foto_alumno');
+            img1.onerror = function (e){
+                e.target.src= '/images/user.jpg';
+            };
         }
     },
     created: function(){
         this.obtenerDatos();
+    },
+    mounted:function(){
+        let self = this;
+
+        $('#alumno_pais')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#alumno_pais").select2('data');
+            self.alumno.pais_id = value[0].id
+        });
+
+        $('#alumno_nacimiento')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#alumno_nacimiento").select2('data');
+            self.alumno.distrito_nacimiento = value[0].id
+        });
+
+        $('#alumno_residencia')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#alumno_residencia").select2('data');
+            self.alumno.distrito_residencia = value[0].id
+        });
+
+
+
+        this.cargarImagen();
+    },
+    updated:function (){
+        let self = this;
+
+        $('#familiar_pais_nacimiento')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#familiar_pais_nacimiento").select2('data');
+            self.familiar_seleccionado.pais_nacimiento_id = value[0].id
+        });
+
+        $('#familiar_distrito_nacimiento')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#familiar_distrito_nacimiento").select2('data');
+            self.familiar_seleccionado.distrito_nacimiento_id = value[0].id
+        });
+
+        $('#familiar_pais_residencia')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#familiar_pais_residencia").select2('data');
+            self.familiar_seleccionado.pais_residencia_id = value[0].id
+        });
+
+        $('#familiar_distrito_residencia')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#familiar_distrito_residencia").select2('data');
+            self.familiar_seleccionado.distrito_residencia_id = value[0].id
+        });
+
+        $('#familiar_centro_laboral')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#familiar_centro_laboral").select2('data');
+            self.familiar_seleccionado.centro_laboral_id = value[0].id
+        });
+
+        $('#familiar_ocupacion')
+        .select2()
+        .on('select2:select', function () {
+            let value = $("#familiar_ocupacion").select2('data');
+            self.familiar_seleccionado.ocupacion_id = value[0].id
+        });
     }
 });

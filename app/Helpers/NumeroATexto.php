@@ -4,7 +4,7 @@ namespace App\Helpers;
 use NumberFormatter;
 
 class NumeroATexto{
-    public function Soles($numero)
+    public static function Soles($numero)
     {
         $formatterES = new NumberFormatter("es-ES", NumberFormatter::SPELLOUT);
         $izquierda = intval(floor($numero));

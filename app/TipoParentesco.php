@@ -19,7 +19,7 @@ class TipoParentesco extends Model
   ];
   public function Parentescos()
   {
-    return $this->hasMany('App\Parentescos', 'tipo_parentesco_id', 'id');
+    return $this->hasMany('App\Parentescos', 'MP_TIPAR_ID', 'MP_TIPAR_ID');
   }
   public function id()
   {

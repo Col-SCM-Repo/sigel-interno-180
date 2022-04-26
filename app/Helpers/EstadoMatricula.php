@@ -1,5 +1,8 @@
 <?php
 namespace App\Helpers;
+
+use App\Structure\Services\AnioAcademicoService;
+
 class EstadoMatricula{
     public static function ANumero($estado)
     {
@@ -48,5 +51,16 @@ class EstadoMatricula{
                 break;
         }
         return $estado_letras;
+    }
+    public static function PueedeRetirarse($anio_id)
+    {
+        $anioService = new AnioAcademicoService();
+        $anioactual = $anioService->ObtenerAnioVigente();
+        if ($anio_id == $anioactual->id) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

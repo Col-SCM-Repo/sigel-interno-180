@@ -12,10 +12,11 @@ class CronogramaMapper
         $_cronogramaVM->id =$_cronograma->MP_CRO_ID;
         $_cronogramaVM->matricula_id =$_cronograma->MP_MAT_ID;
         $_cronogramaVM->concepto_pago_id =$_cronograma->MP_CONPAGO_ID;
-        $_cronogramaVM->fecha_vencimiento = date('Y-m-d H:i:s',strtotime($_cronograma->MP_CRO_FECHAVEN));
+        $_cronogramaVM->fecha_vencimiento = date('d-m-Y',strtotime($_cronograma->MP_CRO_FECHAVEN));
         $_cronogramaVM->tipo_deuda =$_cronograma->MP_CRO_TIPODEUDA;
         $_cronogramaVM->monto =$_cronograma->MP_CRO_MONTO;
         $_cronogramaVM->estado =$_cronograma->MP_CRO_ESTADO;
+        $_cronogramaVM->vencido =strtotime($_cronograma->MP_CRO_FECHAVEN)<strtotime(date('d-m-Y'))?true:false;
         return $_cronogramaVM;
     }
     public function ListModelToViewModel($_cronogramas)
@@ -34,7 +35,7 @@ class CronogramaMapper
         }
         $_cronogramaModel->MP_MAT_ID = $_cronogramaVM->matricula_id;
         $_cronogramaModel->MP_CONPAGO_ID = $_cronogramaVM->concepto_pago_id;
-        $_cronogramaModel->MP_CRO_FECHAVEN = date('Y-m-d\TH:i:s',strtotime($_cronogramaVM->fecha_vencimiento)) ;
+        $_cronogramaModel->MP_CRO_FECHAVEN = date('Y-m-d\T00:00:00',strtotime($_cronogramaVM->fecha_vencimiento)) ;
         $_cronogramaModel->MP_CRO_TIPODEUDA = $_cronogramaVM->tipo_deuda ;
         $_cronogramaModel->MP_CRO_MONTO = $_cronogramaVM->monto ;
         $_cronogramaModel->MP_CRO_ESTADO = $_cronogramaVM->estado ;
