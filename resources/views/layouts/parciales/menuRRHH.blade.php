@@ -17,7 +17,7 @@
             <a class="dropdown-item" href="{{ route('rrhh.alumnos') }}">
                 Alumnos
             </a>
-            <a class="dropdown-item disabled" href="">
+            <a class="dropdown-item " href="{{ route('rrnn.empleados') }}">
                 Personal
             </a>
         </div>
