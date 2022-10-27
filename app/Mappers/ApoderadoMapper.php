@@ -34,6 +34,7 @@ class ApoderadoMapper
         $_apoderadoVM->parentesco_id=$_parentesco->MP_PAR_ID;
         $_apoderadoVM->tipo_parentesco_id=$_parentesco->MP_TIPAR_ID;
         $_apoderadoVM->alumno_id=$_parentesco->MP_ALU_ID;
+        $_apoderadoVM->responsable_defecto =  $_parentesco->MP_RESPONSABLE_PAGO_DEFECTO == 1? true : false;
         return $_apoderadoVM;
     }
     public function ListModelToViewModel($parentescos)
@@ -77,6 +78,8 @@ class ApoderadoMapper
         $_apoderadoModel->MP_OCU_ID = $_apoderadoViewModel->ocupacion_id;
         $_apoderadoModel->MP_GI_ID= $_apoderadoViewModel->grado_instruccion_id;
         $_apoderadoModel->MP_TIPDOC_ID = $_apoderadoViewModel->tipo_documento_id;
+
+        $_parentescoModel->MP_RESPONSABLE_PAGO_DEFECTO = ($_apoderadoViewModel->responsable_defecto && $_apoderadoViewModel->responsable_defecto == true) ? 1 : 0;
 
         if ($_apoderadoViewModel->parentesco_id != 0) {
             $_parentescoModel->MP_PAR_ID = $_apoderadoViewModel->parentesco_id;

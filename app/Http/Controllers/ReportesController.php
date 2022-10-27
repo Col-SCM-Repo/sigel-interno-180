@@ -98,8 +98,12 @@ class ReportesController extends Controller
     }
     public function VerBoleta($pago_id)
     {
+
+        ini_set('memory_limit', '1024M');
+        set_time_limit(0);
+       /*  dd(Pago::find($pago_id)->ResponsablePago->apellidos() ); */
         $pago=Pago::find($pago_id);
-        $pdf = PDF::loadView('reportes.pdf.boleta', ['pago'=>$pago] )->setPaper( [0, 0, 220, 340]);
+        $pdf = PDF::loadView('reportes.pdf.boleta', ['pago'=>$pago] )->setPaper( [0, 0, 220, 365]);
         return $pdf->stream('invoice.pdf');
     }
     #funciones por corregir

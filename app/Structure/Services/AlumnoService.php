@@ -61,9 +61,9 @@ class AlumnoService
         $deuda =0;
         foreach ($_listaMatriculasVM as $matricula_VM) {
             foreach ($matricula_VM->cronogramas  as $cronograma) {
-                if ($cronograma->estado!='CANCELADO'||$cronograma->estado!='EXONERADO') {
+                if ( $cronograma->estado != 'CANCELADO' && $cronograma->estado != 'EXONERADO' ) {
                     $cronograma->pagos = $_pagoService->ObtenerPagosPorCronograma($cronograma->id);
-                    $saldo =$cronograma->monto;
+                    $saldo =$cronograma->monto_final;
                     foreach ($cronograma->pagos as $pago) {
                         $saldo -= $pago->monto;
                     }

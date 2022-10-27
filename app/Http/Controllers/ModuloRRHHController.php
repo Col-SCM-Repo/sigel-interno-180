@@ -20,7 +20,7 @@ class ModuloRRHHController extends Controller
     /* VISTAS */
     public function index()
     {
-        
+
         return view('modulos.recursosHumanos.reloj.index');
     }
 
@@ -29,18 +29,24 @@ class ModuloRRHHController extends Controller
         return view('modulos.recursosHumanos.reloj.alumnos');
     }
 
+    public function alumnosAcademia()
+    {
+        return view('modulos.recursosHumanos.reloj.alumnos-academia');
+    }
+
+
     public function empleados()
     {
         return view('modulos.recursosHumanos.reloj.empleados');
     }
-    
+
     public function verReporteMarcaciones( Request $request)
     {
         $request->validate([
             "personal_id" => "string | min:1 | required",
             "f_inicio" => "string | min:10 | max:10  | required",
             "f_fin" => "string | min:10 | max:10  | required",
-        ]); 
+        ]);
 
         $data =  [
             "marcaciones" => self::getMarcacionesPersonal($request->personal_id, $request->f_inicio, $request->f_fin),
@@ -51,7 +57,7 @@ class ModuloRRHHController extends Controller
         //return $data;
     }
 
-    
+
 
     /***************************** API - DEVUELVEN DATOS *****************************/
     public function empleados_search( $param=null ){
@@ -64,10 +70,10 @@ class ModuloRRHHController extends Controller
         $request->validate([
             "nivel"=>"required | string | min:1",
             "seccion"=>"required | string | min:1",
-            "grado"=>"required | string | min:1",
+            "grado"=>"",
             "f_inicio"=>"required",
         ]);
-        
+
         $f_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $request->f_inicio.' 00:00:00','GMT')->timestamp;
         $f_mediodia = Carbon::createFromFormat('Y-m-d H:i:s', $request->f_inicio.' 13:30:00','GMT')->timestamp;
         $f_fin = Carbon::createFromFormat('Y-m-d H:i:s', $request->f_inicio.' 23:59:59','GMT')->timestamp;
@@ -83,15 +89,15 @@ class ModuloRRHHController extends Controller
                         ->where('TB_EVENT_LOG.nUserID', '<>', 0)
                         ->whereBetween('TB_EVENT_LOG.nDateTime', [$f_inicio, $f_fin])
                         ->where('TB_USER_DEPT.sDepartment', '=', $departamento)
-                        ->get(['TB_EVENT_LOG.nEventLogIdn', 
-                                'TB_EVENT_LOG.nDateTime as fecha', 
-                                'TB_USER.sUserName as usuario', 
+                        ->get(['TB_EVENT_LOG.nEventLogIdn',
+                                'TB_EVENT_LOG.nDateTime as fecha',
+                                'TB_USER.sUserName as usuario',
                                 'TB_EVENT_DATA.sName as accion',
                                 'TB_READER.sName as local',
                                 'TB_USER_DEPT.sDepartment as departamento',
                                 'TB_USER.nUserIdn as id_usuario'
                             ]);
-                            
+
         $dataRegistros_bak= DB::connection('bio_start')->table('TB_EVENT_LOG_BK')
         ->join('TB_USER', 'TB_EVENT_LOG_BK.nUserID', '=', 'TB_USER.sUserID')
         ->join('TB_EVENT_DATA', 'TB_EVENT_LOG_BK.nEventIdn', '=', 'TB_EVENT_DATA.nEventIdn')
@@ -100,17 +106,17 @@ class ModuloRRHHController extends Controller
         ->where('TB_EVENT_LOG_BK.nUserID', '<>', 0)
         ->whereBetween('TB_EVENT_LOG_BK.nDateTime', [$f_inicio, $f_fin])
         ->where('TB_USER_DEPT.sDepartment', '=', $departamento)
-        ->get(['TB_EVENT_LOG_BK.nEventLogIdn', 
-                'TB_EVENT_LOG_BK.nDateTime as fecha', 
-                'TB_USER.sUserName as usuario', 
+        ->get(['TB_EVENT_LOG_BK.nEventLogIdn',
+                'TB_EVENT_LOG_BK.nDateTime as fecha',
+                'TB_USER.sUserName as usuario',
                 'TB_EVENT_DATA.sName as accion',
                 'TB_READER.sName as local',
                 'TB_USER_DEPT.sDepartment as departamento',
                 'TB_USER.nUserIdn as id_usuario'
             ]);
-            
+
         $dataRegistros = [ ...$dataRegistros_log , ...$dataRegistros_bak];
-                            
+
         //Lista de alumnos
         $alumnos= DB::connection('bio_start')
                     ->table('TB_USER')
@@ -121,7 +127,7 @@ class ModuloRRHHController extends Controller
                         "TB_USER.sUserName as nombre",
                         "TB_USER_DEPT.sDepartment as nivel",
                     ]);
-                        
+
         /*  Formateando data  */
         $alumnos_asistencia_maniana  = [];
         $alumnos_asistencia_tarde  = [];
@@ -129,8 +135,8 @@ class ModuloRRHHController extends Controller
         $asist_maniana = 0;
         $asist_tarde = 0;
         foreach ($alumnos as $alumno) {
-            $temp_alumno_maniana = (object) [ "id"=> $alumno->id , "nombre"=> $alumno->nombre , "nivel"=> $alumno->nivel , "asistio"=> false ] ; 
-            $temp_alumno_tarde = (object) [ "id"=> $alumno->id , "nombre"=> $alumno->nombre , "nivel"=> $alumno->nivel , "asistio"=> false ,] ; 
+            $temp_alumno_maniana = (object) [ "id"=> $alumno->id , "nombre"=> $alumno->nombre , "nivel"=> $alumno->nivel , "asistio"=> false ] ;
+            $temp_alumno_tarde = (object) [ "id"=> $alumno->id , "nombre"=> $alumno->nombre , "nivel"=> $alumno->nivel , "asistio"=> false ,] ;
 
             foreach ($dataRegistros as $marcacion) {
                 if(strpos($marcacion->accion, "Success") != false ){
@@ -138,12 +144,12 @@ class ModuloRRHHController extends Controller
                         if($marcacion->fecha < $f_mediodia  ){
                             $temp_alumno_maniana->asistio = true;
                             $temp_alumno_maniana->fecha = gmdate("Y-m-d",$marcacion->fecha);
-                            $temp_alumno_maniana->hora = gmdate("h:i:s A",$marcacion->fecha); 
+                            $temp_alumno_maniana->hora = gmdate("h:i:s A",$marcacion->fecha);
                             $asist_maniana++;
                         }
                         else{
                             $temp_alumno_tarde->asistio = true;
-                            $temp_alumno_tarde->fecha = gmdate("Y-m-d",$marcacion->fecha); 
+                            $temp_alumno_tarde->fecha = gmdate("Y-m-d",$marcacion->fecha);
                             $temp_alumno_tarde->hora = gmdate("h:i:s A",$marcacion->fecha);
                             $asist_tarde++;
                         }
@@ -178,19 +184,19 @@ class ModuloRRHHController extends Controller
         $request->validate([
             "nivel"=>"required | string | min:1",
             "seccion"=>"required | string | min:1",
-            "grado"=>"required | string | min:1",
+            "grado"=>"",
             "f_inicio"=>"required",
         ]);
 
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
-        
+
         $fecha = $request->f_inicio;
         $nivel = $request->nivel;
         $grado = $request->grado;
         $seccion = $request->seccion;
         $departamento = Str::upper($request->nivel.'/'.$request->grado.$request->seccion);
-        
+
         $f_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $request->f_inicio.' 00:00:00','GMT')->timestamp;
         $f_mediodia = Carbon::createFromFormat('Y-m-d H:i:s', $request->f_inicio.' 13:30:00','GMT')->timestamp;
         $f_fin = Carbon::createFromFormat('Y-m-d H:i:s', $request->f_inicio.' 23:59:59','GMT')->timestamp;
@@ -207,15 +213,15 @@ class ModuloRRHHController extends Controller
                         ->where('TB_EVENT_LOG.nUserID', '<>', 0)
                         ->whereBetween('TB_EVENT_LOG.nDateTime', [$f_inicio, $f_fin])
                         ->where('TB_USER_DEPT.sDepartment', '=', $departamento)
-                        ->get(['TB_EVENT_LOG.nEventLogIdn', 
-                                'TB_EVENT_LOG.nDateTime as fecha', 
-                                'TB_USER.sUserName as usuario', 
+                        ->get(['TB_EVENT_LOG.nEventLogIdn',
+                                'TB_EVENT_LOG.nDateTime as fecha',
+                                'TB_USER.sUserName as usuario',
                                 'TB_EVENT_DATA.sName as accion',
                                 'TB_READER.sName as local',
                                 'TB_USER_DEPT.sDepartment as departamento',
                                 'TB_USER.nUserIdn as id_usuario'
                             ]);
-                            
+
         $dataRegistros_bak= DB::connection('bio_start')->table('TB_EVENT_LOG_BK')
         ->join('TB_USER', 'TB_EVENT_LOG_BK.nUserID', '=', 'TB_USER.sUserID')
         ->join('TB_EVENT_DATA', 'TB_EVENT_LOG_BK.nEventIdn', '=', 'TB_EVENT_DATA.nEventIdn')
@@ -224,15 +230,15 @@ class ModuloRRHHController extends Controller
         ->where('TB_EVENT_LOG_BK.nUserID', '<>', 0)
         ->whereBetween('TB_EVENT_LOG_BK.nDateTime', [$f_inicio, $f_fin])
         ->where('TB_USER_DEPT.sDepartment', '=', $departamento)
-        ->get(['TB_EVENT_LOG_BK.nEventLogIdn', 
-                'TB_EVENT_LOG_BK.nDateTime as fecha', 
-                'TB_USER.sUserName as usuario', 
+        ->get(['TB_EVENT_LOG_BK.nEventLogIdn',
+                'TB_EVENT_LOG_BK.nDateTime as fecha',
+                'TB_USER.sUserName as usuario',
                 'TB_EVENT_DATA.sName as accion',
                 'TB_READER.sName as local',
                 'TB_USER_DEPT.sDepartment as departamento',
                 'TB_USER.nUserIdn as id_usuario'
             ]);
-            
+
         $dataRegistros = [ ...$dataRegistros_log , ...$dataRegistros_bak];
 
         //Lista de alumnos
@@ -245,7 +251,7 @@ class ModuloRRHHController extends Controller
                         "TB_USER.sUserName as nombre",
                         "TB_USER_DEPT.sDepartment as nivel",
                     ]);
-                        
+
         /*  Formateando data  */
         $alumnos_asistencia_maniana  = [];
         $alumnos_asistencia_tarde  = [];
@@ -253,8 +259,8 @@ class ModuloRRHHController extends Controller
         $asist_maniana = 0;
         $asist_tarde = 0;
         foreach ($alumnos as $alumno) {
-            $temp_alumno_maniana = (object) [ "id"=> $alumno->id , "nombre"=> $alumno->nombre , "nivel"=> $alumno->nivel , "asistio"=> false ] ; 
-            $temp_alumno_tarde = (object) [ "id"=> $alumno->id , "nombre"=> $alumno->nombre , "nivel"=> $alumno->nivel , "asistio"=> false ,] ; 
+            $temp_alumno_maniana = (object) [ "id"=> $alumno->id , "nombre"=> $alumno->nombre , "nivel"=> $alumno->nivel , "asistio"=> false ] ;
+            $temp_alumno_tarde = (object) [ "id"=> $alumno->id , "nombre"=> $alumno->nombre , "nivel"=> $alumno->nivel , "asistio"=> false ,] ;
 
             foreach ($dataRegistros as $marcacion) {
                 if(strpos($marcacion->accion, "Success") != false ){
@@ -262,12 +268,12 @@ class ModuloRRHHController extends Controller
                         if($marcacion->fecha < $f_mediodia  ){
                             $temp_alumno_maniana->asistio = true;
                             $temp_alumno_maniana->fecha = gmdate("Y-m-d",$marcacion->fecha);
-                            $temp_alumno_maniana->hora = gmdate("h:i:s A",$marcacion->fecha); 
+                            $temp_alumno_maniana->hora = gmdate("h:i:s A",$marcacion->fecha);
                             $asist_maniana++;
                         }
                         else{
                             $temp_alumno_tarde->asistio = true;
-                            $temp_alumno_tarde->fecha = gmdate("Y-m-d",$marcacion->fecha); 
+                            $temp_alumno_tarde->fecha = gmdate("Y-m-d",$marcacion->fecha);
                             $temp_alumno_tarde->hora = gmdate("h:i:s A",$marcacion->fecha);
                             $asist_tarde++;
                         }
@@ -287,7 +293,7 @@ class ModuloRRHHController extends Controller
             $alumnos_asistencia_tarde[] = $temp_alumno_tarde;
         }
 
-        $pdf = PDF::loadView('reportes.pdf.rrhh.alumnos',compact('alumnos_asistencia_maniana', 'alumnos_asistencia_tarde','asist_maniana','asist_tarde','fecha',  'nivel',  'grado',  'seccion'));          
+        $pdf = PDF::loadView('reportes.pdf.rrhh.alumnos',compact('alumnos_asistencia_maniana', 'alumnos_asistencia_tarde','asist_maniana','asist_tarde','fecha',  'nivel',  'grado',  'seccion'));
         return $pdf->stream();
 
         //return $request->all();
@@ -298,7 +304,7 @@ class ModuloRRHHController extends Controller
             "personal_id" => "string | min:1 | required",
             "f_inicio" => "string | min:10 | max:10  | required",
             "f_fin" => "string | min:10 | max:10  | required",
-        ]); 
+        ]);
 
 
         $personal = DB::connection('bio_start')
@@ -327,7 +333,7 @@ class ModuloRRHHController extends Controller
     private function getMarcacionesPersonal( $personal_id, $f_inicio, $f_fin ){
         $f_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $f_inicio.' 00:00:00','GMT')->timestamp;
         $f_fin = Carbon::createFromFormat('Y-m-d H:i:s', $f_fin.' 23:59:59','GMT')->timestamp;
-        $diaSemana= ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo']; 
+        $diaSemana= ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
 
         $marcacionesBK = DB::connection('bio_start')
                     ->table('TB_EVENT_LOG_BK')
@@ -347,7 +353,7 @@ class ModuloRRHHController extends Controller
                         "TB_EVENT_DATA.sName",
                         "TB_READER.sName as nLocal",
                     ]);
-                    
+
         $marcacionesLog = DB::connection('bio_start')
                     ->table('TB_EVENT_LOG')
                     ->join('TB_USER', 'TB_USER.sUserID', 'TB_EVENT_LOG.nUserID')
@@ -365,7 +371,7 @@ class ModuloRRHHController extends Controller
                         "TB_EVENT_DATA.sName",
                         "TB_READER.sName as nLocal",
                     ]);
-                    
+
         $marcaciones = [...$marcacionesBK, ... $marcacionesLog];
 
         //Formateando fecha (Formatear)
@@ -398,13 +404,13 @@ class ModuloRRHHController extends Controller
         return $data;
     }
 
-}   
+}
 /*
     POLITICAS DE ACCESO
         HinicioMañana = 8:00
         HinicioMañanaVigilante = 7:30
         HinicioMañanaAuxiliares = 7:30
-        
+
         HsalidaMañana_general= 1
         HsalidaMañana_general_  =
 
@@ -415,13 +421,13 @@ class ModuloRRHHController extends Controller
 
         HsalidaTarde_general=
         HsalidaTarde_general_  =
-        
-        tardanza : 
+
+        tardanza :
 
         ROLES:
 
         DIAS DE TRABAJO:
         L, M , M, J , V ,S
 
-        SABADO: 
+        SABADO:
 */

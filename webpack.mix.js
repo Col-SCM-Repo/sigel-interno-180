@@ -53,4 +53,5 @@ mix.js(
 //Reloj
 mix.js("resources/js/reloj/index.js", "public/js/reloj");
 mix.js("resources/js/reloj/alumnos.js", "public/js/reloj");
+mix.js("resources/js/reloj/alumnosAcademia.js", "public/js/reloj");
 mix.js("resources/js/reloj/empleados.js", "public/js/reloj");

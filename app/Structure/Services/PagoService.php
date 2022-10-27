@@ -25,6 +25,7 @@ class PagoService
     protected $_vacanteReposotory;
     protected $_alumnoMorosoMapper;
     protected $_pagoEntreFechasMapper;
+    protected $_parentescoService;
     public function __construct()
     {
         $this->_pagoMapper= new PagoMapper();
@@ -36,6 +37,7 @@ class PagoService
         $this->_vacanteReposotory= new VacanteRepository();
         $this->_alumnoMorosoMapper= new AlumnoMorosoMapper();
         $this->_pagoEntreFechasMapper= new PagoEntreFechasMapper();
+        $this->_parentescoService = new ParentescoService();
     }
     public function ObtenerPagosPorCronograma($cronogramaId)
     {
@@ -50,7 +52,15 @@ class PagoService
         $_pagoVM =  $this->_pagoMapper->ViewModel();
         if ($cronograma_id!=0) {
             $_cronogramaVm = $this->_cronogramaService->BuscarPorId($cronograma_id);
-            $_pagoVM->saldo = $_cronogramaVm->monto;
+            $_pagoVM->saldo = $_cronogramaVm->monto_final;
+            $_pagoVM->responsables_pago = $this->_parentescoService->BuscarPorAlumnoId( $_cronogramaVm->alumno_id );
+
+            foreach ($_pagoVM->responsables_pago as $responsable_pago )
+                if( $responsable_pago->responsable_defecto == true ){
+                    $_pagoVM->responsable_pago_id = $responsable_pago->id;
+                    break;
+                }
+
             foreach (self::ObtenerPagosPorCronograma($cronograma_id) as $pago) {
                 $_pagoVM->saldo -= $pago->monto;
             }
@@ -64,10 +74,16 @@ class PagoService
     }
     public function GuardarPago($_pagoVM)
     {
-        if($_pagoVM->tipo_comprobante_id==TipoComprobanteEnum::BoletaElectronica){
+        if($_pagoVM->tipo_comprobante_id==TipoComprobanteEnum::BoletaElectronica || $_pagoVM->tipo_comprobante_id==TipoComprobanteEnum::FaturaElectronica){
             $_pagoVM->numero = $this->_pagoRespository->ObtenerNumeracionPorserie($_pagoVM->serie)+1;
         }
-        if (isset($_pagoVM->cronograma_id)) {
+       /*  else
+            if($_pagoVM->tipo_comprobante_id==TipoComprobanteEnum::FaturaElectronica){
+                $_pagoVM->numero = $this->_pagoRespository->ObtenerNumeracionPorserie($_pagoVM->serie)+1;
+            } */
+
+
+        if (isset($_pagoVM->cronograma_id)) {   // crear nota credito
            $cronogramaVM = $this->_cronogramaService->BuscarPorId($_pagoVM->cronograma_id);
            if(number_format($_pagoVM->monto,2)<number_format($_pagoVM->saldo,2)){
             $cronogramaVM->estado='SALDO';
@@ -90,7 +106,7 @@ class PagoService
             $_cronogramaVM = $this->_cronogramaService->BuscarPorId($_pagoAnteriorModel->CronogramaPago->id());
             if (number_format(number_format($_montoPagado,2)+number_format($_pagoVM->monto,2),2)==number_format(0,2)) {
                 $_cronogramaVM->estado = 'PENDIENTE';
-            } else if(number_format(number_format($_montoPagado,2)+number_format($_pagoVM->monto,2),2)<number_format($_cronogramaVM->monto,2)) {
+            } else if(number_format(number_format($_montoPagado,2)+number_format($_pagoVM->monto,2),2)<number_format($_cronogramaVM->monto_final,2)) {
                 $_cronogramaVM->estado = 'SALDO';
             }
             $this->_cronogramaService->Actualizar($_cronogramaVM);

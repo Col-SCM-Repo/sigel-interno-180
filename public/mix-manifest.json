@@ -12,6 +12,7 @@
     "/js/pagos/fecha_por_usuario_actual.js": "/js/pagos/fecha_por_usuario_actual.js",
     "/js/pagos/pagos_entre_fechas.js": "/js/pagos/pagos_entre_fechas.js",
     "/js/reloj/alumnos.js": "/js/reloj/alumnos.js",
+    "/js/reloj/alumnosAcademia.js": "/js/reloj/alumnosAcademia.js",
     "/js/reloj/empleados.js": "/js/reloj/empleados.js",
     "/js/reloj/index.js": "/js/reloj/index.js",
     "/js/usuarios/index.js": "/js/usuarios/index.js",

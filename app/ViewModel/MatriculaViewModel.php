@@ -29,4 +29,5 @@ class MatriculaViewModel
         public $frente_carnet = '';
         public $reverso_carnet = '';
         public $puede_retirarse = false;
+        public $descuento_id = null;
 }

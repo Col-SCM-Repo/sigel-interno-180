@@ -49,23 +49,56 @@
                 </td>
                 <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->serie()}} -  {{$pago->numero()}}</td>
             </tr>
+            @if ( substr($pago->serie(),0,1)=='E'  )
+                <tr>
+                    <td width="40%" style="font-size:0.55em; text-align:left">
+                        RUC:
+                    </td>
+                    <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->MP_RUC}} </td>
+                </tr>
+                <tr>
+                    <td width="40%" style="font-size:0.55em; text-align:left">
+                        Razón social:
+                    </td>
+                    <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->MP_RAZON_SOCIAL}} </td>
+                </tr>
+            @endif
             <tr>
                 <td width="40%" style="font-size:0.55em; text-align:left">
                     Matrícula:
                 </td>
                 <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->Matricula->id()}} </td>
             </tr>
+            @php
+                $responsable_pago = $pago->ResponsablePago;
+                if($responsable_pago){
+                    $apellidos_responsable = $responsable_pago->apellidos();
+                    $nombres_responsable = $responsable_pago->nombres();
+                    $dni_responsable = $responsable_pago->MP_APO_NRODOC ;
+                }
+                else{
+                    $apellidos_responsable = $pago->Matricula->Alumno->apellidos();
+                    $nombres_responsable = $pago->Matricula->Alumno->nombres();
+                    $dni_responsable = $pago->Matricula->Alumno->MP_ALU_DNI ;
+                }
+            @endphp
             <tr>
                 <td width="40%" style="font-size:0.55em; text-align:left">
-                    Apellidos:
+                    Responsable Pago:
                 </td>
-                <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->Matricula->Alumno->apellidos()}} </td>
+                <td width="60%" style="font-size:0.55em; text-align:left">{{$apellidos_responsable.', '.$nombres_responsable}} </td>
             </tr>
             <tr>
                 <td width="40%" style="font-size:0.55em; text-align:left">
-                    Nombres:
+                    DNI:
                 </td>
-                <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->Matricula->Alumno->nombres()}} </td>
+                <td width="60%" style="font-size:0.55em; text-align:left">{{$dni_responsable}} </td>
+            </tr>
+            <tr>
+                <td width="40%" style="font-size:0.55em; text-align:left">
+                    Alumno:
+                </td>
+                <td width="60%" style="font-size:0.55em; text-align:left">{{$pago->Matricula->Alumno->apellidos().', '.$pago->Matricula->Alumno->nombres()}} </td>
             </tr>
             <tr>
                 <td width="40%" style="font-size:0.55em; text-align:left">
@@ -88,7 +121,7 @@
             </tr>
             <tr>
                 <td width="40%" style="font-size:0.55em; text-align:left">
-                    Fecha:
+                    Fecha Emisión:
                 </td>
                 <td width="60%" style="font-size:0.55em; text-align:left">{{date('d/m/Y H:i:s',strtotime($pago->fecha()))}} </td>
             </tr>
@@ -117,6 +150,5 @@
                 </td>
             </tr>
         </table>
-        <br>
     </body>
 </html>

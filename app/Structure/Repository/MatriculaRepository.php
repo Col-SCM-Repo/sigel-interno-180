@@ -48,4 +48,7 @@ class MatriculaRepository extends Matricula
     {
         return $this::where('MP_VAC_ID', $vacante_id)->get();
     }
+    public function UltimaMatricula ($alumno_id){
+        return $this::where('MP_ALU_ID',$alumno_id)->orderBy('MP_MAT_ID', 'desc')->first();
+    }
 }

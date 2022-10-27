@@ -27,6 +27,7 @@ class MatriculaMapper
         $_matriculaVM->vacante_id = $_matricula->MP_VAC_ID;
         $_matriculaVM->nivel = $_matricula->Vacante->Nivel->id();
         $_matriculaVM->grado = $_matricula->Vacante->Grado->id();
+        $_matriculaVM->descuento_id = $_matricula->MP_DESCUENTO_ID;
         $_matriculaVM->puede_retirarse = EstadoMatricula::PueedeRetirarse($_matricula->Vacante->anioId());
         return $_matriculaVM;
     }
@@ -64,6 +65,8 @@ class MatriculaMapper
         $_matriculaM->MP_PAG_OBS =$_matriculaVM->pago_observacion;
         $_matriculaM->MP_VAC_ID = $_matriculaVM->vacante_id ;
         $_matriculaM->MP_MAT_MONTOPENSION = $_matriculaVM->monto_pension==''?0: $_matriculaVM->monto_pension;
+
+        $_matriculaM->MP_DESCUENTO_ID = $_matriculaVM->descuento_id ;
         return $_matriculaM;
     }
 }

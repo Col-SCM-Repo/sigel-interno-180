@@ -618,6 +618,26 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="input-group input-group-sm mb-3">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="chk-responsable-pago" >Responsable de pago por defecto </label>
+                                                    <input type="checkbox" class="ml-3" id="chk-responsable-pago" :disabled="!editar_familiar"  v-model="familiar_seleccionado.responsable_defecto">
+                                                </div>
+                                                {{-- <div v-if="error && validaciones['familiar.ocupacion_id']!= undefined" class="invalid-feedback">
+                                                    @{{_.head(validaciones['familiar.ocupacion_id'])}}
+                                                </div> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
                             </div>
                         </div>
                     </div>

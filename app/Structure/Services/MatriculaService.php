@@ -1,13 +1,17 @@
 <?php
 namespace App\Structure\Services;
 
+use App\CronogramaPago;
+use App\Descuento;
 use App\Enums\EstadoMatriculaEnum;
 use App\Enums\ParteCarnetEnum;
 use App\Helpers\EstadoMatricula;
 use App\Mappers\CronogramaMapper;
 use App\Mappers\MatriculaMapper;
+use App\Matricula;
 use App\Structure\Repository\CronogramaRepository;
 use App\Structure\Repository\MatriculaRepository;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class MatriculaService
 {
@@ -68,7 +72,9 @@ class MatriculaService
             }else{
                 if($matriculaVM->monto_matricula!=''||$matriculaVM->monto_pension!=''){
                     foreach ($_matriculaModel->CronogramaPagos as $cronograma) {
-                        $cronograma->MP_CRO_MONTO = $cronograma->ConceptoPago->concepto_id()==1? ($matriculaVM->monto_matricula!=''?$matriculaVM->monto_matricula:$cronograma->monto()):($matriculaVM->monto_pension!=''?$matriculaVM->monto_pension:$cronograma->monto());
+                        $monto_cronograma = $cronograma->ConceptoPago->concepto_id()==1? ($matriculaVM->monto_matricula!=''?$matriculaVM->monto_matricula:$cronograma->monto()):($matriculaVM->monto_pension!=''?$matriculaVM->monto_pension:$cronograma->monto());
+                        $cronograma->MP_CRO_MONTO = $monto_cronograma;
+                        $cronograma->MONTO_FINAL = $monto_cronograma;
                         $this->_cronogramaService->Actualizar($this->_cronogramaMapper->ModelToViewModel($cronograma));
                     }
                 }
@@ -84,7 +90,10 @@ class MatriculaService
                 $nuevoCronogramaVM->concepto_pago_id =$pension->id;
                 $nuevoCronogramaVM->fecha_vencimiento = date('Y-m-d\TH:i:s',strtotime($pension->fecha_vencimiento));
                 $nuevoCronogramaVM->tipo_deuda =$pension->id==1? 'DERECHO DE PAGO':'PENSION';
-                $nuevoCronogramaVM->monto =$pension->id==1? ($matriculaVM->monto_matricula!=''?$matriculaVM->monto_matricula:($pension->monto)):(date('m',strtotime($pension->fecha_vencimiento))<date('m',strtotime($matriculaVM->fecha_ingreso))? '0.0':($matriculaVM->monto_pension!=''?$matriculaVM->monto_pension:($matriculaVM->tipo_matricula_id==3?($pension->monto/2):$pension->monto)));
+
+                $monto_cronograma = $pension->id==1? ($matriculaVM->monto_matricula!=''?$matriculaVM->monto_matricula:($pension->monto)):(date('m',strtotime($pension->fecha_vencimiento))<date('m',strtotime($matriculaVM->fecha_ingreso))? '0.0':($matriculaVM->monto_pension!=''?$matriculaVM->monto_pension:($matriculaVM->tipo_matricula_id==3?($pension->monto/2):$pension->monto)));
+                $nuevoCronogramaVM->monto = $monto_cronograma ;
+                $nuevoCronogramaVM->monto_final = $monto_cronograma ;
                 $nuevoCronogramaVM->estado =$pension->id==1?('PENDIENTE'):(($matriculaVM->tipo_matricula_id==2||date('m',strtotime($pension->fecha_vencimiento))<date('m',strtotime($matriculaVM->fecha_ingreso)))?('EXONERADO'):('PENDIENTE'));
                 $aux_max = $nuevoCronogramaVM->id;
                 while ($nuevoCronogramaVM->id==$aux_max) {
@@ -143,9 +152,55 @@ class MatriculaService
         foreach ($_matriculaModel->CronogramaPagos as $cronograma) {
             if (date('m',strtotime($cronograma->MP_CRO_FECHAVEN))>date('m')) {
                 $cronograma->MP_CRO_MONTO = 0;
+                $cronograma->MONTO_FINAL = 0;
+                $cronograma->MONTO_DESCUENTO = null;
                 $cronograma->MP_CRO_ESTADO = 'EXONERADO';
                 $this->_cronogramaService->Actualizar($this->_cronogramaMapper->ModelToViewModel($cronograma));
             }
         }
+    }
+    public function AplicarDescuentoBecar( $matricula_id, $descuento_id, $cronogramas_afectados ){
+        $descuento =    null;
+        $matricula =    null;
+
+        if($descuento_id>0) $descuento = Descuento::find($descuento_id);
+        $matricula = Matricula::find($matricula_id);
+        if(!$matricula) throw new NotFoundResourceException("Error, no se encontro a la matricula con codido $matricula_id .");
+
+        if($descuento){ // Aplica descuento
+            $matricula->MP_DESCUENTO_ID = $descuento->Id();
+            foreach ($cronogramas_afectados as $cronograma_id) {
+                $cronograma = CronogramaPago::find($cronograma_id);
+                if($cronograma){
+                    $cronograma->MONTO_DESCUENTO = $descuento->calcularDescuento( $cronograma->MP_CRO_MONTO );
+                    $cronograma->MONTO_FINAL = $cronograma->MP_CRO_MONTO - $cronograma->MONTO_DESCUENTO;
+                    // se actualiza el monto y ya no hay devoluciones
+                    if($cronograma->MONTO_FINAL <= 0 ){
+                        $cronograma->MONTO_FINAL = 0;
+                        $cronograma->MP_CRO_ESTADO = 'CANCELADO';
+                    }
+                    $cronograma->save();
+                }
+            }
+        }
+        else{ // Quita descuento
+            $matricula->MP_DESCUENTO_ID = null;
+            $cronogramasMatricula = CronogramaPago::where('MP_MAT_ID', $matricula_id)
+                                                    ->where('MP_CRO_ESTADO', '!=', 'EXONERADO')
+                                                    ->where('MP_CRO_ESTADO', '!=', 'CANCELADO')
+                                                    ->get();
+            foreach ($cronogramasMatricula  as $cronograma) {
+                $cronograma->MONTO_DESCUENTO = null ;
+                $cronograma->MONTO_FINAL = $cronograma->MP_CRO_MONTO ;
+                $cronograma->save();
+            }
+        }
+        $matricula->save();
+        return true;
+    }
+
+    public function ultimaMatricula( $alumno_id ){
+        $matriculaM = $this->_matriculaRepository->UltimaMatricula($alumno_id);
+        return $matriculaM ? $this->_matriculaMapper->ModelToViewModel( $matriculaM ) : null;
     }
 }

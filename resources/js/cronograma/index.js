@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from 'vue';
 var cronograma = new Vue({
     el: '#cronograma',
@@ -16,7 +17,15 @@ var cronograma = new Vue({
         editar: false,
         serie_usuario: $("#serie_usuario").val(),
         fecha_deposito:'',
-        pago_model : []
+        pago_model : [],
+
+        // Modal descuentos
+        listaDescuentosDisponibles : [],
+        listaCronogramasDescuentos: [],
+        descuentoSeleccionado_id : null,
+        descuentoEditar_id : '',
+
+
     },
     methods: {
         obtenerDatos:function () {
@@ -28,6 +37,7 @@ var cronograma = new Vue({
                 this.matricula = response.data;
                 this.alumno = this.matricula.alumno;
                 this.cronogramas = this.matricula.cronogramas;
+                this.descuentoSeleccionado_id = (!this.matricula.descuento_id || this.matricula.descuento_id == '')? '': this.matricula.descuento_id;
             }).catch((error) => {
             }).finally((response) => {
             });
@@ -74,6 +84,25 @@ var cronograma = new Vue({
                 }
             });
         },
+        onEditarDescuento:function( descuento_id , event ){
+            event.preventDefault();
+            const $formularioDescuentos = document.getElementById('form-nuevo-descuento');
+            const url = $formularioDescuentos.getAttribute('action')+'/'+descuento_id;
+            axios(url).then(response=>{
+                const descuentoTemp = response.data;
+                console.log( descuentoTemp );
+
+                $formularioDescuentos.nombreDescuento.value = descuentoTemp.MP_NOMBRE.toUpperCase() ;
+                $formularioDescuentos.descripcionDescuento.value = descuentoTemp.DESCRIPCION.toUpperCase() ;
+                $formularioDescuentos.tipoDescuento.value = descuentoTemp.MP_TIPO_BECA ;
+                $formularioDescuentos.valorDescuento.value = descuentoTemp.VALOR ;
+
+                this.descuentoEditar_id = descuento_id;
+            }).catch(err=>{
+                console.error(err);
+                showToastr('Error', 'Ocurrio un error al buscar descuento', 'error');
+            });
+        },
         cerrarModalPagar:function(){
             $('#pagarModal').modal('hide');
             this.pago_model = [];
@@ -106,6 +135,49 @@ var cronograma = new Vue({
             this.pago_seleccionado = [];
             this.pago_model = [];
         },
+        abrirModalOtrosDocumentosModal:function(){
+            $('#otrosDocumentosModal').modal({backdrop: 'static', keyboard: false});
+            $('#otrosDocumentosModal').modal('show');
+        },
+        cerrarModalOtrosDocumentosModal:function(){
+            $('#otrosDocumentosModal').modal('hide');
+        },
+        aplicarTodo : function ($event){
+            this.listaCronogramasDescuentos.forEach(cron=>cron.check=$event.target.checked);
+        },
+        onUpdateCronograma : function ($event){
+            const aplicarTodoCronograma = document.getElementById('aplicar-todo-cronograma');
+            if(!$event.target.checked)
+                aplicarTodoCronograma.checked=false;
+            else{
+                const seleccionados = this.listaCronogramasDescuentos.filter(cro => cro.check);
+                aplicarTodoCronograma.checked = seleccionados.length == this.listaCronogramasDescuentos.length;
+            }
+        },
+        aplicarDescuentosBecar:function( ){
+            const cronogramasAplicar = this.listaCronogramasDescuentos.filter(cron=>cron.check).map(cron=>cron.id);
+
+            if(  this.descuentoSeleccionado_id && this.descuentoSeleccionado_id != '' && cronogramasAplicar.length>0 ){
+                const $formularioAplicar = document.getElementById('formulario-aplicar-descuento');
+
+                const url = $formularioAplicar.getAttribute('action');
+                const data = new FormData();
+                data.append('matricula_id', this.matricula_id);
+                data.append('descuento_id', this.descuentoSeleccionado_id);
+                data.append('cronogramas_afectados', JSON.stringify(cronogramasAplicar));
+
+                axios( url, {method:'POST', data} ).then(response=> {
+                    this.obtenerDatos();
+                    this.cerrarModalDescuentos();
+                    showToastr('Actualización', 'La beca fue aplicada satisfactoriamente', 'success');
+                }).catch(err=>{
+                    showToastr('Error', 'Ocurrio un error al aplicar el Descuento', 'error');
+                })
+            }
+            else
+                showToastr('Error','Datos incompletos, asegúrese de seleccionar un descuento y tener activos al menos un cronograma', 'error');
+        },
+
         guardaNotaCredito:function(){
             let url = this.url_principal +'pagos/guardar_nota_credito';
             this.pago_model.observacion = 'ANULA TICKET Nº '+this.pago_seleccionado.serie +'-' +this.pago_seleccionado.numero+', POR ' + this.pago_model.observacion;
@@ -142,6 +214,89 @@ var cronograma = new Vue({
 
             });
         },
+        abrirModalDescuentos: function (){
+            this.listaCronogramasDescuentos = this.cronogramas.filter( crono => (crono.estado != 'CANCELADO' && crono.estado != 'EXONERADO') ).map(  cronograma => {
+                return {    id:     cronograma.id ,
+                            nombre: cronograma.concepto.concepto,
+                            estado: cronograma.estado,
+                            check:  cronograma.monto_descuento?true:false
+                        } } );
+            const seleccionadosTemp = this.listaCronogramasDescuentos.filter(cron => cron.check);
+
+            document.getElementById('aplicar-todo-cronograma').checked = seleccionadosTemp.length == this.listaCronogramasDescuentos.length ;
+
+            this.cargarDescuentos();
+
+            $('#becasDescuentosModal').modal({backdrop: 'static', keyboard: false});
+            $('#becasDescuentosModal').modal('show');
+        },
+        cerrarModalDescuentos : function (){
+
+            $('#becasDescuentosModal').modal('hide');
+        }
+        ,
+        abrirModalNuevosDescuentos:function(){
+            $('#nuevaBecaModal').modal({backdrop: 'static', keyboard: false});
+            $('#nuevaBecaModal').modal('show');
+        },
+        cerrarModalNuevosDescuentos:function(){
+            $('#nuevaBecaModal').modal('hide');
+        },
+
+        registrarDescuento:function( event ){
+            event.preventDefault();
+            const $formularioDescuentos = document.getElementById('form-nuevo-descuento');
+
+            const nombreDescuento = $formularioDescuentos.nombreDescuento.value.toUpperCase();
+            const descripcionDescuento = $formularioDescuentos.descripcionDescuento.value.toUpperCase();
+            const tipoDescuento = $formularioDescuentos.tipoDescuento.value;
+            const valorDescuento = $formularioDescuentos.valorDescuento.value;
+
+            if( nombreDescuento != ''/*  && descripcionDescuento != '' */ && tipoDescuento != '' && valorDescuento != '' ){
+                const data = new FormData();
+                data.append('nombre', nombreDescuento);
+                data.append('descripcion', descripcionDescuento);
+                data.append('tipo', tipoDescuento);
+                data.append('valor', valorDescuento);
+
+                let url = $formularioDescuentos.getAttribute('action');
+
+                if(this.descuentoEditar_id != ''){
+                    url = url+'/'+this.descuentoEditar_id;
+                }
+
+                axios(url, { method:'POST', data }).then(response=>{
+                    $formularioDescuentos.nombreDescuento.value = '';
+                    $formularioDescuentos.descripcionDescuento.value = '';
+                    $formularioDescuentos.tipoDescuento.value = '';
+                    $formularioDescuentos.valorDescuento.value = '';
+                    this.descuentoEditar_id = '';
+                    this.cargarDescuentos();
+                }).catch(err=>{
+                    showToastr('Error','Ocurrio un error inesperado', 'error');
+                })
+            }else{
+                showToastr('Alerta','Datos incompletos', 'warning');
+            }
+
+
+
+        },
+
+
+        cargarDescuentos:function(){
+            const $formularioDescuentos = document.getElementById('form-nuevo-descuento');
+
+            const url = $formularioDescuentos.getAttribute('action');
+
+            axios(url).then(response=>{
+                this.listaDescuentosDisponibles = response.data;
+            }).catch(err=>{
+                showToastr('Error','Ocurrio un error inesperado al cargar los descuentos', 'error');
+                console.error(err);
+            });
+        },
+
         generarFichaMatricula:function(){
             window.open(this.url_principal+'reportes/descargar_ficha_matricula/'+this.matricula_id);
         },
@@ -153,8 +308,20 @@ var cronograma = new Vue({
         },
         modificarMonto:function(cronograma){
             let url = this.url_principal +'cronograma/actualizar_monto';
-            if(cronograma.monto =="0")
-                cronograma.estado="EXONERADO";
+
+            console.log(cronograma);
+            if(cronograma.monto_final == "0"){
+                cronograma.estado ="EXONERADO";
+                cronograma.monto = "0";
+            }
+            else{
+                if(cronograma.estado == "EXONERADO"){
+                    cronograma.monto = cronograma.monto_final;
+                    cronograma.estado = 'PENDIENTE';
+                }
+            }
+            cronograma.monto_descuento = 0;
+
             let data = {
                 'cronograma': cronograma,
             };
@@ -171,6 +338,20 @@ var cronograma = new Vue({
             let data = {
                 'pago': this.pago_model,
             };
+
+            if (this.pago_model.tipo_comprobante_id==4) {
+                if(!this.pago_model.ruc || this.pago_model.ruc.length!=11){
+                    return  showToastr('AVISO',"Debe ingresar el numero de RUC de 11 digitos.", 'warning');
+                }
+                if(!this.pago_model.razon_social){
+                    return  showToastr('AVISO',"Debe ingresar la razón social.", 'warning');
+                }
+                /* if(!this.pago_model.numero || parseInt(this.pago_model.numero)> 32767 ){
+                    return  showToastr('AVISO',"Debe ingresar un numero menor de 32767.", 'warning');
+                } */
+
+            }
+
             if(this.pago_model.modalidad==2){
                 if(!this.pago_model.banco){
                    return  showToastr('AVISO',"Debe seleccionar un banco.", 'warning');

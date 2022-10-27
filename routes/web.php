@@ -69,7 +69,22 @@ Route::prefix('pagos')->middleware('auth', 'accesos_control')->group(function ()
     Route::get('/pagos_entre_fechas', ['uses' => 'PagosController@PagosEntreFechasView', 'as' => 'vista.pagos.entre.fechas.pagos']);
     Route::post('/obtener_entre_fechas', ['uses' => 'PagosController@ObtenerPagosEntreFechas', 'as' => 'obtener.pagos.entre.fechas.pagos']);
     Route::post('/validar_pago', ['uses' => 'PagosController@ValidarPago', 'as' => 'validar.pago.pagos']);
+
+    #Descuentos / Becas
+    Route::post('/aplicar-becas', ['uses' => 'MatriculasController@ActualizarDescuentoBecar', 'as' => 'matricula.aplicar.descuento']);
+
 });
+
+//Routes Descuentos
+Route::prefix('descuentos')->middleware('auth', 'accesos_control')->group(function () {
+
+    Route::get('/', ['uses' => 'DescuentoController@getDescuentos', 'as' => 'descuentos.listar']);
+    Route::get('/{descuento_id}', ['uses' => 'DescuentoController@getDescuento', 'as' => 'descuentos.buscar']);
+    Route::post('/', ['uses' => 'DescuentoController@registrarDescuento', 'as' => 'descuentos.registrar']);
+    Route::post('/{descuento_id}', ['uses' => 'DescuentoController@actualizarDescuento', 'as' => 'descuentos.actualizar']);
+
+});
+
 //Routes Cronograma Pagos
 Route::prefix('cronograma')->middleware('auth', 'accesos_control')->group(function () {
     #Dashboard
@@ -211,19 +226,26 @@ Route::prefix('recursos-humanos')->middleware('auth')->group(function () {
 
     Route::prefix('alumnos')->group(function(){
         Route::get('/', ['uses' => 'ModuloRRHHController@alumnos', 'as' => 'rrhh.alumnos']);
-        
+        Route::get('/academia', ['uses' => 'ModuloRRHHController@alumnosAcademia', 'as' => 'rrhh.alumnos.academia']);
+
         /* Api  */
         Route::post('/', ['uses' => 'ModuloRRHHController@getDataReloj'])->name('rrhh.alumnos.data');
-        
+
         /* Libreria PDF  */
         Route::post('/descargar/{type?}', ['uses' => 'ModuloRRHHController@descargarPDF'])->name('rrhh.alumnos.download');
 
     });
+
+    Route::prefix('aulas')->group(function(){
+        Route::get('/listar-aulas/{nivelStr?}', ['uses' => 'AulasController@getAulasPorNivel', 'as' => 'aulas.listar-aulas']);
+
+    });
+
     Route::prefix('empleados')->middleware('accesos_control')->group(function(){
         Route::get('/', ['uses' => 'ModuloRRHHController@empleados', 'as' => 'rrnn.empleados']);
         Route::post('/informacion', ['uses' => 'ModuloRRHHController@verReporteMarcaciones', 'as' => 'rrnn.empleados.ver']);
         Route::post('/download', ['uses' => 'ModuloRRHHController@descargarReportePersonal', 'as' => 'rrnn.empleados.download']);
-        
+
         /*Api*/
         Route::post('/{param?}', ['uses' => 'ModuloRRHHController@empleados_search', 'as' => 'rrnn.empleados.search']);
 

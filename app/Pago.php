@@ -62,6 +62,10 @@ class Pago extends Model
       return $this->belongsTo('App\User', 'USU_ID','USU_ID');
     }
 
+    public function ResponsablePago(){
+      return $this->belongsTo('App\Apoderado', 'RESPONSABLE_PAGO_ID', 'MP_APO_ID');
+    }
+
     public function id()
     {
         return $this->MP_PAGO_ID;
@@ -94,4 +98,10 @@ class Pago extends Model
     {
         return $this->MP_SERCOM_ID;
     }
+
+    // Modificando . . . !!
+    public function notaCredito (){
+        return $this->hasOne(Pago::class, 'MP_CONPAGO_ID', 'MP_PAGO_ID');
+    }
+
 }

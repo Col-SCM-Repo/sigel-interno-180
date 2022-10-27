@@ -28,4 +28,8 @@ class PagoViewModel
     public $usuario_nombres = '';
     public $modalidad = 1;
     public $tipoPago='';
+    public $responsables_pago=[];
+    public $responsable_pago_id='';
+    public $ruc = '';
+    public $razon_social='';
 }

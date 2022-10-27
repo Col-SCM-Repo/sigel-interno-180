@@ -45,10 +45,10 @@
                                 <div class="col-md-6">
                                     <h3>CRONOGRAMA DE PAGOS</h3>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 text-right">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-primary btn-sm" v-on:click="generarFichaMatricula"><i class="fas fa-file-export" ></i> F. de Matícula</button>
-                                        <button  type="button" class="btn btn-success btn-sm" v-on:click="generarCronograma"><i class="far fa-calendar-alt"></i> Cro. Pagos</button>
+                                        <button  type="button" class="btn btn-primary btn-sm" v-on:click="abrirModalOtrosDocumentosModal"> <i class="fa fa-file" aria-hidden="true"></i> Documentos</button>
+                                        <button  type="button" class="btn btn-warning btn-sm" v-on:click="abrirModalDescuentos"> <i class="fa fa-money" aria-hidden="true"></i> Becas/descuentos</button>
                                         <button  type="button" class="btn btn-light btn-sm" v-on:click="editarCronograma">
                                             <template v-if="!editar">
                                                 <i class="far fa-edit"></i> Editar
@@ -67,7 +67,8 @@
                                     <th scope="col">Concepto</th>
                                     <th scope="col">Mes</th>
                                     <th scope="col">Fec. Vencimiento</th>
-                                    <th scope="col">Monto</th>
+                                    <th scope="col">Monto final</th>
+                                    <th scope="col">Descuento</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col">Opciones</th>
                                   </tr>
@@ -79,9 +80,10 @@
                                     <td >@{{cronograma.concepto.concepto}}</td>
                                     <td :style="cronograma.vencido?'color:red':'color:green'">@{{cronograma.fecha_vencimiento}}</td>
                                     <td >
-                                        <input v-if="editar && i!=0 && (cronograma.estado!='CANCELADO'||cronograma.estado=='EXONERADO')"  type="text" v-model="cronograma.monto" class="form-control" v-on:change="modificarMonto(cronograma)">
-                                        <p v-else>S/ @{{cronograma.monto}}</p>
+                                        <input v-if="editar && i!=0 && (cronograma.estado!='CANCELADO'||cronograma.estado=='EXONERADO')"  type="text" v-model="cronograma.monto_final" class="form-control" v-on:change="modificarMonto(cronograma)">
+                                        <p v-else>S/ @{{cronograma.monto_final}}</p>
                                     </td>
+                                    <td >S/ @{{cronograma.monto_descuento ? cronograma.monto_descuento : '0.0' }}</td>
                                     <td :style="cronograma.estado=='CANCELADO'?'color:green':(cronograma.estado=='EXONERADO'?'color:skyblue':(cronograma.estado=='PENDIENTE'?'color:orange':'color:blue'))">@{{cronograma.estado}}</td>
                                     <td>
                                         <div v-if="i==0" class="btn-group" role="group" aria-label="Basic example">
@@ -283,16 +285,32 @@
                                             <input v-else type="text" class="form-control" v-model="pago_model.serie='E001'"  >
                                         </div>
                                     </div>
-                                    <div  v-if="pago_model.tipo_comprobante_id==4" class="form-group row">
+                                    {{-- <div  v-if="pago_model.tipo_comprobante_id==4" class="form-group row">
                                         <label for="serie" class="col-sm-4 col-form-label">Número</label>
                                         <div class="col-sm-8">
                                             <input type="text"  class="form-control" v-model="pago_model.numero" >
                                         </div>
-                                    </div>
+                                    </div> --}}
+
+                                    <template v-if="pago_model.tipo_comprobante_id==4">
+                                        <div   class="form-group row">
+                                            <label for="serie" class="col-sm-4 col-form-label">Numero RUC</label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  class="form-control" v-model="pago_model.ruc" >
+                                            </div>
+                                        </div>
+                                        <div  v-if="pago_model.tipo_comprobante_id==4" class="form-group row">
+                                            <label for="serie" class="col-sm-4 col-form-label">Razón social</label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  class="form-control" v-model="pago_model.razon_social" >
+                                            </div>
+                                        </div>
+                                    </template>
+
                                     <div class="form-group row">
                                         <label for="monto" class="col-sm-4 col-form-label">Monto</label>
                                         <div class="col-sm-8">
-                                            <input type="text"  class="form-control" id="monto" :value="'S/ ' + cronograma_seleccionado.monto" disabled>
+                                            <input type="text"  class="form-control" id="monto" :value="'S/ ' + cronograma_seleccionado.monto_final" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -319,6 +337,17 @@
                                             <input type="text"  class="form-control mayus" id="pago" v-model="pago_model.observacion" >
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label for="responsable_vacante" class="col-sm-4 col-form-label">Responsable:</label>
+                                        <div class="col-sm-8">
+                                            <select id="responsable_vacante"  class="form-control mayus" v-model="pago_model.responsable_pago_id">
+                                                <option value="">SELECCIONE UN RESPONSABLE </option>
+                                                <option v-for="responsable in pago_model.responsables_pago"  :value="responsable.id">@{{ responsable.apellidos + ', '+responsable.nombres }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -377,6 +406,18 @@
                                             <textarea  type="text"  class="form-control mayus" id="nota_observacion" v-model="pago_model.observacion"rows="4" ></textarea>
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label for="responsable_vacante_nc" class="col-sm-4 col-form-label">Responsable:</label>
+                                        <div class="col-sm-8">
+                                            <select id="responsable_vacante_nc"  class="form-control mayus" v-model="pago_model.responsable_pago_id">
+                                                <option value="">SELECCIONE UN RESPONSABLE </option>
+                                                <option v-for="responsable in pago_model.responsables_pago"  :value="responsable.id">@{{ responsable.apellidos + ', '+responsable.nombres }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -389,6 +430,242 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal para Becas y Descuentos-->
+    <div class="modal fade" id="becasDescuentosModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Descuentos </h5>
+                    <button type="button" class="close" v-on:click="cerrarModalDescuentos">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" style="padding: 0 20px; background: #fafafa">
+                    <div class="row">
+                        <form class="col-12" id="formulario-aplicar-descuento" action="{{ route('matricula.aplicar.descuento') }}">
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="tipo-descuento-beca"class="col-sm-3 form-label pr-0">
+                                        Tipo Descuento:
+                                    </label>
+                                    <div class="col-sm-7">
+                                        <select name="tipoDescuentoBeca" id="tipo-descuento-beca" class="form-control " v-model="descuentoSeleccionado_id">
+                                            <option value="">SELECCIONE UN DESCUENTO</option>
+                                            <option value="-6">NINGUN DESCUENTO</option>
+                                            <option  v-for=" descuento in listaDescuentosDisponibles" :title="descuento.DESCRIPCION" :value="descuento.MP_DESCUENTO_ID">@{{ descuento.MP_NOMBRE}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-xs p-0 bg-transparent text-success" type="button" v-on:click="abrirModalNuevosDescuentos" > <i class="fa fa-plus" aria-hidden="true"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <table class="table table-striped table-hover" style="width: 100%">
+                                        <thead class="thead-inverse">
+                                            <tr>
+                                                <th class="text-center " >COD.</th>
+                                                <th class="text-center " >CONCEPTO</th>
+                                                <th class="text-center "  >
+                                                    <input type="checkbox" title="Aplicar a todos los cronogramas" name="aplicarTodo" id="aplicar-todo-cronograma" v-on:change="aplicarTodo($event)">
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template v-if=" listaCronogramasDescuentos && listaCronogramasDescuentos.length >0 ">
+                                                    <tr v-for="(cronograma, index) in listaCronogramasDescuentos" :key="index+'cronogramas'" >
+                                                        <td class="p-0 text-center"  scope="row"> <label :for="'cronograma-'+cronograma.id"> @{{ cronograma.id }} </label> </td>
+                                                        <td class="p-0 text-center" > <label :for="'cronograma-'+cronograma.id"> @{{ cronograma.nombre }} </label> </td>
+                                                        <td class="p-0 text-center"  class="text-center">
+                                                            <input type="checkbox" :name="'cronograma-'+cronograma.id" :id="'cronograma-'+cronograma.id" v-model="cronograma.check"  v-on:change="onUpdateCronograma($event)">
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                                <template v-else>
+                                                    <tr>
+                                                        <td colspan="3"> <small> No se encontró cronogramas </small> </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn-sm" v-on:click="cerrarModalDescuentos">Close</button>
+                    <button type="button" class="btn btn-primary btn-sm" v-on:click="aplicarDescuentosBecar" >Aplicar descuento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal para otros documentos-->
+<div class="modal fade" id="otrosDocumentosModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> OTROS DOCUMENTOS </h5>
+                <button type="button" class="close" v-on:click="cerrarModalOtrosDocumentosModal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="padding: 0 20px; background: #fafafa">
+
+                <table class="table table-hover " style="width: 100%">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th class="text-center">NRO</th>
+                            <th>NOMBRE DE DOCUMENTO</th>
+                            <th class="text-center">ACCIONES</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="pt-0 pb-0 text-center"  scope="row">1</td>
+                                <td class="pt-0 pb-0" > Ficha de matricula</td>
+                                <td class="pt-0 pb-0 text-center" >
+                                    <button type="button" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary" v-on:click="generarFichaMatricula">
+                                        <i class="fa fa-file" aria-hidden="true"></i> Descargar
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pt-0 pb-0 text-center"  scope="row">2</td>
+                                <td class="pt-0 pb-0" > Cronograma de pagos</td>
+                                <td class="pt-0 pb-0 text-center" >
+                                    <button  type="button" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary" v-on:click="generarCronograma">
+                                        <i class="fa fa-file" aria-hidden="true"></i> Descargar
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pt-0 pb-0 text-center"  scope="row">3</td>
+                                <td class="pt-0 pb-0" > Contrato</td>
+                                <td class="pt-0 pb-0 text-center" >
+                                    <a href="" target="_blank" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary"> <i class="fa fa-file" aria-hidden="true"></i> Descargar </a>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pt-0 pb-0 text-center"  scope="row">4</td>
+                                <td class="pt-0 pb-0" > Autorizacion de imagen</td>
+                                <td class="pt-0 pb-0 text-center" >
+                                    <a href="" target="_blank" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary"> <i class="fa fa-file" aria-hidden="true"></i> Descargar </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" v-on:click="cerrarModalOtrosDocumentosModal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal para creacion de becas/descuentos-->
+    <div class="modal fade" id="nuevaBecaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> DESCUENTOS REGISTRADOS </h5>
+                    <button type="button" class="close" v-on:click="cerrarModalNuevosDescuentos">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" style="background: #fafafa">
+                    <div class="row">
+
+                        <div class="col-sm-7">
+                            <table class="table table-striped table-inverse " style="width: 100%">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th>COD.</th>
+                                        <th>NOMBRE</th>
+                                        <th>TIPO</th>
+                                        <th>VALOR</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template v-if=" listaDescuentosDisponibles && listaDescuentosDisponibles.length>0 ">
+                                            <tr v-for=" descuento in listaDescuentosDisponibles" :title="descuento.DESCRIPCION">
+                                                <td class="text-uppercase pt-0 pb-0"  scope="row"> @{{ descuento.MP_DESCUENTO_ID }} </td>
+                                                <td class="text-uppercase pt-0 pb-0" > @{{ descuento.MP_NOMBRE }} </td>
+                                                <td class="text-uppercase pt-0 pb-0" > @{{ descuento.MP_TIPO_BECA }} </td>
+                                                <td class="text-uppercase pt-0 pb-0" > @{{ descuento.VALOR }} </td>
+                                                <td class="pt-0 pb-0">
+                                                    <button type="button" class="btn btn-xs bg-transparent p-0 text-primary" title="Editar" v-on:click="onEditarDescuento(descuento.MP_DESCUENTO_ID, $event)">
+                                                        <i class="fas fa-edit    "></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        <template v-else>
+                                            <tr>
+                                                <td colspan="4" class="text-center"> <small>No se encontrò descuentos</small> </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-5" style="border-left: 1px solid #a09a9a54; ">
+                            <h5> @{{ descuentoEditar_id == ''? 'Nuevo':'Actualizar' }} descuento</h5>
+
+                            <form action="{{ route('descuentos.registrar') }}" id="form-nuevo-descuento"  v-on:submit="registrarDescuento($event)">
+                                <div class="form-group">
+                                  <label for="nombreDescuento">Nombre:</label>
+                                  <input type="text"
+                                    class="form-control" name="nombreDescuento" id="nombreDescuento" aria-describedby="helpId" placeholder="">
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="descripcionDescuento">Descripcion</label>
+                                  <textarea class="form-control" name="descripcionDescuento" id="descripcionDescuento" rows="3"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="tipoDescuento">Tipo:</label>
+                                    <select name="tipoDescuento" id="tipoDescuento" class="form-control">
+                                        <option value="">SELECCIONE UN TIPO</option>
+                                        <option value="porcentaje">PORCENTUAL</option>
+                                        <option value="monto">MONTO FIJO</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="valorDescuento">Valor:</label>
+                                    <input type="text" class="form-control" name="valorDescuento" id="valorDescuento" >
+                                    <input type="hidden" name="descuentoEditarId" id="descuentoEditar_id" value="">
+                                </div>
+                                <div class="form-group text-right">
+                                    <button class="btn btn-xs btn-success " type="submit">
+                                        @{{ descuentoEditar_id == '' ? 'Guardar' : 'Actualizar' }}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <input type="text" name="" id="matricula_id" value="{{$matricula_id}}" hidden>
     <input type="text" name="" id="serie_usuario" value="{{Auth::user()->SerieComprobante()->get()->last()->serie()}}" hidden>
 </div>

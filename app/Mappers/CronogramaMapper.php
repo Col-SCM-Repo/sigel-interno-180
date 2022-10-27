@@ -17,6 +17,9 @@ class CronogramaMapper
         $_cronogramaVM->monto =$_cronograma->MP_CRO_MONTO;
         $_cronogramaVM->estado =$_cronograma->MP_CRO_ESTADO;
         $_cronogramaVM->vencido =strtotime($_cronograma->MP_CRO_FECHAVEN)<strtotime(date('d-m-Y'))?true:false;
+        $_cronogramaVM->alumno_id = $_cronograma->Matricula->MP_ALU_ID;
+        $_cronogramaVM->monto_descuento =$_cronograma->MONTO_DESCUENTO;
+        $_cronogramaVM->monto_final =$_cronograma->MONTO_FINAL;
         return $_cronogramaVM;
     }
     public function ListModelToViewModel($_cronogramas)
@@ -39,6 +42,8 @@ class CronogramaMapper
         $_cronogramaModel->MP_CRO_TIPODEUDA = $_cronogramaVM->tipo_deuda ;
         $_cronogramaModel->MP_CRO_MONTO = $_cronogramaVM->monto ;
         $_cronogramaModel->MP_CRO_ESTADO = $_cronogramaVM->estado ;
+        $_cronogramaModel->MONTO_FINAL = $_cronogramaVM->monto_final ;
+        $_cronogramaModel->MONTO_DESCUENTO = $_cronogramaVM->monto_descuento ;
         return $_cronogramaModel;
     }
     public function ViewModel()

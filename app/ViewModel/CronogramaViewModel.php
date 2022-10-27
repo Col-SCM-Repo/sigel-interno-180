@@ -14,4 +14,7 @@ class CronogramaViewModel
     public $matricula = [];
     public $pagos = [];
     public $venido = [];
+    public $alumno_id ='';
+    public $monto_descuento = NULL;
+    public $monto_final = NULL;
 }

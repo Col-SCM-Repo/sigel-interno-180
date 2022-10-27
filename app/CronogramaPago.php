@@ -50,7 +50,8 @@ class CronogramaPago extends Model
     }
     public function monto()
     {
-        return $this->MP_CRO_MONTO;
+        // return $this->MP_CRO_MONTO;
+        return $this->MONTO_FINAL;
     }
     public function estado()
     {

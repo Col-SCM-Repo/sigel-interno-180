@@ -15,6 +15,7 @@ class ParentescoRepositoy extends Parentesco
         $actualizarParentesco->MP_ALU_ID = $parentescoModel->MP_ALU_ID;
         $actualizarParentesco->MP_APO_ID = $parentescoModel->MP_APO_ID;
         $actualizarParentesco->MP_TIPAR_ID = $parentescoModel->MP_TIPAR_ID;
+        $actualizarParentesco->MP_RESPONSABLE_PAGO_DEFECTO = $parentescoModel->MP_RESPONSABLE_PAGO_DEFECTO;
         $actualizarParentesco->save();
         return $actualizarParentesco->id();
     }

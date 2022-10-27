@@ -1,11 +1,11 @@
 <!-- Left Side Of Navbar -->
 <ul class="navbar-nav mr-auto">
-   
+
     <!--  <li id="alumnos-nav" class="nav-item dropdown ">
         <a  class="nav-link " href="{{ route('rrhh.alumnos') }}" role="button" >
             RR.HH
         </a>
-    </li> 
+    </li>
 -->
 
 
@@ -15,14 +15,17 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="matriculas">
             <a class="dropdown-item" href="{{ route('rrhh.alumnos') }}">
-                Alumnos
+                Alumnos colegio
+            </a>
+            <a class="dropdown-item " href="{{ route('rrhh.alumnos.academia') }}">
+                Alumnos academia
             </a>
             <a class="dropdown-item " href="{{ route('rrnn.empleados') }}">
                 Personal
             </a>
         </div>
     </li>
-    <!-- 
+    <!--
     <li id="reportes-nav" class="nav-item dropdown ">
         <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             REPORTES

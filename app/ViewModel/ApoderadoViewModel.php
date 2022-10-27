@@ -39,4 +39,5 @@ class ApoderadoViewModel
     public $tipo_parentesco='';
     public $alumno_id='';
     public $alumno='';
+    public $responsable_defecto = 0;
 }

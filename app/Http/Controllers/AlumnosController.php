@@ -84,7 +84,7 @@ class AlumnosController extends Controller
             'tipo_parentescos'=>$this->_tipoParentescoService->ObtenerTiposParentesco(),
             'grados_intruccion'=>$this->_gradoInstruccionService->ObtenerGradosInstruccion(),
             'centro_laborales'=>$this->_centroLaboralService->ObtenerCentrosLaboral(),
-            'ocupaciones'=>$this->_ocupacionService->ObtenerOcupaciones()
+            'ocupaciones'=>$this->_ocupacionService->ObtenerOcupaciones(),
         ];
         return response()->json($data);
     }
