@@ -23,6 +23,17 @@ class ParentescoService
         }
         return $_listApoderadosVM;
     }
+
+
+    public function BuscarPorAlumnoIdYParentesco($alumno_id, $tipo_parentesco_id)
+    {
+        return $this->_apoderadoMapper->ParentescoModelToViewModel($this->_parentescoRepository->BuscarPorAlumnoIdYTipoParentesco($alumno_id, $tipo_parentesco_id));
+    }
+
+    public function BuscarResponsableMatricula( $alumno_id  ){
+        return $this->_apoderadoMapper->ParentescoModelToViewModel($this->_parentescoRepository->ResponsableMatricula($alumno_id));
+    }
+
     public function BuscarPorID($parentesco_id)
     {
         return $this->_apoderadoMapper->ParentescoModelToViewModel($this->_parentescoRepository->BuscarPorID($parentesco_id));

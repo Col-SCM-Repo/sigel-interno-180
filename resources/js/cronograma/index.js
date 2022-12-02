@@ -25,6 +25,8 @@ var cronograma = new Vue({
         descuentoSeleccionado_id : null,
         descuentoEditar_id : '',
 
+        // Modal Documentos
+        listaDocumentos : [],
 
     },
     methods: {
@@ -70,7 +72,7 @@ var cronograma = new Vue({
             this.obtenerPagoModel(cronograma.id);
         },
         obtenerPagoModel:function(cronograma_id){
-            let url = this.url_principal +'pagos/obtener_modelo/'+cronograma_id;
+            let url = this.url_principal +'pagos/obtener_modelo/'+cronograma_id+'/'+this.alumno.id;
             axios.get(url).then((response) => {
                 this.pago_model = response.data;
             }).catch((error) => {
@@ -81,6 +83,8 @@ var cronograma = new Vue({
                     this.pago_model.cronograma_id = this.cronograma_seleccionado.id;
                 }else{
                     this.pago_model.monto = -this.pago_seleccionado.monto;
+                    this.pago_model.observacion=`ANULA TICKET Nº ${this.pago_seleccionado.serie}-${this.pago_seleccionado.numero}, POR \n`
+                    /* this.pago_model.numero = this.pago_seleccionado.numero; */
                 }
             });
         },
@@ -135,7 +139,13 @@ var cronograma = new Vue({
             this.pago_seleccionado = [];
             this.pago_model = [];
         },
-        abrirModalOtrosDocumentosModal:function(){
+        abrirModalOtrosDocumentosModal:function(url){
+            axios(url).then(response => {
+                this.listaDocumentos = response.data;
+            }).catch(err=>{
+                showToastr('Error', 'Ocurrio un error al obtener los documentos disponibles. ', 'error');
+            });
+
             $('#otrosDocumentosModal').modal({backdrop: 'static', keyboard: false});
             $('#otrosDocumentosModal').modal('show');
         },
@@ -180,7 +190,7 @@ var cronograma = new Vue({
 
         guardaNotaCredito:function(){
             let url = this.url_principal +'pagos/guardar_nota_credito';
-            this.pago_model.observacion = 'ANULA TICKET Nº '+this.pago_seleccionado.serie +'-' +this.pago_seleccionado.numero+', POR ' + this.pago_model.observacion;
+            /* this.pago_model.observacion = this.pago_model.observacion; */
             this.pago_model.matricula_id = this.matricula.id;
             this.pago_model.cronograma_id = this.pago_seleccionado.cronograma_id;
             this.pago_model.concepto_pago_id = this.pago_seleccionado.concepto_pago_id;
@@ -309,28 +319,35 @@ var cronograma = new Vue({
         modificarMonto:function(cronograma){
             let url = this.url_principal +'cronograma/actualizar_monto';
 
-            console.log(cronograma);
-            if(cronograma.monto_final == "0"){
-                cronograma.estado ="EXONERADO";
-                cronograma.monto = "0";
+            // SI MODIFICA EL MONTO A COBRAR, EL MONTO DE DESCUENTO ES 0
+
+            if( cronograma.monto_cobrar !='' && cronograma.monto_cobrar>=0){
+                if(cronograma.monto_cobrar == "0"){
+                    cronograma.estado ="EXONERADO";
+                }
+                else{
+                    if(cronograma.estado == "EXONERADO"){
+                        cronograma.estado = 'PENDIENTE';
+                    }
+                }
+                cronograma.monto_descuento = 0;
+
+                let data = {
+                    'cronograma': cronograma,
+                };
+                axios.post(url, data).then((response) => {
+                    showToastr('Correcto','Se modifico el monto correctamente.', 'success');
+                }).catch((error) => {
+                    showToastr('Error','Ocurrio un error inesperado. POR FAVOR RECARGUE LA PÁGINA', 'error');
+                }).finally((response) => {
+                });
+
             }
             else{
-                if(cronograma.estado == "EXONERADO"){
-                    cronograma.monto = cronograma.monto_final;
-                    cronograma.estado = 'PENDIENTE';
-                }
+                showToastr('Error', 'El monto a cobrar no puede ser negativo', 'error');
+                cronograma.monto_cobrar = parseFloat(cronograma.monto_inicial) - parseFloat(cronograma.monto_descuento);
+                return ;
             }
-            cronograma.monto_descuento = 0;
-
-            let data = {
-                'cronograma': cronograma,
-            };
-            axios.post(url, data).then((response) => {
-                showToastr('Correcto','Se modifico el monto correctamente.', 'success');
-            }).catch((error) => {
-                showToastr('Error','Ocurrio un error inesperado. POR FAVOR RECARGUE LA PÁGINA', 'error');
-            }).finally((response) => {
-            });
         },
         validarPago:function(){
             let self = this;
@@ -393,6 +410,34 @@ var cronograma = new Vue({
             }else{
                 this.guardarPago();
             }
+        },
+        generarDocumento : function ( url, documento_id ){
+
+            const documento_seleccionado = this.listaDocumentos.filter(doc => doc.id == documento_id);
+
+            if( documento_seleccionado.length != 1 ){
+                showToastr('Alerta', 'Ocurrio un error, actualice la pagina', 'error');
+                return ;
+            }
+
+            const data = new FormData();
+            data.append('matricula_id', this.matricula_id);
+            data.append('documento_id', documento_id);
+  /*           data.append('directorio_documento', documento_seleccionado[0].directorio );
+            data.append('nombre_documento', documento_seleccionado[0].nombre_archivo ); */
+
+            axios(url, {method:'POST', data, responseType: 'blob'}).then( response => {
+                console.log(response.data);
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute("download", documento_seleccionado[0].nombre_archivo);
+                document.body.appendChild(link);
+                link.click();
+
+            } ).catch(err=>{
+                showToastr('Error', 'Ocurrio un error al generar el documento.', 'error');
+            })
         }
     },
     created: function(){

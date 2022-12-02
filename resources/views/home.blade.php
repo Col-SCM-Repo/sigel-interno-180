@@ -48,7 +48,7 @@
                             </div>
 
                             <br>
-                            <h3>Proximamente ...</h3>
+                            {{-- <h3>Proximamente ...</h3> --}}
                         @endif
                         <div class="row ">
                             <div class="col-md-6">
@@ -79,7 +79,7 @@
                                                 </div>
                                             </div>
                                             <br>
-                                            <a href="#" type="button" class="btn btn-info btn-block text-white disabled" >
+                                            <a href="{{ route('logistica.index') }}" type="button" class="btn btn-warning btn-block " >
                                                 <i class="fas fa-sign-in-alt"></i> Ingresar
                                             </a>
                                         </div>

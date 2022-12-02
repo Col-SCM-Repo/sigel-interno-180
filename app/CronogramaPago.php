@@ -48,10 +48,15 @@ class CronogramaPago extends Model
     {
         return $this->MP_CRO_TIPODEUDA;
     }
-    public function monto()
+    public function montoCobrar()
     {
-        // return $this->MP_CRO_MONTO;
-        return $this->MONTO_FINAL;
+        return $this->MONTO_COBRAR;
+    }
+    public function montoInicial (){
+        return $this->MP_CRO_MONTO;
+    }
+    public function montoDescuento(){
+        return $this->MONTO_DESCUENTO;
     }
     public function estado()
     {

@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button  type="button" class="btn btn-primary btn-sm" v-on:click="abrirModalOtrosDocumentosModal"> <i class="fa fa-file" aria-hidden="true"></i> Documentos</button>
+                                        <button  type="button" class="btn btn-primary btn-sm" v-on:click='abrirModalOtrosDocumentosModal("{{ route('documentos.listar', ['modulo_id'=>1]) }}"   )'> <i class="fa fa-file" aria-hidden="true"></i> Documentos</button>
                                         <button  type="button" class="btn btn-warning btn-sm" v-on:click="abrirModalDescuentos"> <i class="fa fa-money" aria-hidden="true"></i> Becas/descuentos</button>
                                         <button  type="button" class="btn btn-light btn-sm" v-on:click="editarCronograma">
                                             <template v-if="!editar">
@@ -80,8 +80,8 @@
                                     <td >@{{cronograma.concepto.concepto}}</td>
                                     <td :style="cronograma.vencido?'color:red':'color:green'">@{{cronograma.fecha_vencimiento}}</td>
                                     <td >
-                                        <input v-if="editar && i!=0 && (cronograma.estado!='CANCELADO'||cronograma.estado=='EXONERADO')"  type="text" v-model="cronograma.monto_final" class="form-control" v-on:change="modificarMonto(cronograma)">
-                                        <p v-else>S/ @{{cronograma.monto_final}}</p>
+                                        <input v-if="editar && i!=0 && (cronograma.estado!='CANCELADO'||cronograma.estado=='EXONERADO')"  type="text" v-model="cronograma.monto_cobrar" class="form-control" v-on:change="modificarMonto(cronograma)">
+                                        <p v-else>S/ @{{cronograma.monto_cobrar}}</p>
                                     </td>
                                     <td >S/ @{{cronograma.monto_descuento ? cronograma.monto_descuento : '0.0' }}</td>
                                     <td :style="cronograma.estado=='CANCELADO'?'color:green':(cronograma.estado=='EXONERADO'?'color:skyblue':(cronograma.estado=='PENDIENTE'?'color:orange':'color:blue'))">@{{cronograma.estado}}</td>
@@ -196,6 +196,7 @@
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <button type="button" class="btn btn-light btn-sm" v-on:click="verBoletaFactura(pago.id)"><i class="far fa-eye" ></i> Boleta | Factura</button>
+                                                    <a :href='"{{ route('matricula.generar.xml-especifico', ['pago_id'=>'']) }}/" + pago.id' target="_blank" class="btn btn-light btn-sm"> <i class="fa fa-file" aria-hidden="true"></i> XML </a>
                                                     <button v-if="parseFloat(pago.monto)>0" type="button" class="btn btn-success btn-sm" v-on:click="abrirModalNota(pago)"><i class="fas fa-money-bill-alt"></i> N. C.</button>
                                                 </div>
                                             </td>
@@ -310,7 +311,7 @@
                                     <div class="form-group row">
                                         <label for="monto" class="col-sm-4 col-form-label">Monto</label>
                                         <div class="col-sm-8">
-                                            <input type="text"  class="form-control" id="monto" :value="'S/ ' + cronograma_seleccionado.monto_final" disabled>
+                                            <input type="text"  class="form-control" id="monto" :value="'S/ ' + cronograma_seleccionado.monto_cobrar" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -387,12 +388,12 @@
                                             <input type="text"  class="form-control" id="serie" v-model="pago_model.serie" >
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <label for="correlativo" class="col-sm-4 col-form-label">Nro. Comprobante</label>
                                         <div class="col-sm-8">
                                             <input type="text"  class="form-control" id="correlativo" v-model="pago_model.numero" >
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group row">
                                         <label for="monto" class="col-sm-4 col-form-label">Monto</label>
                                         <div class="col-sm-8">
@@ -402,7 +403,6 @@
                                     <div class="form-group row">
                                         <label for="nota_observacion" class="col-sm-4 col-form-label">Observación</label>
                                         <div class="col-sm-8">
-                                            <p>ANULA TICKET Nº @{{pago_seleccionado.serie}}-@{{pago_seleccionado.numero}}, POR ...</p>
                                             <textarea  type="text"  class="form-control mayus" id="nota_observacion" v-model="pago_model.observacion"rows="4" ></textarea>
                                         </div>
                                     </div>
@@ -529,38 +529,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="pt-0 pb-0 text-center"  scope="row">1</td>
-                                <td class="pt-0 pb-0" > Ficha de matricula</td>
-                                <td class="pt-0 pb-0 text-center" >
-                                    <button type="button" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary" v-on:click="generarFichaMatricula">
-                                        <i class="fa fa-file" aria-hidden="true"></i> Descargar
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="pt-0 pb-0 text-center"  scope="row">2</td>
-                                <td class="pt-0 pb-0" > Cronograma de pagos</td>
-                                <td class="pt-0 pb-0 text-center" >
-                                    <button  type="button" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary" v-on:click="generarCronograma">
-                                        <i class="fa fa-file" aria-hidden="true"></i> Descargar
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="pt-0 pb-0 text-center"  scope="row">3</td>
-                                <td class="pt-0 pb-0" > Contrato</td>
-                                <td class="pt-0 pb-0 text-center" >
-                                    <a href="" target="_blank" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary"> <i class="fa fa-file" aria-hidden="true"></i> Descargar </a>
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="pt-0 pb-0 text-center"  scope="row">4</td>
-                                <td class="pt-0 pb-0" > Autorizacion de imagen</td>
+                            <tr v-for=" documento in listaDocumentos">
+                                <td class="pt-0 pb-0 text-center"  scope="row"> @{{ documento.id }} </td>
+                                <td class="pt-0 pb-0" > @{{ documento.nombre_archivo }} </td>
                                 <td class="pt-0 pb-0 text-center" >
-                                    <a href="" target="_blank" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary"> <i class="fa fa-file" aria-hidden="true"></i> Descargar </a>
-
+                                    <template v-if="documento.tipo_documento == 'ESTATICO'">
+                                        <a type="button" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary" target="_blank" :href=' "{{ asset('/') }}"+ documento.directorio +"/"+ documento.nombre_archivo ' >
+                                            <i class="fa fa-file" aria-hidden="true"></i> Descargar
+                                        </a>
+                                    </template>
+                                    <template v-else>
+                                        <button type="button" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary" v-on:click='generarDocumento( "{{ route('documentos.matricula.generar-word') }}", documento.id ) ' {{--  v-on:click="generarFichaMatricula" --}}>
+                                            <i class="fa fa-file" aria-hidden="true"></i> Descargar
+                                        </button>
+                                    </template>
                                 </td>
                             </tr>
                         </tbody>
@@ -627,12 +610,12 @@
                                 <div class="form-group">
                                   <label for="nombreDescuento">Nombre:</label>
                                   <input type="text"
-                                    class="form-control" name="nombreDescuento" id="nombreDescuento" aria-describedby="helpId" placeholder="">
+                                    class="form-control text-uppercase" name="nombreDescuento" id="nombreDescuento" aria-describedby="helpId" placeholder="">
                                 </div>
 
                                 <div class="form-group">
                                   <label for="descripcionDescuento">Descripcion</label>
-                                  <textarea class="form-control" name="descripcionDescuento" id="descripcionDescuento" rows="3"></textarea>
+                                  <textarea class="form-control text-uppercase" name="descripcionDescuento" id="descripcionDescuento" rows="3"></textarea>
                                 </div>
 
                                 <div class="form-group">

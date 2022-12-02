@@ -22,7 +22,7 @@
         <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             REPORTES
         </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="matriculas">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="reportes">
             <a class="dropdown-item" href="{{ route('pagos.por.fecha.usuario.actual.pagos') }}">
                 Pagos Por Usuario
             </a>
@@ -34,6 +34,19 @@
             </a>
             <a class="dropdown-item" href="{{ route('vista.pagos.entre.fechas.pagos') }}">
                 Pagos Entre Fechas
+            </a>
+            <a class="dropdown-item" href="{{ route('vista.pagos.entre.fechas.pagos-xml') }}">
+                Envio de comprobantes XML
+            </a>
+        </div>
+    </li>
+    <li id="mantenimiento-nav" class="nav-item dropdown ">
+        <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            MANTENIMIENTO
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="mantenimiento">
+            <a class="dropdown-item" href="{{ route('documentos.index', ['modulo'=>'pagos y matriculas']) }}">
+                Documentos
             </a>
         </div>
     </li>

@@ -7,7 +7,6 @@ class CronogramaViewModel
     public $matricula_id = '';
     public $concepto_pago_id = '';
     public $tipo_deuda = '';
-    public $monto = '';
     public $estado = '';
     public $fecha_vencimiento = '';
     public $concepto = [];
@@ -15,6 +14,7 @@ class CronogramaViewModel
     public $pagos = [];
     public $venido = [];
     public $alumno_id ='';
-    public $monto_descuento = NULL;
-    public $monto_final = NULL;
+    public $monto_inicial = '';
+    public $monto_cobrar = '';
+    public $monto_descuento = '';
 }

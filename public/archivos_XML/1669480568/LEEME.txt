@@ -1,0 +1,7 @@
+Archivos generados: 
+	* B005-1494.xml
+	* B005-1495.xml
+	* B002-15766.xml
+
+Numero de archivos no generados 0 
+Numero de archivos no generados:0

@@ -28,10 +28,12 @@ mix.js("resources/js/vacantes/por_anio.js", "public/js/vacantes").js(
     "public/js/vacantes"
 );
 //reportes - pagos
-mix.js("resources/js/pagos/pagos_entre_fechas.js", "public/js/pagos").js(
-    "resources/js/pagos/fecha_por_usuario_actual.js",
-    "public/js/pagos"
-);
+mix.js("resources/js/pagos/pagos_entre_fechas.js", "public/js/pagos")
+    .js('resources/js/pagos/envio_comprobantes_xml.js', "public/js/pagos")
+    .js(
+        "resources/js/pagos/fecha_por_usuario_actual.js",
+        "public/js/pagos"
+    );
 //matriculas
 mix.js("resources/js/matriculas/nueva.js", "public/js/matriculas");
 //Año Escolar
@@ -49,6 +51,12 @@ mix.js(
     "resources/js/modulos/notasAcademicas/notas/index.js",
     "public/js/modulos/notasAcademicas/notas"
 );
+
+// logistica
+mix.js(
+    "resources/js/modulos/logistica/documentos.js",
+    "public/js/modulos/logistica/documentos"
+)
 
 //Reloj
 mix.js("resources/js/reloj/index.js", "public/js/reloj");

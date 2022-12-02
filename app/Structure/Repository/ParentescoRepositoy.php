@@ -30,4 +30,18 @@ class ParentescoRepositoy extends Parentesco
     {
         return $this::find($_parentescoId);
     }
+    public function BuscarPorAlumnoIdYTipoParentesco( $alumno_id, $_tipo_parentesco_id)
+    {
+        return $this::where('MP_TIPAR_ID', $_tipo_parentesco_id)
+                    ->where('MP_ALU_ID', $alumno_id)
+                    ->first();
+    }
+    public function ResponsableMatricula ($alumno_id){
+        $responsable =   $this::where('MP_RESPONSABLE_PAGO_DEFECTO', 1)
+                    ->where('MP_ALU_ID', $alumno_id)
+                    ->first();
+        if(!$responsable)
+            $responsable = $this::where('MP_ALU_ID', $alumno_id)->first();
+        return $responsable;
+    }
 }

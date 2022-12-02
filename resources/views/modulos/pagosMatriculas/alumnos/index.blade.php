@@ -211,7 +211,7 @@
                                             <span class="input-group-text" >Serie</span>
                                         </div>
                                         <input v-if="pago_model.tipo_comprobante_id==8" type="text"  class="form-control" v-model="pago_model.serie=serie_usuario" disabled>
-                                        <input v-else type="text" class="form-control" v-model="pago_model.serie='E001'"  >
+                                        <input v-else type="text" class="form-control" v-model="pago_model.serie='E001' "  >
                                     </div>
                                 </div>
                                 <div v-if="pago_model.tipo_comprobante_id==4" class="col-md-12">

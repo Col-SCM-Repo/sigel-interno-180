@@ -171,13 +171,14 @@ class MatriculaService
             $matricula->MP_DESCUENTO_ID = $descuento->Id();
             foreach ($cronogramas_afectados as $cronograma_id) {
                 $cronograma = CronogramaPago::find($cronograma_id);
+
                 if($cronograma){
                     $cronograma->MONTO_DESCUENTO = $descuento->calcularDescuento( $cronograma->MP_CRO_MONTO );
-                    $cronograma->MONTO_FINAL = $cronograma->MP_CRO_MONTO - $cronograma->MONTO_DESCUENTO;
+                    $cronograma->MONTO_COBRAR = $cronograma->MP_CRO_MONTO - $cronograma->MONTO_DESCUENTO;
                     // se actualiza el monto y ya no hay devoluciones
-                    if($cronograma->MONTO_FINAL <= 0 ){
-                        $cronograma->MONTO_FINAL = 0;
-                        $cronograma->MP_CRO_ESTADO = 'CANCELADO';
+                    if($cronograma->MONTO_COBRAR <= 0 ){
+                        $cronograma->MONTO_COBRAR = 0;
+                        $cronograma->MP_CRO_ESTADO = 'EXONERADO';
                     }
                     $cronograma->save();
                 }
@@ -186,12 +187,12 @@ class MatriculaService
         else{ // Quita descuento
             $matricula->MP_DESCUENTO_ID = null;
             $cronogramasMatricula = CronogramaPago::where('MP_MAT_ID', $matricula_id)
-                                                    ->where('MP_CRO_ESTADO', '!=', 'EXONERADO')
                                                     ->where('MP_CRO_ESTADO', '!=', 'CANCELADO')
+                                                    ->where('MONTO_DESCUENTO', '>', 0)
                                                     ->get();
             foreach ($cronogramasMatricula  as $cronograma) {
                 $cronograma->MONTO_DESCUENTO = null ;
-                $cronograma->MONTO_FINAL = $cronograma->MP_CRO_MONTO ;
+                $cronograma->MONTO_COBRAR = $cronograma->MP_CRO_MONTO ;
                 $cronograma->save();
             }
         }

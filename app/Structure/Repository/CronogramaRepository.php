@@ -14,7 +14,7 @@ class CronogramaRepository extends CronogramaPago
         $actualizarCronograma->MP_CRO_TIPODEUDA =$cronogramaM->MP_CRO_TIPODEUDA ;
         $actualizarCronograma->MP_CRO_MONTO = $cronogramaM->MP_CRO_MONTO;
         $actualizarCronograma->MP_CRO_ESTADO =$cronogramaM->MP_CRO_ESTADO ;
-        $actualizarCronograma->MONTO_FINAL =$cronogramaM->MONTO_FINAL ;
+        $actualizarCronograma->MONTO_COBRAR =$cronogramaM->MONTO_COBRAR ;
         $actualizarCronograma->MONTO_DESCUENTO =$cronogramaM->MONTO_DESCUENTO ;
         $actualizarCronograma->save();
         return $actualizarCronograma->id();

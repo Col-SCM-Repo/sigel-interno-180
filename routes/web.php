@@ -18,9 +18,7 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::get('probandoooooooo ', function () {
-    return 'all';
-});
+Route::get('probandoooooooo ', ['uses' => 'WordController@index'] );
 
 Auth::routes(['register' => false]);
 //principal
@@ -54,7 +52,7 @@ Route::prefix('matriculas')->middleware('auth', 'accesos_control')->group(functi
 });
 //Routes pagos
 Route::prefix('pagos')->middleware('auth', 'accesos_control')->group(function () {
-    Route::get('/obtener_modelo/{cronograma_id}', ['uses' => 'PagosController@ObtenerModelo', 'as' => 'obtener.modelo.pagos']);
+    Route::get('/obtener_modelo/{cronograma_id}/{alumno_id}', ['uses' => 'PagosController@ObtenerModelo', 'as' => 'obtener.modelo.pagos']);
     #pagos
     Route::post('/obtener_pagos', ['uses' => 'PagosController@ObtenerPagosPorCronogramaId', 'as' => 'obtener.por.cronograma.pagos']);
     Route::post('/guardar_pago', ['uses' => 'PagosController@GuardarPago', 'as' => 'guardar.pago.pagos']);
@@ -67,11 +65,17 @@ Route::prefix('pagos')->middleware('auth', 'accesos_control')->group(function ()
     Route::post('/obtener_alumnos_morosos', ['uses' => 'PagosController@ObtenerAlumnosMorosos', 'as' => 'obtener.alumnos.morosos.pagos']);
     #pagos entre fechas
     Route::get('/pagos_entre_fechas', ['uses' => 'PagosController@PagosEntreFechasView', 'as' => 'vista.pagos.entre.fechas.pagos']);
+    Route::get('/pagos_entre_fechas_xml', ['uses' => 'PagosController@PagosEntreFechasXMLView', 'as' => 'vista.pagos.entre.fechas.pagos-xml']);
     Route::post('/obtener_entre_fechas', ['uses' => 'PagosController@ObtenerPagosEntreFechas', 'as' => 'obtener.pagos.entre.fechas.pagos']);
+    Route::post('/generar_archivos_xml', ['uses' => 'PagosController@GenerarArchivosXML', 'as' => 'obtener.archivos.xml.masivo']);
     Route::post('/validar_pago', ['uses' => 'PagosController@ValidarPago', 'as' => 'validar.pago.pagos']);
 
     #Descuentos / Becas
     Route::post('/aplicar-becas', ['uses' => 'MatriculasController@ActualizarDescuentoBecar', 'as' => 'matricula.aplicar.descuento']);
+
+    Route::get('/generar-xml/{pago_id?}', ['uses'=>'PagosController@GenerarBoletaElectronicaXml', 'as'=>'matricula.generar.xml-especifico']);
+    Route::get('/enviar-xml/{pago_id?}', ['uses'=>'PagosController@enviarXmlToOSE', 'as'=>'matricula.enviar.xml-especifico']);
+
 
 });
 
@@ -252,7 +256,41 @@ Route::prefix('recursos-humanos')->middleware('auth')->group(function () {
         /* Libreria PDF  */
 
     });
+
+
+    Route::prefix('logistica')->group(function(){
+        Route::get('/', ['uses' => 'ModuloLogisticaController@index', 'as' => 'logistica.index']);
+
+
+    });
+
+    Route::prefix('documentos')->group(function(){
+
+        Route::get('/view-model', ['uses' => 'DocumentosController@obtenerViewModel', 'as' => 'documentos.view-model']);
+        Route::get('/obtener/{modulo_id}', ['uses' => 'DocumentosController@obtenerDocumentosFiltro', 'as' => 'documentos.listar']);
+        Route::get('/informacion', ['uses' => 'DocumentosController@informacionDocumentos', 'as' => 'documentos.informacion']);
+
+
+        Route::get('/{modulo?}', ['uses' => 'DocumentosController@index', 'as' => 'documentos.index']);
+        Route::delete('/eliminar/{documento_id}', ['uses' => 'DocumentosController@eliminarDocumento', 'as' => 'documentos.eliminar']);
+        Route::post('/', ['uses' => 'DocumentosController@guardarDocumento', 'as' => 'documentos.guardar']);
+
+        Route::post('/generar-word', ['uses' => 'WordController@generarDocumentosMatricula', 'as' => 'documentos.matricula.generar-word']);
+
+    });
+
+
 });
+
+/*
+Route::prefix('facturacion-electronica')->group(function(){
+    Route::get('/ver-xml', function(){
+        return view('reportes.xml.sunat-facturacion');
+    });
+
+}); */
+
+
 
 Route::prefix('notas')->middleware('auth')->group(function () {
     Route::post('/obtener_por_matricula_trimestre', ['uses' => 'NotaController@ObtenerNotasPorMatriculaTrimestre', 'as' => 'obtener.notas.por.matricula.trimestre.notas']);

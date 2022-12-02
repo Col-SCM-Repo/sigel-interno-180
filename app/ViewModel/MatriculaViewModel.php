@@ -12,6 +12,7 @@ class MatriculaViewModel
         public $tipo_matricula_id = '';
         public $observacion = '';
         public $usuario_id = '';
+        public $institucion_educativa_procedencia = '';
         public $institucion_educativa_procedencia_id = '';
         public $estado = 2;//ESTADO DE MATRICULA NORMAL
         public $alumno_id = '';

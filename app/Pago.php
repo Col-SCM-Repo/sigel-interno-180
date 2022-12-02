@@ -100,8 +100,8 @@ class Pago extends Model
     }
 
     // Modificando . . . !!
-    public function notaCredito (){
+    /* public function notaCredito (){
         return $this->hasOne(Pago::class, 'MP_CONPAGO_ID', 'MP_PAGO_ID');
-    }
+    } */
 
 }

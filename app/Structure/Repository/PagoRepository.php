@@ -9,11 +9,12 @@ class PagoRepository extends Pago
     // Obtiene pagos vigentes (NO NOTAS CREDITO)
     public function ObtenerPagosPorCronograma($_cronogramaId)
     {
-        $pagosCronograma =  [];
+        return $this::where('MP_CRO_ID', $_cronogramaId)->get();
+        /* $pagosCronograma =  [];
         foreach ($this::where('MP_CRO_ID', $_cronogramaId)->get() as $pago)
             if( ! $pago->notaCredito )
                 $pagosCronograma[] = $pago;
-        return $pagosCronograma;
+        return $pagosCronograma; */
     }
     public function ObtenerNumeracionPorserie($serie)
     {
@@ -30,13 +31,19 @@ class PagoRepository extends Pago
     {
         return $this::find($_pagoId);
     }
+    public function BuscarPorIds($_pagoIds)
+    {
+        return $this::whereIn('MP_PAGO_ID',$_pagoIds )->get();
+    }
+
     public function ObtenerPagosPorOtrosConceptoPorMatricula($_matriculaId)
     {
-        $otrosPagos = [];
+        return $this::where('MP_MAT_ID',$_matriculaId)->where('MP_CONPAGO_ID','!=',null)->get();
+        /* $otrosPagos = [];
         foreach ( $this::where('MP_MAT_ID',$_matriculaId)->where('MP_CONPAGO_ID','!=',null)->get() as $pago)
             if( ! $pago->notaCredito )
                 $otrosPagos[] = $pago;
-       return $otrosPagos;
+       return $otrosPagos; */
     }
     # NOTA: EVALUAR SI SE ESTA TENIENDO ENCUENTA QUE PODRIAN IR NOTAS DE CREDITO (PAGOS ANULADOS)
     public function ObtenerPagosPorFechaUsuarioActual($fecha)
