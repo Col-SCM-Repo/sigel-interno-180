@@ -427,6 +427,7 @@ var cronograma = new Vue({
             data.append('nombre_documento', documento_seleccionado[0].nombre_archivo ); */
 
             axios(url, {method:'POST', data, responseType: 'blob'}).then( response => {
+                showToastr('Alerta', 'Generando documnento', 'success')
                 console.log(response.data);
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');

@@ -76,6 +76,7 @@ class MatriculasController extends Controller
         if ($matriculaVM->id==0) {
             $_conDeuda = $this->_alumnoService->BuscarDeuda($this->_matriculaService->ObtenerMatriculasConCronogramaPorAlumno($matriculaVM->alumno_id));
         }
+
         if ($_conDeuda==false) {
             return response()->json($this->_matriculaService->Guardar($matriculaVM));
         } else {

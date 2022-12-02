@@ -70,11 +70,11 @@ class MatriculaService
             if ($matriculaVM->estado==EstadoMatriculaEnum::Retirado) {
                 self::RetirarAlumno($matriculaVM);
             }else{
-                if($matriculaVM->monto_matricula!=''||$matriculaVM->monto_pension!=''){
+                if($matriculaVM->monto_matricula!=''||$matriculaVM->monto_pension!=''){     // REVISARRRRRRRRRR
                     foreach ($_matriculaModel->CronogramaPagos as $cronograma) {
                         $monto_cronograma = $cronograma->ConceptoPago->concepto_id()==1? ($matriculaVM->monto_matricula!=''?$matriculaVM->monto_matricula:$cronograma->monto()):($matriculaVM->monto_pension!=''?$matriculaVM->monto_pension:$cronograma->monto());
                         $cronograma->MP_CRO_MONTO = $monto_cronograma;
-                        $cronograma->MONTO_FINAL = $monto_cronograma;
+                        $cronograma->MONTO_COBRAR = $monto_cronograma;
                         $this->_cronogramaService->Actualizar($this->_cronogramaMapper->ModelToViewModel($cronograma));
                     }
                 }
@@ -82,6 +82,7 @@ class MatriculaService
             return $matricula_id;
         }else{//la matricula no existe y se crea junto a su cronograma
             $matricula_id = $this->_matriculaRepository->Crear($_matriculaModel);
+
             $pensiones = $this->_conceptoPagoService->ObtenerPensionesAnioActualYNivel($matriculaVM->nivel);
             foreach ($pensiones as $pension) {
                 $nuevoCronogramaVM = $this->_cronogramaService->CrearViewModel();
@@ -92,8 +93,9 @@ class MatriculaService
                 $nuevoCronogramaVM->tipo_deuda =$pension->id==1? 'DERECHO DE PAGO':'PENSION';
 
                 $monto_cronograma = $pension->id==1? ($matriculaVM->monto_matricula!=''?$matriculaVM->monto_matricula:($pension->monto)):(date('m',strtotime($pension->fecha_vencimiento))<date('m',strtotime($matriculaVM->fecha_ingreso))? '0.0':($matriculaVM->monto_pension!=''?$matriculaVM->monto_pension:($matriculaVM->tipo_matricula_id==3?($pension->monto/2):$pension->monto)));
-                $nuevoCronogramaVM->monto = $monto_cronograma ;
-                $nuevoCronogramaVM->monto_final = $monto_cronograma ;
+                $nuevoCronogramaVM->monto_inicial = $monto_cronograma ;
+                $nuevoCronogramaVM->monto_descuento = 0 ;
+                $nuevoCronogramaVM->monto_cobrar = $monto_cronograma ;
                 $nuevoCronogramaVM->estado =$pension->id==1?('PENDIENTE'):(($matriculaVM->tipo_matricula_id==2||date('m',strtotime($pension->fecha_vencimiento))<date('m',strtotime($matriculaVM->fecha_ingreso)))?('EXONERADO'):('PENDIENTE'));
                 $aux_max = $nuevoCronogramaVM->id;
                 while ($nuevoCronogramaVM->id==$aux_max) {
@@ -104,6 +106,7 @@ class MatriculaService
                     }
                 }
             }
+
             return $matricula_id;
         }
     }

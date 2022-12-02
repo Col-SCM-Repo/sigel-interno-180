@@ -541,7 +541,7 @@
                                     </template>
                                     <template v-else>
                                         <button type="button" class="btn btn-sm pt-0 pb-0 bg-transparent text-primary" v-on:click='generarDocumento( "{{ route('documentos.matricula.generar-word') }}", documento.id ) ' {{--  v-on:click="generarFichaMatricula" --}}>
-                                            <i class="fa fa-file" aria-hidden="true"></i> Descargar
+                                            <i class="fa fa-file" aria-hidden="true"></i> Generar
                                         </button>
                                     </template>
                                 </td>
